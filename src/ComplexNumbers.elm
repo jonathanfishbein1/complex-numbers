@@ -41,29 +41,29 @@ import Monoid
 -- Types
 
 
-type alias Real =
-    Float
+type Real r
+    = Real r
 
 
-type alias Imaginary =
-    Float
+type Imaginary i
+    = Imaginary i
 
 
 {-| Main type.
 -}
-type ComplexNumber
-    = ComplexNumber Real Imaginary
+type ComplexNumber a b
+    = ComplexNumber (Real a) (Imaginary b)
 
 
 
 -- Complex addition
 
 
-add : ComplexNumber -> ComplexNumber -> ComplexNumber
-add (ComplexNumber realOne imaginaryOne) (ComplexNumber realTwo imaginaryTwo) =
-    ComplexNumber (realOne + realTwo) (imaginaryOne + imaginaryTwo)
+add : ComplexNumber number number -> ComplexNumber number number -> ComplexNumber number number
+add (ComplexNumber (Real realOne) (Imaginary imaginaryOne)) (ComplexNumber (Real realTwo) (Imaginary imaginaryTwo)) =
+    ComplexNumber (Real (realOne + realTwo)) (Imaginary (imaginaryOne + imaginaryTwo))
 
 
-complexAdd : Monoid.Monoid ComplexNumber
+complexAdd : Monoid.Monoid (ComplexNumber number number)
 complexAdd =
-    Monoid.monoid (ComplexNumber 0 0) add
+    Monoid.monoid (ComplexNumber (Real 0) (Imaginary 0)) add
