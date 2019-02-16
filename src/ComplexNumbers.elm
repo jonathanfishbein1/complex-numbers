@@ -62,3 +62,8 @@ complexAdd =
 multiply : ComplexNumber number number -> ComplexNumber number number -> ComplexNumber number number
 multiply (ComplexNumber (Real realOne) (Imaginary imaginaryOne)) (ComplexNumber (Real realTwo) (Imaginary imaginaryTwo)) =
     ComplexNumber (Real (realOne * realTwo - imaginaryOne * imaginaryTwo)) (Imaginary (realOne * imaginaryTwo + realTwo * imaginaryOne))
+
+
+complexMultiply : Monoid.Monoid (ComplexNumber number number)
+complexMultiply =
+    Monoid.monoid (ComplexNumber (Real 1) (Imaginary 1)) multiply
