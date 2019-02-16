@@ -47,8 +47,8 @@ type alias Imaginary =
 
 {-| Main type.
 -}
-type alias ComplexNumber =
-    ( Real, Imaginary )
+type ComplexNumber
+    = ComplexNumber Real Imaginary
 
 
 
@@ -56,5 +56,5 @@ type alias ComplexNumber =
 
 
 add : ComplexNumber -> ComplexNumber -> ComplexNumber
-add ( realOne, imaginaryOne ) ( realTwo, imaginaryTwo ) =
-    ( realOne + realTwo, imaginaryOne + imaginaryTwo )
+add (ComplexNumber realOne imaginaryOne) (ComplexNumber realTwo imaginaryTwo) =
+    ComplexNumber (realOne + realTwo) (imaginaryOne + imaginaryTwo)
