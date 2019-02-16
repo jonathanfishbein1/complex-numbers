@@ -34,6 +34,10 @@ For instance, we defined generic `concat` in this module using `Monoid` type as 
 
 -}
 
+import Monoid
+
+
+
 -- Types
 
 
@@ -58,3 +62,8 @@ type ComplexNumber
 add : ComplexNumber -> ComplexNumber -> ComplexNumber
 add (ComplexNumber realOne imaginaryOne) (ComplexNumber realTwo imaginaryTwo) =
     ComplexNumber (realOne + realTwo) (imaginaryOne + imaginaryTwo)
+
+
+complexAdd : Monoid.Monoid ComplexNumber
+complexAdd =
+    Monoid.monoid (ComplexNumber 0 0) add
