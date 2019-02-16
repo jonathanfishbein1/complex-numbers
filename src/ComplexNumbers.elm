@@ -13,24 +13,14 @@ For instance, we defined generic `concat` in this module using `Monoid` type as 
 @docs ComplexNumber
 
 
-# Constructors
+# Add two complex numbers
 
-@docs monoid
-
-
-# Functions for unwraping Monoid
-
-@docs empty
+@docs add
 
 
-# Convenient functions for monoid
+# Monoidally add two complex numbers
 
-@docs concat
-
-
-# Monoid types for popular types
-
-@docs string
+@docs complexAdd
 
 -}
 
