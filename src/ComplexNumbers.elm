@@ -57,3 +57,8 @@ add (ComplexNumber (Real realOne) (Imaginary imaginaryOne)) (ComplexNumber (Real
 complexAdd : Monoid.Monoid (ComplexNumber number number)
 complexAdd =
     Monoid.monoid (ComplexNumber (Real 0) (Imaginary 0)) add
+
+
+multiply : ComplexNumber number number -> ComplexNumber number number -> ComplexNumber number number
+multiply (ComplexNumber (Real realOne) (Imaginary imaginaryOne)) (ComplexNumber (Real realTwo) (Imaginary imaginaryTwo)) =
+    ComplexNumber (Real (realOne * realTwo - imaginaryOne * imaginaryTwo)) (Imaginary (realOne * imaginaryTwo + realTwo * imaginaryOne))
