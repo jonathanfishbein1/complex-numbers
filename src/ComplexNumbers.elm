@@ -1,4 +1,8 @@
-module ComplexNumbers exposing (ComplexNumber(..))
+module ComplexNumbers exposing
+    ( ComplexNumber(..)
+    , add
+    , Imaginary(..), Real(..)
+    )
 
 {-| A module for complex numbers
 For instance, we defined generic `concat` in this module using `Monoid` type as follows.
