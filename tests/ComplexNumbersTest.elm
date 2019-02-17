@@ -10,7 +10,7 @@ import Test
 suite : Test.Test
 suite =
     Test.describe "The ComplexNumbers module"
-        [ Test.fuzz2 Fuzz.float Fuzz.float "tests that ++ equivalent to Monoid.concat for string" <|
+        [ Test.fuzz2 Fuzz.float Fuzz.float "tests ComplexNumbers add" <|
             \real imaginary ->
                 let
                     testValue =
@@ -21,7 +21,7 @@ suite =
                 in
                 ComplexNumbers.add testValue testValue
                     |> Expect.equal expected
-        , Test.fuzz2 Fuzz.float Fuzz.float "tests ComplexNumber empty " <|
+        , Test.fuzz2 Fuzz.float Fuzz.float "tests ComplexNumber empty or identity value" <|
             \real imaginary ->
                 let
                     expected =
@@ -32,7 +32,44 @@ suite =
                 in
                 Monoid.append ComplexNumbers.complexAdd expected empty
                     |> Expect.equal expected
-        , Test.fuzz3 Fuzz.float Fuzz.float Fuzz.float "tests ComplexNumbers multiplication is communanative" <|
+        , Test.fuzz3 Fuzz.float Fuzz.float Fuzz.float "tests ComplexNumbers addition is commutative" <|
+            \one two three ->
+                let
+                    a =
+                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+
+                    b =
+                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
+
+                    testValueOne =
+                        ComplexNumbers.add a b
+
+                    testValueTwo =
+                        ComplexNumbers.add b a
+                in
+                testValueOne
+                    |> Expect.equal testValueTwo
+        , Test.fuzz3 Fuzz.int Fuzz.int Fuzz.int "tests ComplexNumbers addition is associative" <|
+            \one two three ->
+                let
+                    a =
+                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+
+                    b =
+                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
+
+                    c =
+                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real one) (ComplexNumbers.Imaginary three)
+
+                    testValueOne =
+                        ComplexNumbers.add (ComplexNumbers.add a b) c
+
+                    testValueTwo =
+                        ComplexNumbers.add a (ComplexNumbers.add b c)
+                in
+                testValueOne
+                    |> Expect.equal testValueTwo
+        , Test.fuzz3 Fuzz.float Fuzz.float Fuzz.float "tests ComplexNumbers multiplication is commutative" <|
             \one two three ->
                 let
                     a =
