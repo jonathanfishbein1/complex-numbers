@@ -86,6 +86,26 @@ suite =
                 in
                 testValueOne
                     |> Expect.equal testValueTwo
+        , Test.fuzz3 (Fuzz.intRange -10 10) (Fuzz.intRange -10 10) (Fuzz.intRange -10 10) "tests ComplexNumbers multiplication is associative" <|
+            \one two three ->
+                let
+                    a =
+                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+
+                    b =
+                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
+
+                    c =
+                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real one) (ComplexNumbers.Imaginary three)
+
+                    testValueOne =
+                        ComplexNumbers.multiply (ComplexNumbers.multiply a b) c
+
+                    testValueTwo =
+                        ComplexNumbers.multiply a (ComplexNumbers.multiply b c)
+                in
+                testValueOne
+                    |> Expect.equal testValueTwo
         , Test.fuzz3 Fuzz.float Fuzz.float Fuzz.float "tests ComplexNumbers division" <|
             \one two three ->
                 let
