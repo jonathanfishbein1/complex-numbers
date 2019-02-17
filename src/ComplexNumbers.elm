@@ -127,5 +127,5 @@ modulus =
 
 
 conjugate : ComplexNumber number number -> ComplexNumber number number
-conjugate (ComplexNumber (Real realOne) (Imaginary imaginaryOne)) =
-    ComplexNumber (Real realOne) (Imaginary -imaginaryOne)
+conjugate (ComplexNumber real (Imaginary imaginaryOne)) =
+    ComplexNumber real (Imaginary -imaginaryOne)

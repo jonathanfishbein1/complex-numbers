@@ -232,4 +232,29 @@ suite =
                 in
                 ComplexNumbers.conjugate testValue
                     |> Expect.equal expected
+        , Test.fuzz3 Fuzz.int Fuzz.int Fuzz.int "tests conjugation respects addition" <|
+            \one two three ->
+                let
+                    numberOne =
+                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+
+                    numberTwo =
+                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
+
+                    conjugateOne =
+                        ComplexNumbers.conjugate numberOne
+
+                    conjugateTwo =
+                        ComplexNumbers.conjugate numberTwo
+
+                    sumOfconjugateOneconjugateTwo =
+                        ComplexNumbers.add conjugateOne conjugateTwo
+
+                    sumOfNumberOneNumberTwo =
+                        ComplexNumbers.add numberOne numberTwo
+
+                    conjugateOfsumOfNumberOneNumberTwo =
+                        ComplexNumbers.conjugate sumOfNumberOneNumberTwo
+                in
+                Expect.equal sumOfconjugateOneconjugateTwo conjugateOfsumOfNumberOneNumberTwo
         ]
