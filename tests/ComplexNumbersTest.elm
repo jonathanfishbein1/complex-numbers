@@ -49,4 +49,31 @@ suite =
                 in
                 testValueOne
                     |> Expect.equal testValueTwo
+        , Test.fuzz3 Fuzz.float Fuzz.float Fuzz.float "tests ComplexNumbers division" <|
+            \one two three ->
+                let
+                    dividend =
+                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+
+                    divisor =
+                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
+
+                    (ComplexNumbers.ComplexNumber (ComplexNumbers.Real realDivisor) _) =
+                        divisor
+
+                    (ComplexNumbers.ComplexNumber _ (ComplexNumbers.Imaginary imaginaryDivisor)) =
+                        divisor
+
+                    squareOfModulus =
+                        realDivisor ^ 2 + imaginaryDivisor ^ 2
+
+                    quotient =
+                        ComplexNumbers.divide dividend divisor
+                in
+                case round squareOfModulus of
+                    0 ->
+                        Expect.err quotient
+
+                    _ ->
+                        Expect.ok quotient
         ]

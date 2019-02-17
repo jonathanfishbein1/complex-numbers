@@ -2,7 +2,7 @@ module ComplexNumbers exposing
     ( ComplexNumber(..)
     , add
     , complexAdd
-    , Imaginary(..), Real(..), multiply
+    , Imaginary(..), Real(..), divide, multiply
     )
 
 {-| A module for complex numbers
@@ -74,7 +74,7 @@ calculateDivisor (ComplexNumber (Real realTwo) (Imaginary imaginaryTwo)) =
     realTwo ^ 2 + imaginaryTwo ^ 2
 
 
-divide : ComplexNumber Float Float -> ComplexNumber Float Float -> ComplexNumber Float Float
+divide : ComplexNumber Float Float -> ComplexNumber Float Float -> Result String (ComplexNumber Float Float)
 divide (ComplexNumber (Real realOne) (Imaginary imaginaryOne)) complexNumberDivisor =
     let
         divisor =
@@ -89,7 +89,12 @@ divide (ComplexNumber (Real realOne) (Imaginary imaginaryOne)) complexNumberDivi
         imaginaryResult =
             realTwo * imaginaryOne - realOne * imaginaryTwo
     in
-    ComplexNumber (Real realResult) (Imaginary imaginaryResult)
+    case round divisor of
+        0 ->
+            Err "Divisor is zero"
+
+        _ ->
+            Ok <| ComplexNumber (Real realResult) (Imaginary imaginaryResult)
 
 
 complexMultiply : Monoid.Monoid (ComplexNumber number number)
