@@ -154,4 +154,25 @@ suite =
 
                     _ ->
                         Expect.ok quotient
+        , Test.fuzz3 Fuzz.float Fuzz.float Fuzz.float "tests ComplexNumbers modulus" <|
+            \one two three ->
+                let
+                    number =
+                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+
+                    (ComplexNumbers.ComplexNumber (ComplexNumbers.Real real) _) =
+                        number
+
+                    (ComplexNumbers.ComplexNumber _ (ComplexNumbers.Imaginary imaginary)) =
+                        number
+
+                    length =
+                        real
+                            ^ 2
+                            + imaginary
+                            ^ 2
+                            |> sqrt
+                in
+                ComplexNumbers.modulus number
+                    |> Expect.within (Expect.Absolute 0.000000001) length
         ]
