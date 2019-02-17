@@ -1,7 +1,8 @@
 module ComplexNumbers exposing
     ( ComplexNumber(..)
     , add
-    , Imaginary(..), Real(..)
+    , complexAdd
+    , Imaginary(..), Real(..), multiply
     )
 
 {-| A module for complex numbers
