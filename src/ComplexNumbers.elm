@@ -124,3 +124,8 @@ complexMultiply =
 modulus : ComplexNumber Float Float -> Float
 modulus =
     calculateDivisor >> sqrt
+
+
+conjugate : ComplexNumber number number -> ComplexNumber number number
+conjugate (ComplexNumber (Real realOne) (Imaginary imaginaryOne)) =
+    ComplexNumber (Real realOne) (Imaginary -imaginaryOne)
