@@ -198,4 +198,27 @@ suite =
                             |> ComplexNumbers.modulus
                 in
                 Expect.within (Expect.Absolute 10) productLengthOneLengthTwo modulesOfProductOfNumberOneNumberTwo
+        , Test.fuzz3 (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) "tests |c1 + c2| <= |c1| + |c2| (triangle inequality rule)" <|
+            \one two three ->
+                let
+                    numberOne =
+                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+
+                    numberTwo =
+                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
+
+                    modulesOfSumOfNumberOneNumberTwo =
+                        ComplexNumbers.add numberOne numberTwo
+                            |> ComplexNumbers.modulus
+
+                    modulusOne =
+                        ComplexNumbers.modulus numberOne
+
+                    modulusTwo =
+                        ComplexNumbers.modulus numberTwo
+
+                    sumLengthOneLengthTwo =
+                        modulusOne + modulusTwo
+                in
+                modulesOfSumOfNumberOneNumberTwo |> Expect.atMost sumLengthOneLengthTwo
         ]
