@@ -154,8 +154,8 @@ suite =
 
                     _ ->
                         Expect.ok quotient
-        , Test.fuzz3 Fuzz.float Fuzz.float Fuzz.float "tests ComplexNumbers modulus" <|
-            \one two three ->
+        , Test.fuzz2 Fuzz.float Fuzz.float "tests ComplexNumbers modulus" <|
+            \one two ->
                 let
                     number =
                         ComplexNumbers.ComplexNumber (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
@@ -175,4 +175,27 @@ suite =
                 in
                 ComplexNumbers.modulus number
                     |> Expect.within (Expect.Absolute 0.000000001) length
+        , Test.fuzz3 (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) "tests |c1||c2| = |c1c2|" <|
+            \one two three ->
+                let
+                    numberOne =
+                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+
+                    numberTwo =
+                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
+
+                    lengthOne =
+                        ComplexNumbers.modulus numberOne
+
+                    lengthTwo =
+                        ComplexNumbers.modulus numberTwo
+
+                    productLengthOneLengthTwo =
+                        lengthOne * lengthTwo
+
+                    modulesOfProductOfNumberOneNumberTwo =
+                        ComplexNumbers.multiply numberOne numberTwo
+                            |> ComplexNumbers.modulus
+                in
+                Expect.within (Expect.Absolute 10) productLengthOneLengthTwo modulesOfProductOfNumberOneNumberTwo
         ]
