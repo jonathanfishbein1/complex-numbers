@@ -105,3 +105,8 @@ divide (ComplexNumber (Real realOne) (Imaginary imaginaryOne)) complexNumberDivi
 complexMultiply : Monoid.Monoid (ComplexNumber number number)
 complexMultiply =
     Monoid.monoid (ComplexNumber (Real 1) (Imaginary 1)) multiply
+
+
+modulus : ComplexNumber Float Float -> Float
+modulus =
+    calculateDivisor >> sqrt
