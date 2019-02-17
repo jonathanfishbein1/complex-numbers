@@ -69,6 +69,11 @@ multiply (ComplexNumber (Real realOne) (Imaginary imaginaryOne)) (ComplexNumber 
     ComplexNumber (Real (realOne * realTwo - imaginaryOne * imaginaryTwo)) (Imaginary (realOne * imaginaryTwo + realTwo * imaginaryOne))
 
 
+subtract : ComplexNumber number number -> ComplexNumber number number -> ComplexNumber number number
+subtract (ComplexNumber (Real realOne) (Imaginary imaginaryOne)) (ComplexNumber (Real realTwo) (Imaginary imaginaryTwo)) =
+    ComplexNumber (Real (realOne - realTwo)) (Imaginary (imaginaryOne - imaginaryTwo))
+
+
 calculateDivisor : ComplexNumber number number -> number
 calculateDivisor (ComplexNumber (Real realTwo) (Imaginary imaginaryTwo)) =
     realTwo ^ 2 + imaginaryTwo ^ 2
