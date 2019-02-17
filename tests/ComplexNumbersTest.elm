@@ -221,4 +221,15 @@ suite =
                         modulusOne + modulusTwo
                 in
                 modulesOfSumOfNumberOneNumberTwo |> Expect.atMost sumLengthOneLengthTwo
+        , Test.fuzz2 Fuzz.float Fuzz.float "tests ComplexNumbers conjugate" <|
+            \real imaginary ->
+                let
+                    testValue =
+                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
+
+                    expected =
+                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real <| real) (ComplexNumbers.Imaginary <| -imaginary)
+                in
+                ComplexNumbers.conjugate testValue
+                    |> Expect.equal expected
         ]

@@ -2,7 +2,7 @@ module ComplexNumbers exposing
     ( ComplexNumber(..)
     , add
     , complexAdd
-    , Imaginary(..), Real(..), divide, modulus, multiply
+    , Imaginary(..), Real(..), conjugate, divide, modulus, multiply
     )
 
 {-| A module for complex numbers
