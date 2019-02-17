@@ -69,6 +69,11 @@ multiply (ComplexNumber (Real realOne) (Imaginary imaginaryOne)) (ComplexNumber 
     ComplexNumber (Real (realOne * realTwo - imaginaryOne * imaginaryTwo)) (Imaginary (realOne * imaginaryTwo + realTwo * imaginaryOne))
 
 
+divisor : ComplexNumber number number -> number
+divisor (ComplexNumber (Real realTwo) (Imaginary imaginaryTwo)) =
+    realTwo ^ 2 + imaginaryTwo ^ 2
+
+
 complexMultiply : Monoid.Monoid (ComplexNumber number number)
 complexMultiply =
     Monoid.monoid (ComplexNumber (Real 1) (Imaginary 1)) multiply
