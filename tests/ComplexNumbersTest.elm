@@ -30,7 +30,7 @@ suite =
                     empty =
                         ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real 0) (ComplexNumbers.Imaginary 0)
                 in
-                Monoid.append ComplexNumbers.complexAdd expected empty
+                Monoid.append ComplexNumbers.sum expected empty
                     |> Expect.equal expected
         , Test.fuzz3 Fuzz.int Fuzz.int Fuzz.int "tests monoidally add" <|
             \one two three ->
@@ -50,7 +50,7 @@ suite =
                     listOfMonoids =
                         [ a, b, c ]
                 in
-                Monoid.concat ComplexNumbers.complexAdd listOfMonoids
+                Monoid.concat ComplexNumbers.sum listOfMonoids
                     |> Expect.equal expected
         , Test.fuzz3 Fuzz.float Fuzz.float Fuzz.float "tests ComplexNumbers addition is commutative" <|
             \one two three ->
@@ -89,6 +89,26 @@ suite =
                 in
                 testValueOne
                     |> Expect.equal testValueTwo
+        , Test.fuzz3 (Fuzz.intRange -10 10) (Fuzz.intRange -10 10) (Fuzz.intRange -10 10) "tests monoidally product" <|
+            \one two three ->
+                let
+                    a =
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+
+                    b =
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
+
+                    c =
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary three)
+
+                    expected =
+                        ComplexNumbers.multiply (ComplexNumbers.multiply a b) c
+
+                    listOfMonoids =
+                        [ a, b, c ]
+                in
+                Monoid.concat ComplexNumbers.product listOfMonoids
+                    |> Expect.equal expected
         , Test.fuzz3 Fuzz.float Fuzz.float Fuzz.float "tests ComplexNumbers multiplication is commutative" <|
             \one two three ->
                 let
