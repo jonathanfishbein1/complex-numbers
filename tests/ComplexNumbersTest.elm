@@ -257,4 +257,21 @@ suite =
                         ComplexNumbers.conjugate sumOfNumberOneNumberTwo
                 in
                 Expect.equal sumOfconjugateOneconjugateTwo conjugateOfsumOfNumberOneNumberTwo
+        , Test.fuzz2 (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) "tests complex conjugates multiplied equals modulus squared" <|
+            \real imaginary ->
+                let
+                    testValue =
+                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
+
+                    conjugate =
+                        ComplexNumbers.conjugate testValue
+
+                    producttestValueconjugate =
+                        ComplexNumbers.multiply testValue conjugate
+                            |> ComplexNumbers.modulus
+
+                    expected =
+                        ComplexNumbers.modulus testValue ^ 2
+                in
+                Expect.within (Expect.Absolute 0.000000001) producttestValueconjugate expected
         ]
