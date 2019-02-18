@@ -21,7 +21,7 @@ suite =
                 in
                 ComplexNumbers.add testValue testValue
                     |> Expect.equal expected
-        , Test.fuzz2 Fuzz.float Fuzz.float "tests ComplexNumberCartesian empty or identity value" <|
+        , Test.fuzz2 Fuzz.float Fuzz.float "tests ComplexNumberCartesian empty or identity value for sum" <|
             \real imaginary ->
                 let
                     expected =
@@ -86,6 +86,14 @@ suite =
                 in
                 testValueOne
                     |> Expect.equal testValueTwo
+        , Test.fuzz2 (Fuzz.intRange -10 10) (Fuzz.intRange -10 10) "tests ComplexNumberCartesian empty or identity value for product" <|
+            \real imaginary ->
+                let
+                    expected =
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
+                in
+                Monoid.append ComplexNumbers.product expected (Monoid.empty ComplexNumbers.product)
+                    |> Expect.equal expected
         , Test.fuzz3 (Fuzz.intRange -10 10) (Fuzz.intRange -10 10) (Fuzz.intRange -10 10) "tests monoidally product" <|
             \one two three ->
                 let
