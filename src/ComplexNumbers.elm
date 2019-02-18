@@ -143,10 +143,19 @@ conjugate (ComplexNumberCartesian real (Imaginary imaginaryOne)) =
     ComplexNumberCartesian real (Imaginary -imaginaryOne)
 
 
-convertFromCartesianToPolar : ComplexNumberCartesian number number -> ComplexNumberPolar number number
+convertFromCartesianToPolar : ComplexNumberCartesian Float Float -> ComplexNumberPolar Float Float
 convertFromCartesianToPolar (ComplexNumberCartesian (Real real) (Imaginary imaginary)) =
     let
         polar =
-            ( real, imaginary )
+            toPolar ( real, imaginary )
     in
     ComplexNumberPolar (Modulus <| Tuple.first polar) (Theta <| Tuple.second polar)
+
+
+convertFromPolarToCartesian : ComplexNumberPolar Float Float -> ComplexNumberCartesian Float Float
+convertFromPolarToCartesian (ComplexNumberPolar (Modulus ro) (Theta theta)) =
+    let
+        cartesian =
+            fromPolar ( ro, theta )
+    in
+    ComplexNumberCartesian (Real <| Tuple.first cartesian) (Imaginary <| Tuple.second cartesian)
