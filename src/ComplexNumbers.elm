@@ -129,11 +129,16 @@ add (ComplexNumberCartesian (Real realOne) (Imaginary imaginaryOne)) (ComplexNum
     ComplexNumberCartesian (Real (realOne + realTwo)) (Imaginary (imaginaryOne + imaginaryTwo))
 
 
+sumEmpty : ComplexNumberCartesian number number
+sumEmpty =
+    ComplexNumberCartesian (Real 0) (Imaginary 0)
+
+
 {-| Monoidally add two complex numbers together
 -}
 sum : Monoid.Monoid (ComplexNumberCartesian number number)
 sum =
-    Monoid.monoid (ComplexNumberCartesian (Real 0) (Imaginary 0)) add
+    Monoid.monoid sumEmpty add
 
 
 {-| Multiply two complex numbers together
@@ -143,11 +148,16 @@ multiply (ComplexNumberCartesian (Real realOne) (Imaginary imaginaryOne)) (Compl
     ComplexNumberCartesian (Real (realOne * realTwo - imaginaryOne * imaginaryTwo)) (Imaginary (realOne * imaginaryTwo + realTwo * imaginaryOne))
 
 
+productEmpty : ComplexNumberCartesian number number
+productEmpty =
+    ComplexNumberCartesian (Real 1) (Imaginary 0)
+
+
 {-| Monoidally multiply two complex numbers together
 -}
 product : Monoid.Monoid (ComplexNumberCartesian number number)
 product =
-    Monoid.monoid (ComplexNumberCartesian (Real 1) (Imaginary 0)) multiply
+    Monoid.monoid productEmpty multiply
 
 
 {-| Subtract two complex numbers together
