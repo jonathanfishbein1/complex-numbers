@@ -14,21 +14,21 @@ suite =
             \real imaginary ->
                 let
                     testValue =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
 
                     expected =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real <| 2 * real) (ComplexNumbers.Imaginary <| 2 * imaginary)
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real <| 2 * real) (ComplexNumbers.Imaginary <| 2 * imaginary)
                 in
                 ComplexNumbers.add testValue testValue
                     |> Expect.equal expected
-        , Test.fuzz2 Fuzz.float Fuzz.float "tests ComplexNumber empty or identity value" <|
+        , Test.fuzz2 Fuzz.float Fuzz.float "tests ComplexNumberCartesian empty or identity value" <|
             \real imaginary ->
                 let
                     expected =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
 
                     empty =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real 0) (ComplexNumbers.Imaginary 0)
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real 0) (ComplexNumbers.Imaginary 0)
                 in
                 Monoid.append ComplexNumbers.complexAdd expected empty
                     |> Expect.equal expected
@@ -36,10 +36,10 @@ suite =
             \one two three ->
                 let
                     a =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
 
                     b =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
 
                     testValueOne =
                         ComplexNumbers.add a b
@@ -53,13 +53,13 @@ suite =
             \one two three ->
                 let
                     a =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
 
                     b =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
 
                     c =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real one) (ComplexNumbers.Imaginary three)
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary three)
 
                     testValueOne =
                         ComplexNumbers.add (ComplexNumbers.add a b) c
@@ -73,10 +73,10 @@ suite =
             \one two three ->
                 let
                     a =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
 
                     b =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
 
                     testValueOne =
                         ComplexNumbers.multiply a b
@@ -90,13 +90,13 @@ suite =
             \one two three ->
                 let
                     a =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
 
                     b =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
 
                     c =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real one) (ComplexNumbers.Imaginary three)
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary three)
 
                     testValueOne =
                         ComplexNumbers.multiply (ComplexNumbers.multiply a b) c
@@ -110,13 +110,13 @@ suite =
             \one two three ->
                 let
                     a =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
 
                     b =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
 
                     c =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real one) (ComplexNumbers.Imaginary three)
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary three)
 
                     testValueOne =
                         ComplexNumbers.multiply a (ComplexNumbers.add b c)
@@ -131,15 +131,15 @@ suite =
             \one two three ->
                 let
                     dividend =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
 
                     divisor =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
 
-                    (ComplexNumbers.ComplexNumber (ComplexNumbers.Real realDivisor) _) =
+                    (ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real realDivisor) _) =
                         divisor
 
-                    (ComplexNumbers.ComplexNumber _ (ComplexNumbers.Imaginary imaginaryDivisor)) =
+                    (ComplexNumbers.ComplexNumberCartesian _ (ComplexNumbers.Imaginary imaginaryDivisor)) =
                         divisor
 
                     squareOfModulus =
@@ -158,12 +158,12 @@ suite =
             \one two ->
                 let
                     number =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
 
-                    (ComplexNumbers.ComplexNumber (ComplexNumbers.Real real) _) =
+                    (ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real real) _) =
                         number
 
-                    (ComplexNumbers.ComplexNumber _ (ComplexNumbers.Imaginary imaginary)) =
+                    (ComplexNumbers.ComplexNumberCartesian _ (ComplexNumbers.Imaginary imaginary)) =
                         number
 
                     length =
@@ -179,10 +179,10 @@ suite =
             \one two three ->
                 let
                     numberOne =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
 
                     numberTwo =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
 
                     lengthOne =
                         ComplexNumbers.modulus numberOne
@@ -202,10 +202,10 @@ suite =
             \one two three ->
                 let
                     numberOne =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
 
                     numberTwo =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
 
                     modulesOfSumOfNumberOneNumberTwo =
                         ComplexNumbers.add numberOne numberTwo
@@ -225,10 +225,10 @@ suite =
             \real imaginary ->
                 let
                     testValue =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
 
                     expected =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real <| real) (ComplexNumbers.Imaginary <| -imaginary)
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real <| real) (ComplexNumbers.Imaginary <| -imaginary)
                 in
                 ComplexNumbers.conjugate testValue
                     |> Expect.equal expected
@@ -236,10 +236,10 @@ suite =
             \one two three ->
                 let
                     numberOne =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
 
                     numberTwo =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
 
                     conjugateOne =
                         ComplexNumbers.conjugate numberOne
@@ -261,7 +261,7 @@ suite =
             \real imaginary ->
                 let
                     testValue =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
 
                     conjugate =
                         ComplexNumbers.conjugate testValue
@@ -274,4 +274,17 @@ suite =
                         ComplexNumbers.modulus testValue ^ 2
                 in
                 Expect.within (Expect.Absolute 0.000000001) producttestValueconjugate expected
+        , Test.fuzz2 (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) "tests convertFromCartesianToPolar |> convertFromPolarToCartesian round trips" <|
+            \real imaginary ->
+                let
+                    cartesianTestValue =
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
+
+                    polarTestValue =
+                        ComplexNumbers.convertFromCartesianToPolar cartesianTestValue
+
+                    (ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real realAfterConversion) (ComplexNumbers.Imaginary imaginaryAfterConv)) =
+                        ComplexNumbers.convertFromPolarToCartesian polarTestValue
+                in
+                Expect.within (Expect.Absolute 0.000000001) real realAfterConversion
         ]

@@ -1,8 +1,8 @@
-module ComplexNumberCartesians exposing
+module ComplexNumbers exposing
     ( ComplexNumberCartesian(..)
     , add
     , complexAdd
-    , Imaginary(..), Real(..), conjugate, divide, modulus, multiply
+    , Imaginary(..), Real(..), conjugate, convertFromCartesianToPolar, convertFromPolarToCartesian, divide, modulus, multiply
     )
 
 {-| A module for complex numbers
