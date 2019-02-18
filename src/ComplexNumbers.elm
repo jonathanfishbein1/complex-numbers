@@ -1,8 +1,15 @@
 module ComplexNumbers exposing
-    ( ComplexNumberCartesian(..)
+    ( Real(..)
+    , Imaginary(..)
+    , ComplexNumberCartesian(..)
     , add
     , complexAdd
-    , Imaginary(..), Real(..), conjugate, convertFromCartesianToPolar, convertFromPolarToCartesian, divide, modulus, multiply
+    , divide
+    , modulus
+    , conjugate
+    , convertFromCartesianToPolar
+    , convertFromPolarToCartesian
+    , multiply
     )
 
 {-| A module for complex numbers
@@ -10,7 +17,14 @@ module ComplexNumbers exposing
 
 # Types
 
+@docs Real
+@docs Imaginary
+@docs Modulus
+@docs Theta
 @docs ComplexNumberCartesian
+@docs ComplexNumbersPolar
+
+{-| Arithmetic operations on complex numbers -}
 
 
 # Add two complex numbers
@@ -21,6 +35,46 @@ module ComplexNumbers exposing
 # Monoidally add two complex numbers
 
 @docs complexAdd
+
+
+# Multiply two complex numbers
+
+@docs complexMultiply
+
+
+# Monoidally multiply two complex numbers
+
+@docs complexAdd
+
+
+# Subtract two complex numbers
+
+@docs subtract
+
+
+# Divide two complex numbers
+
+@docs divide
+
+
+# Calculate modulus of a complex number
+
+@docs modulus
+
+
+# Calculate the conjugate of a complex number
+
+@docs conjugate
+
+
+# Convert from the Cartesian representation of a complex number to the polar representation
+
+@docs convertFromCartesianToPolar
+
+
+# Convert from the polar representation of a complex number to the Cartesian representation
+
+@docs convertFromPolarToCartesian
 
 -}
 
@@ -87,6 +141,13 @@ multiply (ComplexNumberCartesian (Real realOne) (Imaginary imaginaryOne)) (Compl
     ComplexNumberCartesian (Real (realOne * realTwo - imaginaryOne * imaginaryTwo)) (Imaginary (realOne * imaginaryTwo + realTwo * imaginaryOne))
 
 
+{-| Monoidally multiply two complex numbers together
+-}
+complexMultiply : Monoid.Monoid (ComplexNumberCartesian number number)
+complexMultiply =
+    Monoid.monoid (ComplexNumberCartesian (Real 1) (Imaginary 1)) multiply
+
+
 {-| Subtract two complex numbers together
 -}
 subtract : ComplexNumberCartesian number number -> ComplexNumberCartesian number number -> ComplexNumberCartesian number number
@@ -122,13 +183,6 @@ divide (ComplexNumberCartesian (Real realOne) (Imaginary imaginaryOne)) complexN
 
         _ ->
             Ok <| ComplexNumberCartesian (Real realResult) (Imaginary imaginaryResult)
-
-
-{-| Monoidally multiply two complex numbers together
--}
-complexMultiply : Monoid.Monoid (ComplexNumberCartesian number number)
-complexMultiply =
-    Monoid.monoid (ComplexNumberCartesian (Real 1) (Imaginary 1)) multiply
 
 
 {-| Calculate the modulus of a complex number
