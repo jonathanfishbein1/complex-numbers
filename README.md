@@ -2,35 +2,27 @@
 
 ## Summary
 
-A module to define generic functions for monoid.  If you want your types be instances of the Monoid typeclass.  Although I'm still learning, monoids are like interfaces for types that can be 'mushed' together in some way.
+A module to define complex number and basic arithmetic operations on them
 
-For example lists and strings can be concated together and numbers can be added and multiplied together.
+Examples of complex numbers
 
-The common properties of Monoids are 
+3 + 4i a compolex number with both real and imaginary components
 
-There exits a function that takes two parameters.
-The parameters and the returned value have the same type.
-There exists such a value that doesn't change other values when used with the binary function.
+3 a complex number with no imaginary component
 
-Here is some Haskell examples that show how monoids are a class of types with similar operations but executed differently per type
+i a complex number with no real component
 
-ghci> [1,2,3] `mappend` [4,5,6]  
-[1,2,3,4,5,6]  
-ghci> ("one" `mappend` "two") `mappend` "tree"  
-"onetwotree"  
-ghci> "one" `mappend` ("two" `mappend` "tree")  
-"onetwotree"  
-ghci> "one" `mappend` "two" `mappend` "tree"  
-"onetwotree"  
-ghci> "pang" `mappend` mempty  
-"pang"  
-ghci> mconcat [[1,2],[3,6],[9]]  
-[1,2,3,6,9]  
-ghci> mempty :: [a]  
-[]  
+The above examples are complex numbers using the Cartesian representation they can also be represented
+using polar coordinates in that case the magnitude of the real and imaginary components is the first component called the modulus.
+The angle of the modulus when graphed on the complex plane is the second component.
 
-See [documentation](http://learnyouahaskell.com/functors-applicative-functors-and-monoids#monoids)
+Complex numbers have arithmetic operations associated with them including add, multiply, subtract, divide, modulus and conjugate.
+The majority of the operations are familiar but encapsulate the unique procedures required to do so with complex numbers.
 
-## Details
+The conjugate of a complex number is the complex number with the sign of its imaginary portion flipped.  For example 
+the conjugate of 3 + 4i would be 3 - 4i
 
-Forked from [documentation](http://package.elm-lang.org/packages/arowM/elm-monoid/latest).
+There are two functions convertFromCartesianToPolar and convertFromPolarToCartesian for converting between Cartesian and polar and polar to 
+Cartesian representations respectivly.
+
+Complex numbers have two monoid instances sum and product.
