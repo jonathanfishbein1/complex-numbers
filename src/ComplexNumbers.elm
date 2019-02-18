@@ -3,12 +3,14 @@ module ComplexNumbers exposing
     , Imaginary(..)
     , ComplexNumberCartesian(..)
     , add
+    , sum
+    , product
     , divide
     , modulus
     , conjugate
     , convertFromCartesianToPolar
     , convertFromPolarToCartesian
-    , multiply, product, sum
+    , multiply
     )
 
 {-| A module for complex numbers
@@ -33,7 +35,7 @@ module ComplexNumbers exposing
 
 # Monoidally add two complex numbers
 
-@docs complexAdd
+@docs sum
 
 
 # Multiply two complex numbers
@@ -43,7 +45,7 @@ module ComplexNumbers exposing
 
 # Monoidally multiply two complex numbers
 
-@docs complexAdd
+@docs product
 
 
 # Subtract two complex numbers
