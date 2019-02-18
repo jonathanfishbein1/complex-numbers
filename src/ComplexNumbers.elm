@@ -1,5 +1,5 @@
-module ComplexNumbers exposing
-    ( ComplexNumber(..)
+module ComplexNumberCartesians exposing
+    ( ComplexNumberCartesian(..)
     , add
     , complexAdd
     , Imaginary(..), Real(..), conjugate, divide, modulus, multiply
@@ -10,7 +10,7 @@ module ComplexNumbers exposing
 
 # Types
 
-@docs ComplexNumber
+@docs ComplexNumberCartesian
 
 
 # Add two complex numbers
@@ -46,8 +46,8 @@ type Imaginary i
 
 {-| Main type.
 -}
-type ComplexNumber a b
-    = ComplexNumber (Real a) (Imaginary b)
+type ComplexNumberCartesian a b
+    = ComplexNumberCartesian (Real a) (Imaginary b)
 
 
 
@@ -56,47 +56,47 @@ type ComplexNumber a b
 
 {-| Add two complex numbers together
 -}
-add : ComplexNumber number number -> ComplexNumber number number -> ComplexNumber number number
-add (ComplexNumber (Real realOne) (Imaginary imaginaryOne)) (ComplexNumber (Real realTwo) (Imaginary imaginaryTwo)) =
-    ComplexNumber (Real (realOne + realTwo)) (Imaginary (imaginaryOne + imaginaryTwo))
+add : ComplexNumberCartesian number number -> ComplexNumberCartesian number number -> ComplexNumberCartesian number number
+add (ComplexNumberCartesian (Real realOne) (Imaginary imaginaryOne)) (ComplexNumberCartesian (Real realTwo) (Imaginary imaginaryTwo)) =
+    ComplexNumberCartesian (Real (realOne + realTwo)) (Imaginary (imaginaryOne + imaginaryTwo))
 
 
 {-| Monoidally add two complex numbers together
 -}
-complexAdd : Monoid.Monoid (ComplexNumber number number)
+complexAdd : Monoid.Monoid (ComplexNumberCartesian number number)
 complexAdd =
-    Monoid.monoid (ComplexNumber (Real 0) (Imaginary 0)) add
+    Monoid.monoid (ComplexNumberCartesian (Real 0) (Imaginary 0)) add
 
 
 {-| Multiply two complex numbers together
 -}
-multiply : ComplexNumber number number -> ComplexNumber number number -> ComplexNumber number number
-multiply (ComplexNumber (Real realOne) (Imaginary imaginaryOne)) (ComplexNumber (Real realTwo) (Imaginary imaginaryTwo)) =
-    ComplexNumber (Real (realOne * realTwo - imaginaryOne * imaginaryTwo)) (Imaginary (realOne * imaginaryTwo + realTwo * imaginaryOne))
+multiply : ComplexNumberCartesian number number -> ComplexNumberCartesian number number -> ComplexNumberCartesian number number
+multiply (ComplexNumberCartesian (Real realOne) (Imaginary imaginaryOne)) (ComplexNumberCartesian (Real realTwo) (Imaginary imaginaryTwo)) =
+    ComplexNumberCartesian (Real (realOne * realTwo - imaginaryOne * imaginaryTwo)) (Imaginary (realOne * imaginaryTwo + realTwo * imaginaryOne))
 
 
 {-| Subtract two complex numbers together
 -}
-subtract : ComplexNumber number number -> ComplexNumber number number -> ComplexNumber number number
-subtract (ComplexNumber (Real realOne) (Imaginary imaginaryOne)) (ComplexNumber (Real realTwo) (Imaginary imaginaryTwo)) =
-    ComplexNumber (Real (realOne - realTwo)) (Imaginary (imaginaryOne - imaginaryTwo))
+subtract : ComplexNumberCartesian number number -> ComplexNumberCartesian number number -> ComplexNumberCartesian number number
+subtract (ComplexNumberCartesian (Real realOne) (Imaginary imaginaryOne)) (ComplexNumberCartesian (Real realTwo) (Imaginary imaginaryTwo)) =
+    ComplexNumberCartesian (Real (realOne - realTwo)) (Imaginary (imaginaryOne - imaginaryTwo))
 
 
-calculateDivisor : ComplexNumber number number -> number
-calculateDivisor (ComplexNumber (Real realTwo) (Imaginary imaginaryTwo)) =
+calculateDivisor : ComplexNumberCartesian number number -> number
+calculateDivisor (ComplexNumberCartesian (Real realTwo) (Imaginary imaginaryTwo)) =
     realTwo ^ 2 + imaginaryTwo ^ 2
 
 
 {-| Divide two complex numbers together
 -}
-divide : ComplexNumber Float Float -> ComplexNumber Float Float -> Result String (ComplexNumber Float Float)
-divide (ComplexNumber (Real realOne) (Imaginary imaginaryOne)) complexNumberDivisor =
+divide : ComplexNumberCartesian Float Float -> ComplexNumberCartesian Float Float -> Result String (ComplexNumberCartesian Float Float)
+divide (ComplexNumberCartesian (Real realOne) (Imaginary imaginaryOne)) complexNumberCartesianDivisor =
     let
         divisor =
-            calculateDivisor complexNumberDivisor
+            calculateDivisor complexNumberCartesianDivisor
 
-        (ComplexNumber (Real realTwo) (Imaginary imaginaryTwo)) =
-            complexNumberDivisor
+        (ComplexNumberCartesian (Real realTwo) (Imaginary imaginaryTwo)) =
+            complexNumberCartesianDivisor
 
         realResult =
             (realOne * realTwo + imaginaryOne * imaginaryTwo) / divisor
@@ -109,23 +109,23 @@ divide (ComplexNumber (Real realOne) (Imaginary imaginaryOne)) complexNumberDivi
             Err "Divisor is zero"
 
         _ ->
-            Ok <| ComplexNumber (Real realResult) (Imaginary imaginaryResult)
+            Ok <| ComplexNumberCartesian (Real realResult) (Imaginary imaginaryResult)
 
 
 {-| Monoidally multiply two complex numbers together
 -}
-complexMultiply : Monoid.Monoid (ComplexNumber number number)
+complexMultiply : Monoid.Monoid (ComplexNumberCartesian number number)
 complexMultiply =
-    Monoid.monoid (ComplexNumber (Real 1) (Imaginary 1)) multiply
+    Monoid.monoid (ComplexNumberCartesian (Real 1) (Imaginary 1)) multiply
 
 
 {-| Calculate the modulus of a complex number
 -}
-modulus : ComplexNumber Float Float -> Float
+modulus : ComplexNumberCartesian Float Float -> Float
 modulus =
     calculateDivisor >> sqrt
 
 
-conjugate : ComplexNumber number number -> ComplexNumber number number
-conjugate (ComplexNumber real (Imaginary imaginaryOne)) =
-    ComplexNumber real (Imaginary -imaginaryOne)
+conjugate : ComplexNumberCartesian number number -> ComplexNumberCartesian number number
+conjugate (ComplexNumberCartesian real (Imaginary imaginaryOne)) =
+    ComplexNumberCartesian real (Imaginary -imaginaryOne)
