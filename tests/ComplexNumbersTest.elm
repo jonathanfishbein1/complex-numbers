@@ -343,4 +343,41 @@ suite =
                         ComplexNumbers.convertFromPolarToCartesian polarTestValue
                 in
                 Expect.within (Expect.Absolute 0.000000001) real realAfterConversion
+        , Test.fuzz3 Fuzz.float Fuzz.float Fuzz.float "tests ComplexNumbers polar multiplication is commutative" <|
+            \one two three ->
+                let
+                    a =
+                        ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus one) (ComplexNumbers.Theta two)
+
+                    b =
+                        ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus two) (ComplexNumbers.Theta three)
+
+                    testValueOne =
+                        ComplexNumbers.multiplyPolar a b
+
+                    testValueTwo =
+                        ComplexNumbers.multiplyPolar b a
+                in
+                testValueOne
+                    |> Expect.equal testValueTwo
+        , Test.fuzz3 (Fuzz.intRange -10 10) (Fuzz.intRange -10 10) (Fuzz.intRange -10 10) "tests ComplexNumbers polar multiplication is associative" <|
+            \one two three ->
+                let
+                    a =
+                        ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus one) (ComplexNumbers.Theta two)
+
+                    b =
+                        ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus two) (ComplexNumbers.Theta three)
+
+                    c =
+                        ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus one) (ComplexNumbers.Theta three)
+
+                    testValueOne =
+                        ComplexNumbers.multiplyPolar (ComplexNumbers.multiplyPolar a b) c
+
+                    testValueTwo =
+                        ComplexNumbers.multiplyPolar a (ComplexNumbers.multiplyPolar b c)
+                in
+                testValueOne
+                    |> Expect.equal testValueTwo
         ]

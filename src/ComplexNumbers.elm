@@ -15,6 +15,7 @@ module ComplexNumbers exposing
     , conjugate
     , convertFromCartesianToPolar
     , convertFromPolarToCartesian
+    , multiplyPolar
     )
 
 {-| A module for complex numbers
