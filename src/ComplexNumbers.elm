@@ -191,11 +191,15 @@ modulus =
     calculateDivisor >> sqrt
 
 
+{-| Calculate the conjugate of a complex number
+-}
 conjugate : ComplexNumberCartesian number number -> ComplexNumberCartesian number number
 conjugate (ComplexNumberCartesian real (Imaginary imaginaryOne)) =
     ComplexNumberCartesian real (Imaginary -imaginaryOne)
 
 
+{-| Convert from the Cartesian representation of a complex number to the polar representation
+-}
 convertFromCartesianToPolar : ComplexNumberCartesian Float Float -> ComplexNumberPolar Float Float
 convertFromCartesianToPolar (ComplexNumberCartesian (Real real) (Imaginary imaginary)) =
     let
@@ -205,6 +209,8 @@ convertFromCartesianToPolar (ComplexNumberCartesian (Real real) (Imaginary imagi
     ComplexNumberPolar (Modulus <| Tuple.first polar) (Theta <| Tuple.second polar)
 
 
+{-| Convert from the polar representation of a complex number to the Cartesian representation
+-}
 convertFromPolarToCartesian : ComplexNumberPolar Float Float -> ComplexNumberCartesian Float Float
 convertFromPolarToCartesian (ComplexNumberPolar (Modulus ro) (Theta theta)) =
     let
