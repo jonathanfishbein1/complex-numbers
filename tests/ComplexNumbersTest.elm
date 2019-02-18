@@ -167,6 +167,17 @@ suite =
                 in
                 testValueOne
                     |> Expect.equal testValueTwo
+        , Test.fuzz2 Fuzz.int Fuzz.int "tests ComplexNumbers subtract" <|
+            \real imaginary ->
+                let
+                    testValue =
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
+
+                    expected =
+                        testValue
+                in
+                ComplexNumbers.subtract testValue (Monoid.empty ComplexNumbers.sum)
+                    |> Expect.equal expected
         , Test.fuzz3 Fuzz.float Fuzz.float Fuzz.float "tests ComplexNumbers division" <|
             \one two three ->
                 let

@@ -5,6 +5,7 @@ module ComplexNumbers exposing
     , add
     , sum
     , product
+    , subtract
     , divide
     , modulus
     , conjugate
