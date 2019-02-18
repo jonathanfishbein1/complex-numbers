@@ -141,3 +141,12 @@ modulus =
 conjugate : ComplexNumberCartesian number number -> ComplexNumberCartesian number number
 conjugate (ComplexNumberCartesian real (Imaginary imaginaryOne)) =
     ComplexNumberCartesian real (Imaginary -imaginaryOne)
+
+
+convertFromCartesianToPolar : ComplexNumberCartesian number number -> ComplexNumberPolar number number
+convertFromCartesianToPolar (ComplexNumberCartesian (Real real) (Imaginary imaginary)) =
+    let
+        polar =
+            ( real, imaginary )
+    in
+    ComplexNumberPolar (Modulus <| Tuple.first polar) (Theta <| Tuple.second polar)
