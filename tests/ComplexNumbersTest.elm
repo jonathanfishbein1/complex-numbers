@@ -32,6 +32,26 @@ suite =
                 in
                 Monoid.append ComplexNumbers.complexAdd expected empty
                     |> Expect.equal expected
+        , Test.fuzz3 Fuzz.int Fuzz.int Fuzz.int "tests monoidally add" <|
+            \one two three ->
+                let
+                    a =
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+
+                    b =
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
+
+                    c =
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary three)
+
+                    expected =
+                        ComplexNumbers.add (ComplexNumbers.add a b) c
+
+                    listOfMonoids =
+                        [ a, b, c ]
+                in
+                Monoid.concat ComplexNumbers.complexAdd listOfMonoids
+                    |> Expect.equal expected
         , Test.fuzz3 Fuzz.float Fuzz.float Fuzz.float "tests ComplexNumbers addition is commutative" <|
             \one two three ->
                 let
