@@ -26,11 +26,8 @@ suite =
                 let
                     expected =
                         ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
-
-                    empty =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real 0) (ComplexNumbers.Imaginary 0)
                 in
-                Monoid.append ComplexNumbers.sum expected empty
+                Monoid.append ComplexNumbers.sum expected (Monoid.empty ComplexNumbers.sum)
                     |> Expect.equal expected
         , Test.fuzz3 Fuzz.int Fuzz.int Fuzz.int "tests monoidally add" <|
             \one two three ->
