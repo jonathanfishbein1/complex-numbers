@@ -4,6 +4,7 @@ module ComplexNumbers exposing
     , Modulus(..)
     , Theta(..)
     , ComplexNumberCartesian(..)
+    , ComplexNumberPolar(..)
     , add
     , sum
     , multiply
@@ -14,7 +15,6 @@ module ComplexNumbers exposing
     , conjugate
     , convertFromCartesianToPolar
     , convertFromPolarToCartesian
-    , ComplexNumberPolar(..)
     )
 
 {-| A module for complex numbers
@@ -27,7 +27,7 @@ module ComplexNumbers exposing
 @docs Modulus
 @docs Theta
 @docs ComplexNumberCartesian
-@docs ComplexNumbersPolar
+@docs ComplexNumberPolar
 
 {-| Arithmetic operations on complex numbers -}
 
