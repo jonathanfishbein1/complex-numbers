@@ -3,13 +3,12 @@ module ComplexNumbers exposing
     , Imaginary(..)
     , ComplexNumberCartesian(..)
     , add
-    , complexAdd
     , divide
     , modulus
     , conjugate
     , convertFromCartesianToPolar
     , convertFromPolarToCartesian
-    , multiply
+    , multiply, product, sum
     )
 
 {-| A module for complex numbers
@@ -129,8 +128,8 @@ add (ComplexNumberCartesian (Real realOne) (Imaginary imaginaryOne)) (ComplexNum
 
 {-| Monoidally add two complex numbers together
 -}
-complexAdd : Monoid.Monoid (ComplexNumberCartesian number number)
-complexAdd =
+sum : Monoid.Monoid (ComplexNumberCartesian number number)
+sum =
     Monoid.monoid (ComplexNumberCartesian (Real 0) (Imaginary 0)) add
 
 
@@ -143,9 +142,9 @@ multiply (ComplexNumberCartesian (Real realOne) (Imaginary imaginaryOne)) (Compl
 
 {-| Monoidally multiply two complex numbers together
 -}
-complexMultiply : Monoid.Monoid (ComplexNumberCartesian number number)
-complexMultiply =
-    Monoid.monoid (ComplexNumberCartesian (Real 1) (Imaginary 1)) multiply
+product : Monoid.Monoid (ComplexNumberCartesian number number)
+product =
+    Monoid.monoid (ComplexNumberCartesian (Real 1) (Imaginary 0)) multiply
 
 
 {-| Subtract two complex numbers together
