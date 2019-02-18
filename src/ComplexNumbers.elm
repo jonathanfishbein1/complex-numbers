@@ -88,33 +88,28 @@ import Monoid
 
 
 -- Types
-{- Real portion -}
 
 
+{-| Real portion
+-}
 type Real r
     = Real r
 
 
-
-{- Imaginary portion -}
-
-
+{-| Imaginary portion
+-}
 type Imaginary i
     = Imaginary i
 
 
-
-{- Modulus or magnitude portion -}
-
-
+{-| Modulus or magnitude portion
+-}
 type Modulus m
     = Modulus m
 
 
-
-{- Angle in real-complex plane of modulus -}
-
-
+{-| Angle in real-complex plane of modulus
+-}
 type Theta t
     = Theta t
 
