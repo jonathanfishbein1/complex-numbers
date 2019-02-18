@@ -1,9 +1,12 @@
 module ComplexNumbers exposing
     ( Real(..)
     , Imaginary(..)
+    , Modulus(..)
+    , Theta(..)
     , ComplexNumberCartesian(..)
     , add
     , sum
+    , multiply
     , product
     , subtract
     , divide
@@ -11,7 +14,7 @@ module ComplexNumbers exposing
     , conjugate
     , convertFromCartesianToPolar
     , convertFromPolarToCartesian
-    , multiply
+    , ComplexNumberPolar(..)
     )
 
 {-| A module for complex numbers
@@ -41,7 +44,7 @@ module ComplexNumbers exposing
 
 # Multiply two complex numbers
 
-@docs complexMultiply
+@docs multiply
 
 
 # Monoidally multiply two complex numbers
@@ -85,7 +88,7 @@ import Monoid
 
 
 -- Types
-{- Real Portion -}
+{- Real portion -}
 
 
 type Real r
@@ -93,27 +96,37 @@ type Real r
 
 
 
-{- Real Imaginary -}
+{- Imaginary portion -}
 
 
 type Imaginary i
     = Imaginary i
 
 
+
+{- Modulus or magnitude portion -}
+
+
 type Modulus m
     = Modulus m
+
+
+
+{- Angle in real-complex plane of modulus -}
 
 
 type Theta t
     = Theta t
 
 
-{-| Main type.
+{-| Cartesian representation of a complex number
 -}
 type ComplexNumberCartesian a b
     = ComplexNumberCartesian (Real a) (Imaginary b)
 
 
+{-| Polar representation of a complex number
+-}
 type ComplexNumberPolar a b
     = ComplexNumberPolar (Modulus a) (Theta b)
 
