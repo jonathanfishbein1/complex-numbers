@@ -239,3 +239,8 @@ convertFromPolarToCartesian (ComplexNumberPolar (Modulus ro) (Theta theta)) =
             fromPolar ( ro, theta )
     in
     ComplexNumberCartesian (Real <| Tuple.first cartesian) (Imaginary <| Tuple.second cartesian)
+
+
+multiplyPolar : ComplexNumberPolar number number -> ComplexNumberPolar number number -> ComplexNumberPolar number number
+multiplyPolar (ComplexNumberPolar (Modulus roOne) (Theta thetaOne)) (ComplexNumberPolar (Modulus roTwo) (Theta thetaTwo)) =
+    ComplexNumberPolar (Modulus <| roOne * roTwo) (Theta <| thetaOne + thetaTwo)
