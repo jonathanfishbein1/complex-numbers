@@ -44,10 +44,22 @@ type Imaginary i
     = Imaginary i
 
 
+type Modulus m
+    = Modulus m
+
+
+type Theta t
+    = Theta t
+
+
 {-| Main type.
 -}
 type ComplexNumberCartesian a b
     = ComplexNumberCartesian (Real a) (Imaginary b)
+
+
+type ComplexNumberPolar a b
+    = ComplexNumberPolar (Modulus a) (Theta b)
 
 
 
