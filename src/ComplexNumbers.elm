@@ -15,7 +15,7 @@ module ComplexNumbers exposing
     , conjugate
     , convertFromCartesianToPolar
     , convertFromPolarToCartesian
-    , dividePolar, multiplyPolar
+    , dividePolar, mapCartesian, multiplyPolar
     )
 
 {-| A module for complex numbers
@@ -242,11 +242,15 @@ convertFromPolarToCartesian (ComplexNumberPolar (Modulus ro) (Theta theta)) =
     ComplexNumberCartesian (Real <| Tuple.first cartesian) (Imaginary <| Tuple.second cartesian)
 
 
+{-| Multiply two complex numbers in polar representations together
+-}
 multiplyPolar : ComplexNumberPolar number -> ComplexNumberPolar number -> ComplexNumberPolar number
 multiplyPolar (ComplexNumberPolar (Modulus roOne) (Theta thetaOne)) (ComplexNumberPolar (Modulus roTwo) (Theta thetaTwo)) =
     ComplexNumberPolar (Modulus <| roOne * roTwo) (Theta <| thetaOne + thetaTwo)
 
 
+{-| Divide two complex numbers in polar representations together
+-}
 dividePolar : ComplexNumberPolar Float -> ComplexNumberPolar Float -> Result String (ComplexNumberPolar Float)
 dividePolar (ComplexNumberPolar (Modulus roOne) (Theta thetaOne)) (ComplexNumberPolar (Modulus roTwo) (Theta thetaTwo)) =
     case round roTwo of
@@ -257,6 +261,8 @@ dividePolar (ComplexNumberPolar (Modulus roOne) (Theta thetaOne)) (ComplexNumber
             Ok <| ComplexNumberPolar (Modulus <| roOne / roTwo) (Theta <| thetaOne - thetaTwo)
 
 
-map : (number -> number) -> ComplexNumberCartesian number -> ComplexNumberCartesian number
-map f (ComplexNumberCartesian (Real realOne) (Imaginary imaginaryOne)) =
+{-| Map over a complex number
+-}
+mapCartesian : (number -> number) -> ComplexNumberCartesian number -> ComplexNumberCartesian number
+mapCartesian f (ComplexNumberCartesian (Real realOne) (Imaginary imaginaryOne)) =
     ComplexNumberCartesian (Real <| f realOne) (Imaginary <| f imaginaryOne)
