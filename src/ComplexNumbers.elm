@@ -245,3 +245,13 @@ convertFromPolarToCartesian (ComplexNumberPolar (Modulus ro) (Theta theta)) =
 multiplyPolar : ComplexNumberPolar number number -> ComplexNumberPolar number number -> ComplexNumberPolar number number
 multiplyPolar (ComplexNumberPolar (Modulus roOne) (Theta thetaOne)) (ComplexNumberPolar (Modulus roTwo) (Theta thetaTwo)) =
     ComplexNumberPolar (Modulus <| roOne * roTwo) (Theta <| thetaOne + thetaTwo)
+
+
+dividePolar : ComplexNumberPolar Float number -> ComplexNumberPolar Float number -> Result String (ComplexNumberPolar Float number)
+dividePolar (ComplexNumberPolar (Modulus roOne) (Theta thetaOne)) (ComplexNumberPolar (Modulus roTwo) (Theta thetaTwo)) =
+    case round roTwo of
+        0 ->
+            Err "Divisor is zero"
+
+        _ ->
+            Ok <| ComplexNumberPolar (Modulus <| roOne / roTwo) (Theta <| thetaOne - thetaTwo)
