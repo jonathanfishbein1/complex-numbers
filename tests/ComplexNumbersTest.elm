@@ -380,4 +380,25 @@ suite =
                 in
                 testValueOne
                     |> Expect.equal testValueTwo
+        , Test.fuzz3 Fuzz.float Fuzz.float Fuzz.float "tests ComplexNumbers polar division" <|
+            \one two three ->
+                let
+                    dividend =
+                        ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus one) (ComplexNumbers.Theta two)
+
+                    divisor =
+                        ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus two) (ComplexNumbers.Theta three)
+
+                    (ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus modulusDivisor) _) =
+                        divisor
+
+                    quotient =
+                        ComplexNumbers.dividePolar dividend divisor
+                in
+                case round modulusDivisor of
+                    0 ->
+                        Expect.err quotient
+
+                    _ ->
+                        Expect.ok quotient
         ]
