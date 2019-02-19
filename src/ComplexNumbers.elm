@@ -117,14 +117,14 @@ type Theta t
 
 {-| Cartesian representation of a complex number
 -}
-type ComplexNumberCartesian a b
-    = ComplexNumberCartesian (Real a) (Imaginary b)
+type ComplexNumberCartesian a
+    = ComplexNumberCartesian (Real a) (Imaginary a)
 
 
 {-| Polar representation of a complex number
 -}
-type ComplexNumberPolar a b
-    = ComplexNumberPolar (Modulus a) (Theta b)
+type ComplexNumberPolar a
+    = ComplexNumberPolar (Modulus a) (Theta a)
 
 
 
@@ -133,57 +133,57 @@ type ComplexNumberPolar a b
 
 {-| Add two complex numbers together
 -}
-add : ComplexNumberCartesian number number -> ComplexNumberCartesian number number -> ComplexNumberCartesian number number
+add : ComplexNumberCartesian number -> ComplexNumberCartesian number -> ComplexNumberCartesian number
 add (ComplexNumberCartesian (Real realOne) (Imaginary imaginaryOne)) (ComplexNumberCartesian (Real realTwo) (Imaginary imaginaryTwo)) =
     ComplexNumberCartesian (Real (realOne + realTwo)) (Imaginary (imaginaryOne + imaginaryTwo))
 
 
-sumEmpty : ComplexNumberCartesian number number
+sumEmpty : ComplexNumberCartesian number
 sumEmpty =
     ComplexNumberCartesian (Real 0) (Imaginary 0)
 
 
 {-| Monoidally add two complex numbers together
 -}
-sum : Monoid.Monoid (ComplexNumberCartesian number number)
+sum : Monoid.Monoid (ComplexNumberCartesian number)
 sum =
     Monoid.monoid sumEmpty add
 
 
 {-| Multiply two complex numbers together
 -}
-multiply : ComplexNumberCartesian number number -> ComplexNumberCartesian number number -> ComplexNumberCartesian number number
+multiply : ComplexNumberCartesian number -> ComplexNumberCartesian number -> ComplexNumberCartesian number
 multiply (ComplexNumberCartesian (Real realOne) (Imaginary imaginaryOne)) (ComplexNumberCartesian (Real realTwo) (Imaginary imaginaryTwo)) =
     ComplexNumberCartesian (Real (realOne * realTwo - imaginaryOne * imaginaryTwo)) (Imaginary (realOne * imaginaryTwo + realTwo * imaginaryOne))
 
 
-productEmpty : ComplexNumberCartesian number number
+productEmpty : ComplexNumberCartesian number
 productEmpty =
     ComplexNumberCartesian (Real 1) (Imaginary 0)
 
 
 {-| Monoidally multiply two complex numbers together
 -}
-product : Monoid.Monoid (ComplexNumberCartesian number number)
+product : Monoid.Monoid (ComplexNumberCartesian number)
 product =
     Monoid.monoid productEmpty multiply
 
 
 {-| Subtract two complex numbers together
 -}
-subtract : ComplexNumberCartesian number number -> ComplexNumberCartesian number number -> ComplexNumberCartesian number number
+subtract : ComplexNumberCartesian number -> ComplexNumberCartesian number -> ComplexNumberCartesian number
 subtract (ComplexNumberCartesian (Real realOne) (Imaginary imaginaryOne)) (ComplexNumberCartesian (Real realTwo) (Imaginary imaginaryTwo)) =
     ComplexNumberCartesian (Real (realOne - realTwo)) (Imaginary (imaginaryOne - imaginaryTwo))
 
 
-calculateDivisor : ComplexNumberCartesian number number -> number
+calculateDivisor : ComplexNumberCartesian number -> number
 calculateDivisor (ComplexNumberCartesian (Real realTwo) (Imaginary imaginaryTwo)) =
     realTwo ^ 2 + imaginaryTwo ^ 2
 
 
 {-| Divide two complex numbers together
 -}
-divide : ComplexNumberCartesian Float Float -> ComplexNumberCartesian Float Float -> Result String (ComplexNumberCartesian Float Float)
+divide : ComplexNumberCartesian Float -> ComplexNumberCartesian Float -> Result String (ComplexNumberCartesian Float)
 divide (ComplexNumberCartesian (Real realOne) (Imaginary imaginaryOne)) complexNumberCartesianDivisor =
     let
         divisor =
@@ -208,21 +208,21 @@ divide (ComplexNumberCartesian (Real realOne) (Imaginary imaginaryOne)) complexN
 
 {-| Calculate the modulus of a complex number
 -}
-modulus : ComplexNumberCartesian Float Float -> Float
+modulus : ComplexNumberCartesian Float -> Float
 modulus =
     calculateDivisor >> sqrt
 
 
 {-| Calculate the conjugate of a complex number
 -}
-conjugate : ComplexNumberCartesian number number -> ComplexNumberCartesian number number
+conjugate : ComplexNumberCartesian number -> ComplexNumberCartesian number
 conjugate (ComplexNumberCartesian real (Imaginary imaginaryOne)) =
     ComplexNumberCartesian real (Imaginary -imaginaryOne)
 
 
 {-| Convert from the Cartesian representation of a complex number to the polar representation
 -}
-convertFromCartesianToPolar : ComplexNumberCartesian Float Float -> ComplexNumberPolar Float Float
+convertFromCartesianToPolar : ComplexNumberCartesian Float -> ComplexNumberPolar Float
 convertFromCartesianToPolar (ComplexNumberCartesian (Real real) (Imaginary imaginary)) =
     let
         polar =
@@ -233,7 +233,7 @@ convertFromCartesianToPolar (ComplexNumberCartesian (Real real) (Imaginary imagi
 
 {-| Convert from the polar representation of a complex number to the Cartesian representation
 -}
-convertFromPolarToCartesian : ComplexNumberPolar Float Float -> ComplexNumberCartesian Float Float
+convertFromPolarToCartesian : ComplexNumberPolar Float -> ComplexNumberCartesian Float
 convertFromPolarToCartesian (ComplexNumberPolar (Modulus ro) (Theta theta)) =
     let
         cartesian =
@@ -242,12 +242,12 @@ convertFromPolarToCartesian (ComplexNumberPolar (Modulus ro) (Theta theta)) =
     ComplexNumberCartesian (Real <| Tuple.first cartesian) (Imaginary <| Tuple.second cartesian)
 
 
-multiplyPolar : ComplexNumberPolar number number -> ComplexNumberPolar number number -> ComplexNumberPolar number number
+multiplyPolar : ComplexNumberPolar number -> ComplexNumberPolar number -> ComplexNumberPolar number
 multiplyPolar (ComplexNumberPolar (Modulus roOne) (Theta thetaOne)) (ComplexNumberPolar (Modulus roTwo) (Theta thetaTwo)) =
     ComplexNumberPolar (Modulus <| roOne * roTwo) (Theta <| thetaOne + thetaTwo)
 
 
-dividePolar : ComplexNumberPolar Float number -> ComplexNumberPolar Float number -> Result String (ComplexNumberPolar Float number)
+dividePolar : ComplexNumberPolar Float -> ComplexNumberPolar Float -> Result String (ComplexNumberPolar Float)
 dividePolar (ComplexNumberPolar (Modulus roOne) (Theta thetaOne)) (ComplexNumberPolar (Modulus roTwo) (Theta thetaTwo)) =
     case round roTwo of
         0 ->
@@ -257,6 +257,6 @@ dividePolar (ComplexNumberPolar (Modulus roOne) (Theta thetaOne)) (ComplexNumber
             Ok <| ComplexNumberPolar (Modulus <| roOne / roTwo) (Theta <| thetaOne - thetaTwo)
 
 
-map : (number -> number) -> ComplexNumberCartesian number number -> ComplexNumberCartesian number number
+map : (number -> number) -> ComplexNumberCartesian number -> ComplexNumberCartesian number
 map f (ComplexNumberCartesian (Real realOne) (Imaginary imaginaryOne)) =
     ComplexNumberCartesian (Real <| f realOne) (Imaginary <| f imaginaryOne)
