@@ -255,3 +255,8 @@ dividePolar (ComplexNumberPolar (Modulus roOne) (Theta thetaOne)) (ComplexNumber
 
         _ ->
             Ok <| ComplexNumberPolar (Modulus <| roOne / roTwo) (Theta <| thetaOne - thetaTwo)
+
+
+map : (number -> number) -> ComplexNumberCartesian number number -> ComplexNumberCartesian number number
+map f (ComplexNumberCartesian (Real realOne) (Imaginary imaginaryOne)) =
+    ComplexNumberCartesian (Real <| f realOne) (Imaginary <| f imaginaryOne)
