@@ -423,4 +423,24 @@ suite =
                 in
                 mapResult
                     |> Expect.equal complexNumber
+        , Test.fuzz2 Fuzz.int Fuzz.int "tests ComplexNumbers Functor composition" <|
+            \one two ->
+                let
+                    complexNumber =
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+
+                    f =
+                        (*) 2
+
+                    g =
+                        (-) 1
+
+                    fdotG =
+                        f << g
+
+                    mapResult =
+                        ComplexNumbers.mapCartesian fdotG complexNumber
+                in
+                mapResult
+                    |> Expect.equal (ComplexNumbers.mapCartesian f (ComplexNumbers.mapCartesian g complexNumber))
         ]
