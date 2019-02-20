@@ -407,11 +407,19 @@ suite =
                     complexNumber =
                         ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
 
-                    (ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real realPart) (ComplexNumbers.Imaginary imaginaryPart)) =
-                        complexNumber
-
                     mapResult =
                         ComplexNumbers.mapCartesian identity complexNumber
+                in
+                mapResult
+                    |> Expect.equal complexNumber
+        , Test.fuzz2 Fuzz.int Fuzz.int "tests ComplexNumbers map polar representation" <|
+            \one two ->
+                let
+                    complexNumber =
+                        ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus one) (ComplexNumbers.Theta two)
+
+                    mapResult =
+                        ComplexNumbers.mapPolar identity complexNumber
                 in
                 mapResult
                     |> Expect.equal complexNumber
