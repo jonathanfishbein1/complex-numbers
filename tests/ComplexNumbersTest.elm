@@ -443,4 +443,24 @@ suite =
                 in
                 mapResult
                     |> Expect.equal (ComplexNumbers.mapCartesian f (ComplexNumbers.mapCartesian g complexNumber))
+        , Test.fuzz2 Fuzz.int Fuzz.int "tests ComplexNumbers Functor composition polar representation" <|
+            \one two ->
+                let
+                    complexNumber =
+                        ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus one) (ComplexNumbers.Theta two)
+
+                    f =
+                        (*) 2
+
+                    g =
+                        (-) 1
+
+                    fdotG =
+                        f << g
+
+                    mapResult =
+                        ComplexNumbers.mapPolar fdotG complexNumber
+                in
+                mapResult
+                    |> Expect.equal (ComplexNumbers.mapPolar f (ComplexNumbers.mapPolar g complexNumber))
         ]
