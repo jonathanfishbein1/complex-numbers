@@ -273,3 +273,13 @@ mapCartesian f (ComplexNumberCartesian (Real realOne) (Imaginary imaginaryOne)) 
 mapPolar : (number -> number) -> ComplexNumberPolar number -> ComplexNumberPolar number
 mapPolar f (ComplexNumberPolar (Modulus ro) (Theta theta)) =
     ComplexNumberPolar (Modulus <| f ro) (Theta <| f theta)
+
+
+pureCartesian : number -> ComplexNumberCartesian number
+pureCartesian a =
+    ComplexNumberCartesian (Real a) (Imaginary a)
+
+
+purePolar : number -> ComplexNumberPolar number
+purePolar a =
+    ComplexNumberPolar (Modulus a) (Theta a)
