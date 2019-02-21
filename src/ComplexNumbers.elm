@@ -15,7 +15,7 @@ module ComplexNumbers exposing
     , conjugate
     , convertFromCartesianToPolar
     , convertFromPolarToCartesian
-    , dividePolar, mapCartesian, mapPolar, multiplyPolar
+    , applyCartesian, applyPolar, dividePolar, mapCartesian, mapPolar, multiplyPolar, pureCartesian, purePolar
     )
 
 {-| A module for complex numbers
@@ -275,12 +275,12 @@ mapPolar f (ComplexNumberPolar (Modulus ro) (Theta theta)) =
     ComplexNumberPolar (Modulus <| f ro) (Theta <| f theta)
 
 
-pureCartesian : number -> ComplexNumberCartesian number
+pureCartesian : a -> ComplexNumberCartesian a
 pureCartesian a =
     ComplexNumberCartesian (Real a) (Imaginary a)
 
 
-purePolar : number -> ComplexNumberPolar number
+purePolar : a -> ComplexNumberPolar a
 purePolar a =
     ComplexNumberPolar (Modulus a) (Theta a)
 
