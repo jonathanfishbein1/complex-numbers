@@ -285,11 +285,11 @@ purePolar a =
     ComplexNumberPolar (Modulus a) (Theta a)
 
 
-applyCartesian : ComplexNumberCartesian (number -> number) -> ComplexNumberCartesian number -> ComplexNumberCartesian number
+applyCartesian : ComplexNumberCartesian (a -> b) -> ComplexNumberCartesian a -> ComplexNumberCartesian b
 applyCartesian (ComplexNumberCartesian (Real fReal) (Imaginary fImaginary)) (ComplexNumberCartesian (Real real) (Imaginary imaginary)) =
     ComplexNumberCartesian (Real <| fReal real) (Imaginary <| fImaginary imaginary)
 
 
-applyPolar : ComplexNumberPolar (number -> number) -> ComplexNumberPolar number -> ComplexNumberPolar number
+applyPolar : ComplexNumberPolar (a -> b) -> ComplexNumberPolar a -> ComplexNumberPolar b
 applyPolar (ComplexNumberPolar (Modulus fRo) (Theta fTheta)) (ComplexNumberPolar (Modulus ro) (Theta theta)) =
     ComplexNumberPolar (Modulus <| fRo ro) (Theta <| fTheta theta)
