@@ -480,6 +480,26 @@ suite =
                 in
                 pureFApplyX
                     |> Expect.equal fMapX
+        , Test.fuzz2 Fuzz.int Fuzz.int "tests apply + equal to add" <|
+            \one two ->
+                let
+                    complexNumber =
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+
+                    doubleComplexNumber =
+                        ComplexNumbers.add complexNumber complexNumber
+
+                    f =
+                        (+)
+
+                    fMapX =
+                        ComplexNumbers.mapCartesian f complexNumber
+
+                    pureFApplyX =
+                        ComplexNumbers.applyCartesian fMapX complexNumber
+                in
+                pureFApplyX
+                    |> Expect.equal doubleComplexNumber
         , Test.fuzz2 Fuzz.int Fuzz.int "tests pure f apply x equal map f x polar" <|
             \one two ->
                 let
@@ -497,4 +517,21 @@ suite =
                 in
                 pureFApplyX
                     |> Expect.equal fMapX
+        , Test.fuzz2 Fuzz.int Fuzz.int "tests apply - equal to add" <|
+            \one two ->
+                let
+                    complexNumber =
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+
+                    f =
+                        (-)
+
+                    fMapX =
+                        ComplexNumbers.mapCartesian f complexNumber
+
+                    pureFApplyX =
+                        ComplexNumbers.applyCartesian fMapX complexNumber
+                in
+                pureFApplyX
+                    |> Expect.equal (ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real 0) (ComplexNumbers.Imaginary 0))
         ]
