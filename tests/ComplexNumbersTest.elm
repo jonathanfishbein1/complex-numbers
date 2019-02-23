@@ -631,7 +631,7 @@ suite =
                         ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus one) (ComplexNumbers.Theta two)
 
                     powerResult =
-                        ComplexNumbers.bindPolar complexNumber ComplexNumbers.purePolar
+                        ComplexNumbers.power 2 complexNumber
 
                     productResult =
                         ComplexNumbers.multiplyPolar complexNumber complexNumber
