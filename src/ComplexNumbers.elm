@@ -15,7 +15,7 @@ module ComplexNumbers exposing
     , conjugate
     , convertFromCartesianToPolar
     , convertFromPolarToCartesian
-    , applyCartesian, applyPolar, bindCartesian, bindPolar, dividePolar, imaginaryPart, mapCartesian, mapPolar, modulusPart, multiplyPolar, power, pureCartesian, purePolar, realPart, thetaPart
+    , applyCartesian, applyPolar, bindCartesian, bindPolar, dividePolar, i, imaginaryPart, mapCartesian, mapPolar, modulusPart, multiplyPolar, power, pureCartesian, purePolar, realPart, thetaPart
     )
 
 {-| A module for complex numbers
@@ -125,6 +125,13 @@ type ComplexNumberCartesian a
 -}
 type ComplexNumberPolar a
     = ComplexNumberPolar (Modulus a) (Theta a)
+
+
+{-| The number i
+-}
+i : ComplexNumberCartesian number
+i =
+    ComplexNumberCartesian (Real 0) (Imaginary 1)
 
 
 {-| Extracts the real part of a complex number
