@@ -585,4 +585,15 @@ suite =
                 in
                 bindResult
                     |> Expect.equal fOfX
+        , Test.fuzz2 Fuzz.int Fuzz.int "tests monad right identity" <|
+            \one two ->
+                let
+                    complexNumber =
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+
+                    bindResult =
+                        ComplexNumbers.bindCartesian complexNumber ComplexNumbers.pureCartesian
+                in
+                bindResult
+                    |> Expect.equal complexNumber
         ]
