@@ -624,4 +624,18 @@ suite =
                 in
                 bindResult
                     |> Expect.equal complexNumber
+        , Test.fuzz2 Fuzz.int Fuzz.int "tests power" <|
+            \one two ->
+                let
+                    complexNumber =
+                        ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus one) (ComplexNumbers.Theta two)
+
+                    powerResult =
+                        ComplexNumbers.bindPolar complexNumber ComplexNumbers.purePolar
+
+                    productResult =
+                        ComplexNumbers.multiplyPolar complexNumber complexNumber
+                in
+                powerResult
+                    |> Expect.equal productResult
         ]
