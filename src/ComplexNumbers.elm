@@ -15,7 +15,7 @@ module ComplexNumbers exposing
     , conjugate
     , convertFromCartesianToPolar
     , convertFromPolarToCartesian
-    , applyCartesian, applyPolar, bindCartesian, dividePolar, mapCartesian, mapPolar, multiplyPolar, pureCartesian, purePolar
+    , applyCartesian, applyPolar, bindCartesian, bindPolar, dividePolar, imaginaryPart, mapCartesian, mapPolar, modulusPart, multiplyPolar, pureCartesian, purePolar, realPart, thetaPart
     )
 
 {-| A module for complex numbers

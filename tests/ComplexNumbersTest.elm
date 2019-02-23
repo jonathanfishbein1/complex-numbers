@@ -596,4 +596,32 @@ suite =
                 in
                 bindResult
                     |> Expect.equal complexNumber
+        , Test.fuzz2 Fuzz.int Fuzz.int "tests monad left identity polar" <|
+            \one two ->
+                let
+                    complexNumber =
+                        ComplexNumbers.purePolar one
+
+                    f x =
+                        ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus x) (ComplexNumbers.Theta x)
+
+                    bindResult =
+                        ComplexNumbers.bindPolar complexNumber f
+
+                    fOfX =
+                        f one
+                in
+                bindResult
+                    |> Expect.equal fOfX
+        , Test.fuzz2 Fuzz.int Fuzz.int "tests monad right identity polar" <|
+            \one two ->
+                let
+                    complexNumber =
+                        ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus one) (ComplexNumbers.Theta two)
+
+                    bindResult =
+                        ComplexNumbers.bindPolar complexNumber ComplexNumbers.purePolar
+                in
+                bindResult
+                    |> Expect.equal complexNumber
         ]
