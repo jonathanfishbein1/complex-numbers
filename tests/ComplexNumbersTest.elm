@@ -568,4 +568,21 @@ suite =
                 in
                 pureFApplyX
                     |> Expect.equal fMapX
+        , Test.fuzz2 Fuzz.int Fuzz.int "tests monad left identity" <|
+            \one two ->
+                let
+                    complexNumber =
+                        ComplexNumbers.pureCartesian one
+
+                    f x =
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real x) (ComplexNumbers.Imaginary x)
+
+                    bindResult =
+                        ComplexNumbers.bindCartesian complexNumber f
+
+                    fOfX =
+                        f one
+                in
+                bindResult
+                    |> Expect.equal fOfX
         ]
