@@ -134,6 +134,10 @@ i =
     ComplexNumberCartesian (Real 0) (Imaginary 1)
 
 
+
+-- Unary Operation
+
+
 {-| Extracts the real part of a complex number
 -}
 realPart : ComplexNumberCartesian a -> a
@@ -163,7 +167,7 @@ thetaPart (ComplexNumberPolar _ (Theta theta)) =
 
 
 
--- Complex addition
+-- Binary Operations
 
 
 {-| Add two complex numbers together
