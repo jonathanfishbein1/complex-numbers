@@ -15,7 +15,9 @@ module ComplexNumbers exposing
     , conjugate
     , convertFromCartesianToPolar
     , convertFromPolarToCartesian
-    , applyCartesian, applyPolar, bindCartesian, bindPolar, dividePolar, i, imaginaryPart, mapCartesian, mapPolar, modulusPart, multiplyPolar, power, pureCartesian, purePolar, realPart, thetaPart
+    , multiplyPolar
+    , dividePolar
+    , applyCartesian, applyPolar, bindCartesian, bindPolar, i, imaginaryPart, mapCartesian, mapPolar, modulusPart, power, pureCartesian, purePolar, realPart, thetaPart
     )
 
 {-| A module for complex numbers
@@ -30,57 +32,21 @@ module ComplexNumbers exposing
 @docs ComplexNumberCartesian
 @docs ComplexNumberPolar
 
-{-| Arithmetic operations on complex numbers -}
 
-
-# Add two complex numbers
+# Arithmetic operations on complex numbers
 
 @docs add
-
-
-# Monoidally add two complex numbers
-
 @docs sum
-
-
-# Multiply two complex numbers
-
 @docs multiply
-
-
-# Monoidally multiply two complex numbers
-
 @docs product
-
-
-# Subtract two complex numbers
-
 @docs subtract
-
-
-# Divide two complex numbers
-
 @docs divide
-
-
-# Calculate modulus of a complex number
-
 @docs modulus
-
-
-# Calculate the conjugate of a complex number
-
 @docs conjugate
-
-
-# Convert from the Cartesian representation of a complex number to the polar representation
-
 @docs convertFromCartesianToPolar
-
-
-# Convert from the polar representation of a complex number to the Cartesian representation
-
 @docs convertFromPolarToCartesian
+@docs multiplyPolar
+@docs dividePolar
 
 -}
 
