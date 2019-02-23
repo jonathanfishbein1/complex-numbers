@@ -534,4 +534,38 @@ suite =
                 in
                 pureFApplyX
                     |> Expect.equal (ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real 0) (ComplexNumbers.Imaginary 0))
+        , Test.fuzz2 Fuzz.int Fuzz.int "tests pure f apply x equal map f x multiply polar" <|
+            \one two ->
+                let
+                    complexNumber =
+                        ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus one) (ComplexNumbers.Theta two)
+
+                    f _ =
+                        ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus (*)) (ComplexNumbers.Theta (+))
+
+                    fMapX =
+                        ComplexNumbers.mapPolar f complexNumber
+
+                    pureFApplyX =
+                        ComplexNumbers.applyPolar (ComplexNumbers.purePolar f) complexNumber
+                in
+                pureFApplyX
+                    |> Expect.equal fMapX
+        , Test.fuzz2 Fuzz.int Fuzz.int "tests pure f apply x equal map f x multiply divide" <|
+            \one two ->
+                let
+                    complexNumber =
+                        ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus one) (ComplexNumbers.Theta two)
+
+                    f _ =
+                        ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus (/)) (ComplexNumbers.Theta (-))
+
+                    fMapX =
+                        ComplexNumbers.mapPolar f complexNumber
+
+                    pureFApplyX =
+                        ComplexNumbers.applyPolar (ComplexNumbers.purePolar f) complexNumber
+                in
+                pureFApplyX
+                    |> Expect.equal fMapX
         ]
