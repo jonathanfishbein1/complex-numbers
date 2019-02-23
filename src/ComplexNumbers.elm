@@ -141,6 +141,20 @@ imaginaryPart (ComplexNumberCartesian _ (Imaginary imaginary)) =
     imaginary
 
 
+{-| Extracts the modulus part of a complex number
+-}
+modulusPart : ComplexNumberPolar a -> a
+modulusPart (ComplexNumberPolar (Modulus ro) _) =
+    ro
+
+
+{-| Extracts the imaginary part of a complex number
+-}
+thetaPart : ComplexNumberPolar a -> a
+thetaPart (ComplexNumberPolar _ (Theta theta)) =
+    theta
+
+
 
 -- Complex addition
 
@@ -312,3 +326,8 @@ applyPolar (ComplexNumberPolar (Modulus fRo) (Theta fTheta)) (ComplexNumberPolar
 bindCartesian : ComplexNumberCartesian a -> (a -> ComplexNumberCartesian b) -> ComplexNumberCartesian b
 bindCartesian (ComplexNumberCartesian (Real previousReal) (Imaginary previousImaginary)) f =
     ComplexNumberCartesian (Real <| realPart <| f previousReal) (Imaginary <| imaginaryPart <| f previousImaginary)
+
+
+bindPolar : ComplexNumberPolar a -> (a -> ComplexNumberPolar b) -> ComplexNumberPolar b
+bindPolar (ComplexNumberPolar (Modulus previousModulus) (Theta previousTheta)) f =
+    ComplexNumberPolar (Modulus <| modulusPart <| f previousModulus) (Theta <| thetaPart <| f previousTheta)
