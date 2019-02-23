@@ -300,6 +300,8 @@ dividePolar (ComplexNumberPolar (Modulus roOne) (Theta thetaOne)) (ComplexNumber
             Ok <| ComplexNumberPolar (Modulus <| roOne / roTwo) (Theta <| thetaOne - thetaTwo)
 
 
+{-| Calculate a complex number raised to a power
+-}
 power : number -> ComplexNumberPolar number -> ComplexNumberPolar number
 power n (ComplexNumberPolar (Modulus roOne) (Theta thetaOne)) =
     ComplexNumberPolar (Modulus <| roOne ^ n) (Theta <| n * thetaOne)
@@ -319,31 +321,43 @@ mapPolar f (ComplexNumberPolar (Modulus ro) (Theta theta)) =
     ComplexNumberPolar (Modulus <| f ro) (Theta <| f theta)
 
 
+{-| Place a value in the minimal Complex Number Cartesian context
+-}
 pureCartesian : a -> ComplexNumberCartesian a
 pureCartesian a =
     ComplexNumberCartesian (Real a) (Imaginary a)
 
 
+{-| Place a value in the minimal Complex Number polar context
+-}
 purePolar : a -> ComplexNumberPolar a
 purePolar a =
     ComplexNumberPolar (Modulus a) (Theta a)
 
 
+{-| Apply for Complex Number Cartesian representaiton applicative
+-}
 applyCartesian : ComplexNumberCartesian (a -> b) -> ComplexNumberCartesian a -> ComplexNumberCartesian b
 applyCartesian (ComplexNumberCartesian (Real fReal) (Imaginary fImaginary)) (ComplexNumberCartesian (Real real) (Imaginary imaginary)) =
     ComplexNumberCartesian (Real <| fReal real) (Imaginary <| fImaginary imaginary)
 
 
+{-| Apply for Complex Number polar representaiton applicative
+-}
 applyPolar : ComplexNumberPolar (a -> b) -> ComplexNumberPolar a -> ComplexNumberPolar b
 applyPolar (ComplexNumberPolar (Modulus fRo) (Theta fTheta)) (ComplexNumberPolar (Modulus ro) (Theta theta)) =
     ComplexNumberPolar (Modulus <| fRo ro) (Theta <| fTheta theta)
 
 
+{-| Monadic bind for Complex Number Cartesian representaiton
+-}
 bindCartesian : ComplexNumberCartesian a -> (a -> ComplexNumberCartesian b) -> ComplexNumberCartesian b
 bindCartesian (ComplexNumberCartesian (Real previousReal) (Imaginary previousImaginary)) f =
     ComplexNumberCartesian (Real <| realPart <| f previousReal) (Imaginary <| imaginaryPart <| f previousImaginary)
 
 
+{-| Monadic bind for Complex Number polar representaiton
+-}
 bindPolar : ComplexNumberPolar a -> (a -> ComplexNumberPolar b) -> ComplexNumberPolar b
 bindPolar (ComplexNumberPolar (Modulus previousModulus) (Theta previousTheta)) f =
     ComplexNumberPolar (Modulus <| modulusPart <| f previousModulus) (Theta <| thetaPart <| f previousTheta)
