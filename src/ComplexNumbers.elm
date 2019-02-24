@@ -17,7 +17,16 @@ module ComplexNumbers exposing
     , convertFromPolarToCartesian
     , multiplyPolar
     , dividePolar
-    , applyCartesian, applyPolar, bindCartesian, bindPolar, i, imaginaryPart, mapCartesian, mapPolar, modulusPart, power, pureCartesian, purePolar, realPart, thetaPart
+    , power
+    , mapCartesian
+    , mapPolar
+    , pureCartesian
+    , purePolar
+    , applyCartesian
+    , applyPolar
+    , bindCartesian
+    , bindPolar
+    , i, imaginaryPart, modulusPart, realPart, thetaPart
     )
 
 {-| A module for complex numbers
@@ -47,6 +56,15 @@ module ComplexNumbers exposing
 @docs convertFromPolarToCartesian
 @docs multiplyPolar
 @docs dividePolar
+@docs power
+@docs mapCartesian
+@docs mapPolar
+@docs pureCartesian
+@docs purePolar
+@docs applyCartesian
+@docs applyPolar
+@docs bindCartesian
+@docs bindPolar
 
 -}
 
