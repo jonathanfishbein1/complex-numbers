@@ -5,6 +5,11 @@ module ComplexNumbers exposing
     , Theta(..)
     , ComplexNumberCartesian(..)
     , ComplexNumberPolar(..)
+    , i
+    , realPart
+    , imaginaryPart
+    , modulusPart
+    , thetaPart
     , add
     , sum
     , multiply
@@ -26,7 +31,6 @@ module ComplexNumbers exposing
     , applyPolar
     , bindCartesian
     , bindPolar
-    , i, imaginaryPart, modulusPart, realPart, thetaPart
     )
 
 {-| A module for complex numbers
@@ -44,6 +48,11 @@ module ComplexNumbers exposing
 
 # Arithmetic operations on complex numbers
 
+@docs i
+@docs realPart
+@docs imaginaryPart
+@docs modulusPart
+@docs thetaPart
 @docs add
 @docs sum
 @docs multiply
@@ -118,10 +127,6 @@ i =
     ComplexNumberCartesian (Real 0) (Imaginary 1)
 
 
-
--- Unary Operation
-
-
 {-| Extracts the real part of a complex number
 -}
 realPart : ComplexNumberCartesian a -> a
@@ -148,10 +153,6 @@ modulusPart (ComplexNumberPolar (Modulus ro) _) =
 thetaPart : ComplexNumberPolar a -> a
 thetaPart (ComplexNumberPolar _ (Theta theta)) =
     theta
-
-
-
--- Binary Operations
 
 
 {-| Add two complex numbers together
