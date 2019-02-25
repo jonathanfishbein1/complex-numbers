@@ -21,6 +21,14 @@ suite =
                 in
                 ComplexNumbers.add testValue testValue
                     |> Expect.equal expected
+        , Test.fuzz2 Fuzz.float Fuzz.float "tests ComplexNumbers zero is identity" <|
+            \real imaginary ->
+                let
+                    testValue =
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
+                in
+                ComplexNumbers.add testValue ComplexNumbers.zero
+                    |> Expect.equal testValue
         , Test.fuzz2 Fuzz.float Fuzz.float "tests ComplexNumberCartesian empty or identity value for sum" <|
             \real imaginary ->
                 let
