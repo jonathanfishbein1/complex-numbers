@@ -6,6 +6,7 @@ module ComplexNumbers exposing
     , ComplexNumberCartesian(..)
     , ComplexNumberPolar(..)
     , i
+    , zero
     , realPart
     , imaginaryPart
     , modulusPart
@@ -49,6 +50,7 @@ module ComplexNumbers exposing
 # Arithmetic operations on complex numbers
 
 @docs i
+@docs zero
 @docs realPart
 @docs imaginaryPart
 @docs modulusPart
@@ -118,6 +120,13 @@ type ComplexNumberCartesian a
 -}
 type ComplexNumberPolar a
     = ComplexNumberPolar (Modulus a) (Theta a)
+
+
+{-| zero
+-}
+zero : ComplexNumberCartesian number
+zero =
+    ComplexNumberCartesian (Real 0) (Imaginary 0)
 
 
 {-| The number i
