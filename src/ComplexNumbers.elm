@@ -32,7 +32,7 @@ module ComplexNumbers exposing
     , applyPolar
     , bindCartesian
     , bindPolar
-    , negate
+    , negate, one
     )
 
 {-| A module for complex numbers
@@ -128,6 +128,13 @@ type ComplexNumberPolar a
 zero : ComplexNumberCartesian number
 zero =
     ComplexNumberCartesian (Real 0) (Imaginary 0)
+
+
+{-| one
+-}
+one : ComplexNumberCartesian number
+one =
+    ComplexNumberCartesian (Real 1) (Imaginary 0)
 
 
 {-| The number i
