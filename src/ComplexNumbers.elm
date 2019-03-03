@@ -378,6 +378,8 @@ bindPolar (ComplexNumberPolar (Modulus previousModulus) (Theta previousTheta)) f
     ComplexNumberPolar (Modulus <| modulusPart <| f previousModulus) (Theta <| thetaPart <| f previousTheta)
 
 
+{-| Equality of Complex Numbers
+-}
 equal : ComplexNumberCartesian Float -> ComplexNumberCartesian Float -> Bool
 equal (ComplexNumberCartesian (Real realOne) (Imaginary imaginaryOne)) (ComplexNumberCartesian (Real realTwo) (Imaginary imaginaryTwo)) =
     Float.Extra.equalWithin 0.000000001 realOne realTwo && Float.Extra.equalWithin 0.000000001 imaginaryOne imaginaryTwo
