@@ -285,6 +285,20 @@ suite =
                         modulusOne + modulusTwo
                 in
                 modulesOfSumOfNumberOneNumberTwo |> Expect.atMost sumLengthOneLengthTwo
+        , Test.fuzz2 Fuzz.int Fuzz.int "tests ComplexNumbers negate" <|
+            \real imaginary ->
+                let
+                    testValue =
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
+
+                    negatedTestValue =
+                        ComplexNumbers.negate testValue
+
+                    testResult =
+                        ComplexNumbers.add testValue negatedTestValue
+                in
+                testResult
+                    |> Expect.equal ComplexNumbers.zero
         , Test.fuzz2 Fuzz.float Fuzz.float "tests ComplexNumbers conjugate" <|
             \real imaginary ->
                 let

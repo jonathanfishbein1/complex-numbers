@@ -32,6 +32,7 @@ module ComplexNumbers exposing
     , applyPolar
     , bindCartesian
     , bindPolar
+    , negate
     )
 
 {-| A module for complex numbers
@@ -246,11 +247,18 @@ modulus =
     calculateDivisor >> sqrt
 
 
+{-| negate a complex number
+-}
+negate : ComplexNumberCartesian number -> ComplexNumberCartesian number
+negate (ComplexNumberCartesian (Real real) (Imaginary imaginary)) =
+    ComplexNumberCartesian (Real <| Basics.negate real) (Imaginary <| Basics.negate imaginary)
+
+
 {-| Calculate the conjugate of a complex number
 -}
 conjugate : ComplexNumberCartesian number -> ComplexNumberCartesian number
-conjugate (ComplexNumberCartesian real (Imaginary imaginaryOne)) =
-    ComplexNumberCartesian real (Imaginary -imaginaryOne)
+conjugate (ComplexNumberCartesian real (Imaginary imaginary)) =
+    ComplexNumberCartesian real (Imaginary <| Basics.negate imaginary)
 
 
 {-| Convert from the Cartesian representation of a complex number to the polar representation
