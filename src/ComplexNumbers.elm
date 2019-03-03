@@ -7,6 +7,7 @@ module ComplexNumbers exposing
     , ComplexNumberPolar(..)
     , i
     , zero
+    , one
     , realPart
     , imaginaryPart
     , modulusPart
@@ -18,6 +19,7 @@ module ComplexNumbers exposing
     , subtract
     , divide
     , modulus
+    , negate
     , conjugate
     , convertFromCartesianToPolar
     , convertFromPolarToCartesian
@@ -32,7 +34,6 @@ module ComplexNumbers exposing
     , applyPolar
     , bindCartesian
     , bindPolar
-    , negate, one
     )
 
 {-| A module for complex numbers
@@ -52,6 +53,7 @@ module ComplexNumbers exposing
 
 @docs i
 @docs zero
+@docs one
 @docs realPart
 @docs imaginaryPart
 @docs modulusPart
@@ -63,6 +65,7 @@ module ComplexNumbers exposing
 @docs subtract
 @docs divide
 @docs modulus
+@docs negate
 @docs conjugate
 @docs convertFromCartesianToPolar
 @docs convertFromPolarToCartesian
