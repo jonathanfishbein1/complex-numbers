@@ -361,10 +361,13 @@ suite =
                     polarTestValue =
                         ComplexNumbers.convertFromCartesianToPolar cartesianTestValue
 
-                    (ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real realAfterConversion) (ComplexNumbers.Imaginary imaginaryAfterConv)) =
+                    conversionResult =
                         ComplexNumbers.convertFromPolarToCartesian polarTestValue
+
+                    result =
+                        ComplexNumbers.equal cartesianTestValue conversionResult
                 in
-                Expect.within (Expect.Absolute 0.000000001) real realAfterConversion
+                Expect.true "Should be equal" result
         , Test.fuzz3 Fuzz.float Fuzz.float Fuzz.float "tests ComplexNumbers polar multiplication is commutative" <|
             \one two three ->
                 let
