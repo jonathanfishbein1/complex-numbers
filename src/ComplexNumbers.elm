@@ -167,8 +167,8 @@ thetaPart (ComplexNumberPolar _ (Theta theta)) =
 {-| Add two complex numbers together
 -}
 add : ComplexNumberCartesian number -> ComplexNumberCartesian number -> ComplexNumberCartesian number
-add (ComplexNumberCartesian (Real realOne) (Imaginary imaginaryOne)) (ComplexNumberCartesian (Real realTwo) (Imaginary imaginaryTwo)) =
-    ComplexNumberCartesian (Real (realOne + realTwo)) (Imaginary (imaginaryOne + imaginaryTwo))
+add complexOne complexTwo =
+    liftCartesian (+) complexOne complexTwo
 
 
 sumEmpty : ComplexNumberCartesian number
@@ -355,3 +355,8 @@ bindCartesian (ComplexNumberCartesian (Real previousReal) (Imaginary previousIma
 bindPolar : ComplexNumberPolar a -> (a -> ComplexNumberPolar b) -> ComplexNumberPolar b
 bindPolar (ComplexNumberPolar (Modulus previousModulus) (Theta previousTheta)) f =
     ComplexNumberPolar (Modulus <| modulusPart <| f previousModulus) (Theta <| thetaPart <| f previousTheta)
+
+
+liftCartesian : (a -> b -> c) -> ComplexNumberCartesian a -> ComplexNumberCartesian b -> ComplexNumberCartesian c
+liftCartesian f a b =
+    applyCartesian (mapCartesian f a) b
