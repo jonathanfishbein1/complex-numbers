@@ -32,6 +32,7 @@ module ComplexNumbers exposing
     , applyPolar
     , bindCartesian
     , bindPolar
+    , equal
     )
 
 {-| A module for complex numbers
@@ -79,6 +80,7 @@ module ComplexNumbers exposing
 
 -}
 
+import Float.Extra
 import Monoid
 
 
@@ -365,3 +367,10 @@ liftCartesian f a b =
 liftPolar : (a -> b -> c) -> ComplexNumberPolar a -> ComplexNumberPolar b -> ComplexNumberPolar c
 liftPolar f a b =
     applyPolar (mapPolar f a) b
+
+
+{-| Equality of Complex Numbers
+-}
+equal : ComplexNumberCartesian Float -> ComplexNumberCartesian Float -> Bool
+equal (ComplexNumberCartesian (Real realOne) (Imaginary imaginaryOne)) (ComplexNumberCartesian (Real realTwo) (Imaginary imaginaryTwo)) =
+    Float.Extra.equalWithin 0.000000001 realOne realTwo && Float.Extra.equalWithin 0.000000001 imaginaryOne imaginaryTwo
