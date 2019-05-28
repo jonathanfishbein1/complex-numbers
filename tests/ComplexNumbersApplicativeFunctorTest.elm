@@ -29,6 +29,37 @@ suite =
                         ComplexNumbers.applyCartesian cIdentity c
                 in
                 Expect.equal cApplied c
+        , Test.fuzz Fuzz.int "tests second applicative law for Complex Numbers" <|
+            \one ->
+                let
+                    f =
+                        (<<)
+
+                    fPure =
+                        ComplexNumbers.pureCartesian f
+
+                    u =
+                        ComplexNumbers.pureCartesian identity
+
+                    v =
+                        ComplexNumbers.pureCartesian identity
+
+                    w =
+                        ComplexNumbers.ComplexNumberCartesian
+                            (ComplexNumbers.Real
+                                one
+                            )
+                            (ComplexNumbers.Imaginary
+                                one
+                            )
+
+                    leftSide =
+                        ComplexNumbers.applyCartesian (ComplexNumbers.applyCartesian (ComplexNumbers.applyCartesian fPure u) v) w
+
+                    rightSide =
+                        ComplexNumbers.applyCartesian u (ComplexNumbers.applyCartesian v w)
+                in
+                Expect.equal leftSide rightSide
         , Test.fuzz Fuzz.int "tests third applicative law for Matrix" <|
             \one ->
                 let
@@ -67,6 +98,37 @@ suite =
                         ComplexNumbers.applyPolar cIdentity c
                 in
                 Expect.equal cApplied c
+        , Test.fuzz Fuzz.int "tests second applicative law for Complex Numbers Polar" <|
+            \one ->
+                let
+                    f =
+                        (<<)
+
+                    fPure =
+                        ComplexNumbers.purePolar f
+
+                    u =
+                        ComplexNumbers.purePolar identity
+
+                    v =
+                        ComplexNumbers.purePolar identity
+
+                    w =
+                        ComplexNumbers.ComplexNumberPolar
+                            (ComplexNumbers.Modulus
+                                one
+                            )
+                            (ComplexNumbers.Theta
+                                one
+                            )
+
+                    leftSide =
+                        ComplexNumbers.applyPolar (ComplexNumbers.applyPolar (ComplexNumbers.applyPolar fPure u) v) w
+
+                    rightSide =
+                        ComplexNumbers.applyPolar u (ComplexNumbers.applyPolar v w)
+                in
+                Expect.equal leftSide rightSide
         , Test.fuzz Fuzz.int "tests third applicative law for Complex Numbers Polar" <|
             \one ->
                 let
