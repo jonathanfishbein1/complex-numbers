@@ -95,7 +95,7 @@ suite =
                 in
                 testValueOne
                     |> Expect.equal testValueTwo
-        , Test.fuzz2 (Fuzz.intRange -10 10) (Fuzz.intRange -10 10) "tests ComplexNumberCartesian empty or identity value for product" <|
+        , Test.fuzz2 (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) "tests ComplexNumberCartesian empty or identity value for product" <|
             \real imaginary ->
                 let
                     expected =
@@ -103,7 +103,7 @@ suite =
                 in
                 Monoid.append ComplexNumbers.product expected (Monoid.empty ComplexNumbers.product)
                     |> Expect.equal expected
-        , Test.fuzz3 (Fuzz.intRange -10 10) (Fuzz.intRange -10 10) (Fuzz.intRange -10 10) "tests monoidally product" <|
+        , Test.fuzz3 (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) "tests monoidally product" <|
             \one two three ->
                 let
                     a =
@@ -140,7 +140,7 @@ suite =
                 in
                 testValueOne
                     |> Expect.equal testValueTwo
-        , Test.fuzz3 (Fuzz.intRange -10 10) (Fuzz.intRange -10 10) (Fuzz.intRange -10 10) "tests ComplexNumbers multiplication is associative" <|
+        , Test.fuzz3 (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) "tests ComplexNumbers multiplication is associative" <|
             \one two three ->
                 let
                     a =
@@ -160,7 +160,7 @@ suite =
                 in
                 testValueOne
                     |> Expect.equal testValueTwo
-        , Test.fuzz3 (Fuzz.intRange -10 10) (Fuzz.intRange -10 10) (Fuzz.intRange -10 10) "tests ComplexNumbers multiplication distributes over addition" <|
+        , Test.fuzz3 (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) "tests ComplexNumbers multiplication distributes over addition" <|
             \one two three ->
                 let
                     a =

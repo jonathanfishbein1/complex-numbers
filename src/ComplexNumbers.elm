@@ -144,9 +144,14 @@ sum =
 
 {-| Multiply two complex numbers together
 -}
-multiply : ComplexNumberCartesian number -> ComplexNumberCartesian number -> ComplexNumberCartesian number
-multiply (ComplexNumberCartesian (Real realOne) (Imaginary imaginaryOne)) (ComplexNumberCartesian (Real realTwo) (Imaginary imaginaryTwo)) =
-    ComplexNumberCartesian (Real (realOne * realTwo - imaginaryOne * imaginaryTwo)) (Imaginary (realOne * imaginaryTwo + realTwo * imaginaryOne))
+multiply : ComplexNumberCartesian Float -> ComplexNumberCartesian Float -> ComplexNumberCartesian Float
+multiply complexNumberOne complexNumberTwo =
+    Internal.ComplexNumbers.multiplyPolar (convertFromCartesianToPolar complexNumberOne) (convertFromCartesianToPolar complexNumberTwo)
+        |> convertFromPolarToCartesian
+
+
+
+--ComplexNumberCartesian (Real (realOne * realTwo - imaginaryOne * imaginaryTwo)) (Imaginary (realOne * imaginaryTwo + realTwo * imaginaryOne))
 
 
 productEmpty : ComplexNumberCartesian number
@@ -156,7 +161,7 @@ productEmpty =
 
 {-| Monoidally multiply two complex numbers together
 -}
-product : Monoid.Monoid (ComplexNumberCartesian number)
+product : Monoid.Monoid (ComplexNumberCartesian Float)
 product =
     Monoid.monoid productEmpty multiply
 
