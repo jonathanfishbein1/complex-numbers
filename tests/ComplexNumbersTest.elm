@@ -178,9 +178,11 @@ suite =
                     testValueTwo =
                         ComplexNumbers.multiply a b
                             |> ComplexNumbers.add (ComplexNumbers.multiply a c)
+
+                    result =
+                        ComplexNumbers.equal testValueOne testValueTwo
                 in
-                testValueOne
-                    |> Expect.equal testValueTwo
+                Expect.true "equal" result
         , Test.fuzz2 Fuzz.int Fuzz.int "tests ComplexNumbers subtract" <|
             \real imaginary ->
                 let
