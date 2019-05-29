@@ -277,3 +277,11 @@ liftCartesian f a b =
 equal : ComplexNumberCartesian Float -> ComplexNumberCartesian Float -> Bool
 equal (ComplexNumberCartesian (Real realOne) (Imaginary imaginaryOne)) (ComplexNumberCartesian (Real realTwo) (Imaginary imaginaryTwo)) =
     Float.Extra.equalWithin 0.000000001 realOne realTwo && Float.Extra.equalWithin 0.000000001 imaginaryOne imaginaryTwo
+
+
+{-| Calculate a complex number raised to a power
+-}
+power : Float -> ComplexNumberCartesian Float -> ComplexNumberCartesian Float
+power n complexNumber =
+    Internal.ComplexNumbers.power n (convertFromCartesianToPolar complexNumber)
+        |> convertFromPolarToCartesian
