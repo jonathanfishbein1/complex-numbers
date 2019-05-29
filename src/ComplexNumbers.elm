@@ -1,16 +1,11 @@
 module ComplexNumbers exposing
     ( Real(..)
     , Imaginary(..)
-    , Modulus(..)
-    , Theta(..)
     , ComplexNumberCartesian(..)
-    , ComplexNumberPolar(..)
     , i
     , zero
     , realPart
     , imaginaryPart
-    , modulusPart
-    , thetaPart
     , add
     , sum
     , multiply
@@ -21,17 +16,10 @@ module ComplexNumbers exposing
     , conjugate
     , convertFromCartesianToPolar
     , convertFromPolarToCartesian
-    , multiplyPolar
-    , dividePolar
-    , power
     , mapCartesian
-    , mapPolar
     , pureCartesian
-    , purePolar
     , applyCartesian
-    , applyPolar
     , bindCartesian
-    , bindPolar
     , equal
     )
 
@@ -81,6 +69,7 @@ module ComplexNumbers exposing
 -}
 
 import Float.Extra
+import Internal.ComplexNumbers
 import Monoid
 
 
@@ -100,28 +89,10 @@ type Imaginary i
     = Imaginary i
 
 
-{-| Modulus or magnitude portion
--}
-type Modulus m
-    = Modulus m
-
-
-{-| Angle in real-complex plane of modulus
--}
-type Theta t
-    = Theta t
-
-
 {-| Cartesian representation of a complex number
 -}
 type ComplexNumberCartesian a
     = ComplexNumberCartesian (Real a) (Imaginary a)
-
-
-{-| Polar representation of a complex number
--}
-type ComplexNumberPolar a
-    = ComplexNumberPolar (Modulus a) (Theta a)
 
 
 {-| zero
@@ -150,20 +121,6 @@ realPart (ComplexNumberCartesian (Real real) _) =
 imaginaryPart : ComplexNumberCartesian a -> a
 imaginaryPart (ComplexNumberCartesian _ (Imaginary imaginary)) =
     imaginary
-
-
-{-| Extracts the modulus part of a complex number
--}
-modulusPart : ComplexNumberPolar a -> a
-modulusPart (ComplexNumberPolar (Modulus ro) _) =
-    ro
-
-
-{-| Extracts the imaginary part of a complex number
--}
-thetaPart : ComplexNumberPolar a -> a
-thetaPart (ComplexNumberPolar _ (Theta theta)) =
-    theta
 
 
 {-| Add two complex numbers together
@@ -257,50 +214,24 @@ conjugate (ComplexNumberCartesian real (Imaginary imaginaryOne)) =
 
 {-| Convert from the Cartesian representation of a complex number to the polar representation
 -}
-convertFromCartesianToPolar : ComplexNumberCartesian Float -> ComplexNumberPolar Float
+convertFromCartesianToPolar : ComplexNumberCartesian Float -> Internal.ComplexNumbers.ComplexNumberPolar Float
 convertFromCartesianToPolar (ComplexNumberCartesian (Real real) (Imaginary imaginary)) =
     let
         polar =
             toPolar ( real, imaginary )
     in
-    ComplexNumberPolar (Modulus <| Tuple.first polar) (Theta <| Tuple.second polar)
+    Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus <| Tuple.first polar) (Internal.ComplexNumbers.Theta <| Tuple.second polar)
 
 
 {-| Convert from the polar representation of a complex number to the Cartesian representation
 -}
-convertFromPolarToCartesian : ComplexNumberPolar Float -> ComplexNumberCartesian Float
-convertFromPolarToCartesian (ComplexNumberPolar (Modulus ro) (Theta theta)) =
+convertFromPolarToCartesian : Internal.ComplexNumbers.ComplexNumberPolar Float -> ComplexNumberCartesian Float
+convertFromPolarToCartesian (Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus ro) (Internal.ComplexNumbers.Theta theta)) =
     let
         cartesian =
             fromPolar ( ro, theta )
     in
     ComplexNumberCartesian (Real <| Tuple.first cartesian) (Imaginary <| Tuple.second cartesian)
-
-
-{-| Multiply two complex numbers in polar representations together
--}
-multiplyPolar : ComplexNumberPolar number -> ComplexNumberPolar number -> ComplexNumberPolar number
-multiplyPolar (ComplexNumberPolar (Modulus roOne) (Theta thetaOne)) (ComplexNumberPolar (Modulus roTwo) (Theta thetaTwo)) =
-    ComplexNumberPolar (Modulus <| roOne * roTwo) (Theta <| thetaOne + thetaTwo)
-
-
-{-| Divide two complex numbers in polar representations together
--}
-dividePolar : ComplexNumberPolar Float -> ComplexNumberPolar Float -> Result String (ComplexNumberPolar Float)
-dividePolar (ComplexNumberPolar (Modulus roOne) (Theta thetaOne)) (ComplexNumberPolar (Modulus roTwo) (Theta thetaTwo)) =
-    case round roTwo of
-        0 ->
-            Err "Divisor is zero"
-
-        _ ->
-            Ok <| ComplexNumberPolar (Modulus <| roOne / roTwo) (Theta <| thetaOne - thetaTwo)
-
-
-{-| Calculate a complex number raised to a power
--}
-power : number -> ComplexNumberPolar number -> ComplexNumberPolar number
-power n (ComplexNumberPolar (Modulus roOne) (Theta thetaOne)) =
-    ComplexNumberPolar (Modulus <| roOne ^ n) (Theta <| n * thetaOne)
 
 
 {-| Map over a complex number
@@ -310,25 +241,11 @@ mapCartesian f (ComplexNumberCartesian (Real realOne) (Imaginary imaginaryOne)) 
     ComplexNumberCartesian (Real <| f realOne) (Imaginary <| f imaginaryOne)
 
 
-{-| Map over a complex number in polar representation
--}
-mapPolar : (a -> b) -> ComplexNumberPolar a -> ComplexNumberPolar b
-mapPolar f (ComplexNumberPolar (Modulus ro) (Theta theta)) =
-    ComplexNumberPolar (Modulus <| f ro) (Theta <| f theta)
-
-
 {-| Place a value in the minimal Complex Number Cartesian context
 -}
 pureCartesian : a -> ComplexNumberCartesian a
 pureCartesian a =
     ComplexNumberCartesian (Real a) (Imaginary a)
-
-
-{-| Place a value in the minimal Complex Number polar context
--}
-purePolar : a -> ComplexNumberPolar a
-purePolar a =
-    ComplexNumberPolar (Modulus a) (Theta a)
 
 
 {-| Apply for Complex Number Cartesian representaiton applicative
@@ -338,13 +255,6 @@ applyCartesian (ComplexNumberCartesian (Real fReal) (Imaginary fImaginary)) (Com
     ComplexNumberCartesian (Real <| fReal real) (Imaginary <| fImaginary imaginary)
 
 
-{-| Apply for Complex Number polar representaiton applicative
--}
-applyPolar : ComplexNumberPolar (a -> b) -> ComplexNumberPolar a -> ComplexNumberPolar b
-applyPolar (ComplexNumberPolar (Modulus fRo) (Theta fTheta)) (ComplexNumberPolar (Modulus ro) (Theta theta)) =
-    ComplexNumberPolar (Modulus <| fRo ro) (Theta <| fTheta theta)
-
-
 {-| Monadic bind for Complex Number Cartesian representaiton
 -}
 bindCartesian : ComplexNumberCartesian a -> (a -> ComplexNumberCartesian b) -> ComplexNumberCartesian b
@@ -352,21 +262,9 @@ bindCartesian (ComplexNumberCartesian (Real previousReal) (Imaginary previousIma
     ComplexNumberCartesian (Real <| realPart <| f previousReal) (Imaginary <| imaginaryPart <| f previousImaginary)
 
 
-{-| Monadic bind for Complex Number polar representaiton
--}
-bindPolar : ComplexNumberPolar a -> (a -> ComplexNumberPolar b) -> ComplexNumberPolar b
-bindPolar (ComplexNumberPolar (Modulus previousModulus) (Theta previousTheta)) f =
-    ComplexNumberPolar (Modulus <| modulusPart <| f previousModulus) (Theta <| thetaPart <| f previousTheta)
-
-
 liftCartesian : (a -> b -> c) -> ComplexNumberCartesian a -> ComplexNumberCartesian b -> ComplexNumberCartesian c
 liftCartesian f a b =
     applyCartesian (mapCartesian f a) b
-
-
-liftPolar : (a -> b -> c) -> ComplexNumberPolar a -> ComplexNumberPolar b -> ComplexNumberPolar c
-liftPolar f a b =
-    applyPolar (mapPolar f a) b
 
 
 {-| Equality of Complex Numbers

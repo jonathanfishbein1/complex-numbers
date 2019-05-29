@@ -3,6 +3,7 @@ module ComplexNumbersApplicativeFunctorTest exposing (suite)
 import ComplexNumbers
 import Expect
 import Fuzz
+import Internal.ComplexNumbers
 import Monoid
 import Test
 
@@ -99,19 +100,19 @@ suite =
             \one two ->
                 let
                     cIdentity =
-                        ComplexNumbers.purePolar identity
+                        Internal.ComplexNumbers.purePolar identity
 
                     c =
-                        ComplexNumbers.ComplexNumberPolar
-                            (ComplexNumbers.Modulus
+                        Internal.ComplexNumbers.ComplexNumberPolar
+                            (Internal.ComplexNumbers.Modulus
                                 one
                             )
-                            (ComplexNumbers.Theta
+                            (Internal.ComplexNumbers.Theta
                                 two
                             )
 
                     cApplied =
-                        ComplexNumbers.applyPolar cIdentity c
+                        Internal.ComplexNumbers.applyPolar cIdentity c
                 in
                 Expect.equal cApplied c
         , Test.fuzz Fuzz.int "tests second applicative law for Complex Numbers Polar" <|
@@ -121,28 +122,28 @@ suite =
                         (<<)
 
                     fPure =
-                        ComplexNumbers.purePolar f
+                        Internal.ComplexNumbers.purePolar f
 
                     u =
-                        ComplexNumbers.purePolar identity
+                        Internal.ComplexNumbers.purePolar identity
 
                     v =
-                        ComplexNumbers.purePolar identity
+                        Internal.ComplexNumbers.purePolar identity
 
                     w =
-                        ComplexNumbers.ComplexNumberPolar
-                            (ComplexNumbers.Modulus
+                        Internal.ComplexNumbers.ComplexNumberPolar
+                            (Internal.ComplexNumbers.Modulus
                                 one
                             )
-                            (ComplexNumbers.Theta
+                            (Internal.ComplexNumbers.Theta
                                 one
                             )
 
                     leftSide =
-                        ComplexNumbers.applyPolar (ComplexNumbers.applyPolar (ComplexNumbers.applyPolar fPure u) v) w
+                        Internal.ComplexNumbers.applyPolar (Internal.ComplexNumbers.applyPolar (Internal.ComplexNumbers.applyPolar fPure u) v) w
 
                     rightSide =
-                        ComplexNumbers.applyPolar u (ComplexNumbers.applyPolar v w)
+                        Internal.ComplexNumbers.applyPolar u (Internal.ComplexNumbers.applyPolar v w)
                 in
                 Expect.equal leftSide rightSide
         , Test.fuzz Fuzz.int "tests third applicative law for Complex Numbers Polar" <|
@@ -152,32 +153,32 @@ suite =
                         (*) 2
 
                     pureF =
-                        ComplexNumbers.purePolar f
+                        Internal.ComplexNumbers.purePolar f
 
                     pureOne =
-                        ComplexNumbers.purePolar one
+                        Internal.ComplexNumbers.purePolar one
 
                     expected =
-                        ComplexNumbers.purePolar <| f one
+                        Internal.ComplexNumbers.purePolar <| f one
 
                     cApplied =
-                        ComplexNumbers.applyPolar pureF pureOne
+                        Internal.ComplexNumbers.applyPolar pureF pureOne
                 in
                 Expect.equal cApplied expected
         , Test.fuzz Fuzz.int "tests fourth applicative law for Complex Numbers Polar" <|
             \one ->
                 let
                     pureOne =
-                        ComplexNumbers.purePolar identity
+                        Internal.ComplexNumbers.purePolar identity
 
                     pureTwo =
-                        ComplexNumbers.purePolar one
+                        Internal.ComplexNumbers.purePolar one
 
                     leftSide =
-                        ComplexNumbers.applyPolar pureOne pureTwo
+                        Internal.ComplexNumbers.applyPolar pureOne pureTwo
 
                     rightSide =
-                        ComplexNumbers.applyPolar (ComplexNumbers.purePolar (\_ -> one)) pureOne
+                        Internal.ComplexNumbers.applyPolar (Internal.ComplexNumbers.purePolar (\_ -> one)) pureOne
                 in
                 Expect.equal leftSide rightSide
         ]

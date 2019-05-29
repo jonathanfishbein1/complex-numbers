@@ -3,6 +3,7 @@ module ComplexNumbersFunctorTest exposing (suite)
 import ComplexNumbers
 import Expect
 import Fuzz
+import Internal.ComplexNumbers
 import Monoid
 import Test
 
@@ -25,10 +26,10 @@ suite =
             \one two ->
                 let
                     complexNumber =
-                        ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus one) (ComplexNumbers.Theta two)
+                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus one) (Internal.ComplexNumbers.Theta two)
 
                     mapResult =
-                        ComplexNumbers.mapPolar identity complexNumber
+                        Internal.ComplexNumbers.mapPolar identity complexNumber
                 in
                 mapResult
                     |> Expect.equal complexNumber
@@ -56,7 +57,7 @@ suite =
             \one two ->
                 let
                     complexNumber =
-                        ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus one) (ComplexNumbers.Theta two)
+                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus one) (Internal.ComplexNumbers.Theta two)
 
                     f =
                         (*) 2
@@ -68,8 +69,8 @@ suite =
                         f << g
 
                     mapResult =
-                        ComplexNumbers.mapPolar fdotG complexNumber
+                        Internal.ComplexNumbers.mapPolar fdotG complexNumber
                 in
                 mapResult
-                    |> Expect.equal (ComplexNumbers.mapPolar f (ComplexNumbers.mapPolar g complexNumber))
+                    |> Expect.equal (Internal.ComplexNumbers.mapPolar f (Internal.ComplexNumbers.mapPolar g complexNumber))
         ]

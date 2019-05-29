@@ -3,6 +3,7 @@ module ComplexNumbersTest exposing (suite)
 import ComplexNumbers
 import Expect
 import Fuzz
+import Internal.ComplexNumbers
 import Monoid
 import Test
 
@@ -358,16 +359,16 @@ suite =
             \one two three ->
                 let
                     a =
-                        ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus one) (ComplexNumbers.Theta two)
+                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus one) (Internal.ComplexNumbers.Theta two)
 
                     b =
-                        ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus two) (ComplexNumbers.Theta three)
+                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus two) (Internal.ComplexNumbers.Theta three)
 
                     testValueOne =
-                        ComplexNumbers.multiplyPolar a b
+                        Internal.ComplexNumbers.multiplyPolar a b
 
                     testValueTwo =
-                        ComplexNumbers.multiplyPolar b a
+                        Internal.ComplexNumbers.multiplyPolar b a
                 in
                 testValueOne
                     |> Expect.equal testValueTwo
@@ -375,19 +376,19 @@ suite =
             \one two three ->
                 let
                     a =
-                        ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus one) (ComplexNumbers.Theta two)
+                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus one) (Internal.ComplexNumbers.Theta two)
 
                     b =
-                        ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus two) (ComplexNumbers.Theta three)
+                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus two) (Internal.ComplexNumbers.Theta three)
 
                     c =
-                        ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus one) (ComplexNumbers.Theta three)
+                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus one) (Internal.ComplexNumbers.Theta three)
 
                     testValueOne =
-                        ComplexNumbers.multiplyPolar (ComplexNumbers.multiplyPolar a b) c
+                        Internal.ComplexNumbers.multiplyPolar (Internal.ComplexNumbers.multiplyPolar a b) c
 
                     testValueTwo =
-                        ComplexNumbers.multiplyPolar a (ComplexNumbers.multiplyPolar b c)
+                        Internal.ComplexNumbers.multiplyPolar a (Internal.ComplexNumbers.multiplyPolar b c)
                 in
                 testValueOne
                     |> Expect.equal testValueTwo
@@ -395,16 +396,16 @@ suite =
             \one two three ->
                 let
                     dividend =
-                        ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus one) (ComplexNumbers.Theta two)
+                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus one) (Internal.ComplexNumbers.Theta two)
 
                     divisor =
-                        ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus two) (ComplexNumbers.Theta three)
+                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus two) (Internal.ComplexNumbers.Theta three)
 
-                    (ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus modulusDivisor) _) =
+                    (Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus modulusDivisor) _) =
                         divisor
 
                     quotient =
-                        ComplexNumbers.dividePolar dividend divisor
+                        Internal.ComplexNumbers.dividePolar dividend divisor
                 in
                 case round modulusDivisor of
                     0 ->
@@ -453,16 +454,16 @@ suite =
             \one two ->
                 let
                     complexNumber =
-                        ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus one) (ComplexNumbers.Theta two)
+                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus one) (Internal.ComplexNumbers.Theta two)
 
                     f =
                         (*) 2
 
                     fMapX =
-                        ComplexNumbers.mapPolar f complexNumber
+                        Internal.ComplexNumbers.mapPolar f complexNumber
 
                     pureFApplyX =
-                        ComplexNumbers.applyPolar (ComplexNumbers.purePolar f) complexNumber
+                        Internal.ComplexNumbers.applyPolar (Internal.ComplexNumbers.purePolar f) complexNumber
                 in
                 pureFApplyX
                     |> Expect.equal fMapX
@@ -487,16 +488,16 @@ suite =
             \one two ->
                 let
                     complexNumber =
-                        ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus one) (ComplexNumbers.Theta two)
+                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus one) (Internal.ComplexNumbers.Theta two)
 
                     f _ =
-                        ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus (*)) (ComplexNumbers.Theta (+))
+                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus (*)) (Internal.ComplexNumbers.Theta (+))
 
                     fMapX =
-                        ComplexNumbers.mapPolar f complexNumber
+                        Internal.ComplexNumbers.mapPolar f complexNumber
 
                     pureFApplyX =
-                        ComplexNumbers.applyPolar (ComplexNumbers.purePolar f) complexNumber
+                        Internal.ComplexNumbers.applyPolar (Internal.ComplexNumbers.purePolar f) complexNumber
                 in
                 pureFApplyX
                     |> Expect.equal fMapX
@@ -504,16 +505,16 @@ suite =
             \one two ->
                 let
                     complexNumber =
-                        ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus one) (ComplexNumbers.Theta two)
+                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus one) (Internal.ComplexNumbers.Theta two)
 
                     f _ =
-                        ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus (/)) (ComplexNumbers.Theta (-))
+                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus (/)) (Internal.ComplexNumbers.Theta (-))
 
                     fMapX =
-                        ComplexNumbers.mapPolar f complexNumber
+                        Internal.ComplexNumbers.mapPolar f complexNumber
 
                     pureFApplyX =
-                        ComplexNumbers.applyPolar (ComplexNumbers.purePolar f) complexNumber
+                        Internal.ComplexNumbers.applyPolar (Internal.ComplexNumbers.purePolar f) complexNumber
                 in
                 pureFApplyX
                     |> Expect.equal fMapX
@@ -549,13 +550,13 @@ suite =
             \one two ->
                 let
                     complexNumber =
-                        ComplexNumbers.purePolar one
+                        Internal.ComplexNumbers.purePolar one
 
                     f x =
-                        ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus x) (ComplexNumbers.Theta x)
+                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus x) (Internal.ComplexNumbers.Theta x)
 
                     bindResult =
-                        ComplexNumbers.bindPolar complexNumber f
+                        Internal.ComplexNumbers.bindPolar complexNumber f
 
                     fOfX =
                         f one
@@ -566,10 +567,10 @@ suite =
             \one two ->
                 let
                     complexNumber =
-                        ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus one) (ComplexNumbers.Theta two)
+                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus one) (Internal.ComplexNumbers.Theta two)
 
                     bindResult =
-                        ComplexNumbers.bindPolar complexNumber ComplexNumbers.purePolar
+                        Internal.ComplexNumbers.bindPolar complexNumber Internal.ComplexNumbers.purePolar
                 in
                 bindResult
                     |> Expect.equal complexNumber
@@ -577,13 +578,13 @@ suite =
             \one two ->
                 let
                     complexNumber =
-                        ComplexNumbers.ComplexNumberPolar (ComplexNumbers.Modulus one) (ComplexNumbers.Theta two)
+                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus one) (Internal.ComplexNumbers.Theta two)
 
                     powerResult =
-                        ComplexNumbers.power 2 complexNumber
+                        Internal.ComplexNumbers.power 2 complexNumber
 
                     productResult =
-                        ComplexNumbers.multiplyPolar complexNumber complexNumber
+                        Internal.ComplexNumbers.multiplyPolar complexNumber complexNumber
                 in
                 powerResult
                     |> Expect.equal productResult
