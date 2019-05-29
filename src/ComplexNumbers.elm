@@ -182,17 +182,8 @@ calculateDivisor (ComplexNumberCartesian (Real realTwo) (Imaginary imaginaryTwo)
 -}
 divide : ComplexNumberCartesian Float -> ComplexNumberCartesian Float -> Result String (ComplexNumberCartesian Float)
 divide complexNumberDividend complexNumberCartesianDivisor =
-    let
-        divisor =
-            calculateDivisor complexNumberCartesianDivisor
-    in
-    case round divisor of
-        0 ->
-            Err "Divisor is zero"
-
-        _ ->
-            Internal.ComplexNumbers.dividePolar (convertFromCartesianToPolar complexNumberDividend) (convertFromCartesianToPolar complexNumberCartesianDivisor)
-                |> Result.map convertFromPolarToCartesian
+    Internal.ComplexNumbers.dividePolar (convertFromCartesianToPolar complexNumberDividend) (convertFromCartesianToPolar complexNumberCartesianDivisor)
+        |> Result.map convertFromPolarToCartesian
 
 
 {-| Calculate the modulus of a complex number

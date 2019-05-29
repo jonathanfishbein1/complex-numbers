@@ -209,13 +209,13 @@ suite =
                     (ComplexNumbers.ComplexNumberCartesian _ (ComplexNumbers.Imaginary imaginaryDivisor)) =
                         divisor
 
-                    squareOfModulus =
-                        realDivisor ^ 2 + imaginaryDivisor ^ 2
+                    ( ro, theta ) =
+                        toPolar ( two, three )
 
                     quotient =
                         ComplexNumbers.divide dividend divisor
                 in
-                case round squareOfModulus of
+                case round ro of
                     0 ->
                         Expect.err quotient
 
