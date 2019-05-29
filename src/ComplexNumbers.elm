@@ -173,11 +173,6 @@ subtract complexNumberOne complexNumberTwo =
     liftCartesian (-) complexNumberOne complexNumberTwo
 
 
-calculateDivisor : ComplexNumberCartesian number -> number
-calculateDivisor (ComplexNumberCartesian (Real realTwo) (Imaginary imaginaryTwo)) =
-    realTwo ^ 2 + imaginaryTwo ^ 2
-
-
 {-| Divide two complex numbers together
 -}
 divide : ComplexNumberCartesian Float -> ComplexNumberCartesian Float -> Result String (ComplexNumberCartesian Float)
@@ -189,8 +184,9 @@ divide complexNumberDividend complexNumberCartesianDivisor =
 {-| Calculate the modulus of a complex number
 -}
 modulus : ComplexNumberCartesian Float -> Float
-modulus =
-    calculateDivisor >> sqrt
+modulus (ComplexNumberCartesian (Real realTwo) (Imaginary imaginaryTwo)) =
+    (realTwo ^ 2 + imaginaryTwo ^ 2)
+        |> sqrt
 
 
 {-| Calculate the conjugate of a complex number
