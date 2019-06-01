@@ -56,4 +56,49 @@ suite =
                     in
                     Expect.equal leftSide rightSide
             ]
+        , Test.describe
+            "ComplexNumbers Polar Monad tests"
+            [ Test.fuzz Fuzz.int "tests ComplexNumbers Monad left identity" <|
+                \one ->
+                    let
+                        f a =
+                            Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus <| a * 2) (Internal.ComplexNumbers.Theta <| a * 2)
+
+                        leftSide =
+                            Internal.ComplexNumbers.bindPolar (Internal.ComplexNumbers.purePolar one) f
+
+                        rightSide =
+                            f one
+                    in
+                    Expect.equal leftSide rightSide
+            , Test.fuzz Fuzz.int "tests ComplexNumbers Polar Monad right identity" <|
+                \one ->
+                    let
+                        m =
+                            Internal.ComplexNumbers.purePolar one
+
+                        leftSide =
+                            Internal.ComplexNumbers.bindPolar m Internal.ComplexNumbers.purePolar
+                    in
+                    Expect.equal leftSide m
+            , Test.fuzz Fuzz.int "tests ComplexNumbers Polar Monad associativity" <|
+                \one ->
+                    let
+                        m =
+                            Internal.ComplexNumbers.purePolar one
+
+                        f a =
+                            Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus <| a * 2) (Internal.ComplexNumbers.Theta <| a * 2)
+
+                        g a =
+                            Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus <| a * 3) (Internal.ComplexNumbers.Theta <| a * 3)
+
+                        leftSide =
+                            Internal.ComplexNumbers.bindPolar (Internal.ComplexNumbers.bindPolar m f) g
+
+                        rightSide =
+                            Internal.ComplexNumbers.bindPolar m (\x -> Internal.ComplexNumbers.bindPolar (f x) g)
+                    in
+                    Expect.equal leftSide rightSide
+            ]
         ]
