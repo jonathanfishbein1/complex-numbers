@@ -100,9 +100,11 @@ suite =
                 let
                     expected =
                         ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
+
+                    result =
+                        ComplexNumbers.equal (Monoid.append ComplexNumbers.product expected (Monoid.empty ComplexNumbers.product)) expected
                 in
-                Monoid.append ComplexNumbers.product expected (Monoid.empty ComplexNumbers.product)
-                    |> Expect.equal expected
+                Expect.true "equal" result
         , Test.fuzz3 (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) "tests monoidally product" <|
             \one two three ->
                 let
@@ -120,9 +122,11 @@ suite =
 
                     listOfMonoids =
                         [ a, b, c ]
+
+                    result =
+                        ComplexNumbers.equal (Monoid.concat ComplexNumbers.product listOfMonoids) expected
                 in
-                Monoid.concat ComplexNumbers.product listOfMonoids
-                    |> Expect.equal expected
+                Expect.true "equal" result
         , Test.fuzz3 Fuzz.float Fuzz.float Fuzz.float "tests ComplexNumbers multiplication is commutative" <|
             \one two three ->
                 let
@@ -157,9 +161,11 @@ suite =
 
                     testValueTwo =
                         ComplexNumbers.multiply a (ComplexNumbers.multiply b c)
+
+                    result =
+                        ComplexNumbers.equal testValueOne testValueTwo
                 in
-                testValueOne
-                    |> Expect.equal testValueTwo
+                Expect.true "equal" result
         , Test.fuzz3 (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) "tests ComplexNumbers multiplication distributes over addition" <|
             \one two three ->
                 let
