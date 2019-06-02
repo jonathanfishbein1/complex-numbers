@@ -68,6 +68,7 @@ module ComplexNumbers exposing
 
 -}
 
+import Equal
 import Float.Extra
 import Internal.ComplexNumbers
 import Monoid
@@ -253,8 +254,8 @@ liftCartesian f a b =
 
 {-| Equality of Complex Numbers
 -}
-equal : ComplexNumberCartesian Float -> ComplexNumberCartesian Float -> Bool
-equal (ComplexNumberCartesian (Real realOne) (Imaginary imaginaryOne)) (ComplexNumberCartesian (Real realTwo) (Imaginary imaginaryTwo)) =
+equalImplementation : ComplexNumberCartesian Float -> ComplexNumberCartesian Float -> Bool
+equalImplementation (ComplexNumberCartesian (Real realOne) (Imaginary imaginaryOne)) (ComplexNumberCartesian (Real realTwo) (Imaginary imaginaryTwo)) =
     Float.Extra.equalWithin 0.000000001 realOne realTwo && Float.Extra.equalWithin 0.000000001 imaginaryOne imaginaryTwo
 
 
@@ -264,3 +265,15 @@ power : Float -> ComplexNumberCartesian Float -> ComplexNumberCartesian Float
 power n complexNumber =
     Internal.ComplexNumbers.power n (convertFromCartesianToPolar complexNumber)
         |> convertFromPolarToCartesian
+
+
+{-| `Equal` type for `ComplexNumber`.
+-}
+complexNumberEqual : Equal.Equal (ComplexNumberCartesian Float)
+complexNumberEqual =
+    Equal.Equal equalImplementation
+
+
+equal : ComplexNumberCartesian Float -> ComplexNumberCartesian Float -> Bool
+equal =
+    Equal.equal complexNumberEqual
