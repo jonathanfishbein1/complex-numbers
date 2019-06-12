@@ -20,7 +20,7 @@ module ComplexNumbers exposing
     , pureCartesian
     , applyCartesian
     , bindCartesian
-    , equal
+    , equal, print, read
     )
 
 {-| A module for complex numbers
@@ -72,6 +72,7 @@ import Equal
 import Float.Extra
 import Internal.ComplexNumbers
 import Monoid
+import Parser exposing ((|.), (|=))
 
 
 
@@ -277,3 +278,60 @@ complexNumberEqual =
 equal : ComplexNumberCartesian Float -> ComplexNumberCartesian Float -> Bool
 equal =
     Equal.equal complexNumberEqual
+
+
+print : ComplexNumberCartesian Float -> String
+print (ComplexNumberCartesian (Real real) (Imaginary imaginary)) =
+    "ComplexNumberCartesian Real " ++ String.fromFloat real ++ " Imaginary " ++ String.fromFloat imaginary
+
+
+read : String -> Result (List Parser.DeadEnd) (ComplexNumberCartesian Float)
+read vectorString =
+    Parser.run parseComplexNumber vectorString
+
+
+parseComplexNumber : Parser.Parser (ComplexNumberCartesian Float)
+parseComplexNumber =
+    Parser.succeed ComplexNumberCartesian
+        |. Parser.keyword "ComplexNumberCartesian"
+        |. Parser.spaces
+        |= parseReal
+        |. Parser.spaces
+        |= parseImaginary
+
+
+parseReal : Parser.Parser (Real Float)
+parseReal =
+    Parser.succeed Real
+        |. Parser.keyword "Real"
+        |. Parser.spaces
+        |= myNumber
+
+
+parseImaginary : Parser.Parser (Imaginary Float)
+parseImaginary =
+    Parser.succeed Imaginary
+        |. Parser.keyword "Imaginary"
+        |. Parser.spaces
+        |= myNumber
+
+
+float : Parser.Parser Float
+float =
+    Parser.number
+        { int = Just toFloat
+        , hex = Nothing
+        , octal = Nothing
+        , binary = Nothing
+        , float = Just identity
+        }
+
+
+myNumber : Parser.Parser Float
+myNumber =
+    Parser.oneOf
+        [ Parser.succeed negate
+            |. Parser.symbol "-"
+            |= float
+        , float
+        ]

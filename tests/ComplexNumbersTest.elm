@@ -596,4 +596,17 @@ suite =
                 in
                 powerResult
                     |> Expect.equal productResult
+        , Test.fuzz2 Fuzz.float Fuzz.float "print ComplexNumberCartesian" <|
+            \one two ->
+                let
+                    complexNumber =
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+
+                    printedComplexNumber =
+                        ComplexNumbers.print complexNumber
+
+                    readComplexNumber =
+                        ComplexNumbers.read printedComplexNumber
+                in
+                Expect.equal readComplexNumber (Ok complexNumber)
         ]
