@@ -363,62 +363,6 @@ suite =
 
                     _ ->
                         Expect.ok quotient
-        , Test.fuzz2 Fuzz.int Fuzz.int "tests monad left identity" <|
-            \one two ->
-                let
-                    complexNumber =
-                        ComplexNumbers.pureCartesian one
-
-                    f x =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real x) (ComplexNumbers.Imaginary x)
-
-                    bindResult =
-                        ComplexNumbers.bindCartesian complexNumber f
-
-                    fOfX =
-                        f one
-                in
-                bindResult
-                    |> Expect.equal fOfX
-        , Test.fuzz2 Fuzz.int Fuzz.int "tests monad right identity" <|
-            \one two ->
-                let
-                    complexNumber =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
-
-                    bindResult =
-                        ComplexNumbers.bindCartesian complexNumber ComplexNumbers.pureCartesian
-                in
-                bindResult
-                    |> Expect.equal complexNumber
-        , Test.fuzz2 Fuzz.int Fuzz.int "tests monad left identity polar" <|
-            \one two ->
-                let
-                    complexNumber =
-                        Internal.ComplexNumbers.purePolar one
-
-                    f x =
-                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus x) (Internal.ComplexNumbers.Theta x)
-
-                    bindResult =
-                        Internal.ComplexNumbers.bindPolar complexNumber f
-
-                    fOfX =
-                        f one
-                in
-                bindResult
-                    |> Expect.equal fOfX
-        , Test.fuzz2 Fuzz.int Fuzz.int "tests monad right identity polar" <|
-            \one two ->
-                let
-                    complexNumber =
-                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus one) (Internal.ComplexNumbers.Theta two)
-
-                    bindResult =
-                        Internal.ComplexNumbers.bindPolar complexNumber Internal.ComplexNumbers.purePolar
-                in
-                bindResult
-                    |> Expect.equal complexNumber
         , Test.fuzz2 Fuzz.int Fuzz.int "tests power" <|
             \one two ->
                 let
