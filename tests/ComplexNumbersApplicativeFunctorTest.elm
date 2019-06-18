@@ -94,7 +94,7 @@ suite =
                             ComplexNumbers.applyCartesian pureOne pureTwo
 
                         rightSide =
-                            ComplexNumbers.applyCartesian (ComplexNumbers.pureCartesian (\_ -> one)) pureOne
+                            ComplexNumbers.applyCartesian (ComplexNumbers.pureCartesian (Basics.always one)) pureOne
                     in
                     Expect.equal leftSide rightSide
             , Test.fuzz2 Fuzz.int Fuzz.int "tests first applicative law for Complex Numbers Polar" <|
@@ -179,7 +179,7 @@ suite =
                             Internal.ComplexNumbers.applyPolar pureOne pureTwo
 
                         rightSide =
-                            Internal.ComplexNumbers.applyPolar (Internal.ComplexNumbers.purePolar (\_ -> one)) pureOne
+                            Internal.ComplexNumbers.applyPolar (Internal.ComplexNumbers.purePolar (Basics.always one)) pureOne
                     in
                     Expect.equal leftSide rightSide
             ]
