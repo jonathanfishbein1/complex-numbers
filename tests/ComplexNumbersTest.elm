@@ -4,7 +4,6 @@ import ComplexNumbers
 import Expect
 import Fuzz
 import Internal.ComplexNumbers
-import Monoid
 import Test
 
 
@@ -30,34 +29,6 @@ suite =
                 in
                 ComplexNumbers.add testValue ComplexNumbers.zero
                     |> Expect.equal testValue
-        , Test.fuzz2 Fuzz.float Fuzz.float "tests ComplexNumberCartesian empty or identity value for sum" <|
-            \real imaginary ->
-                let
-                    expected =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
-                in
-                Monoid.append ComplexNumbers.sum expected (Monoid.empty ComplexNumbers.sum)
-                    |> Expect.equal expected
-        , Test.fuzz3 Fuzz.int Fuzz.int Fuzz.int "tests monoidally add" <|
-            \one two three ->
-                let
-                    a =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
-
-                    b =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
-
-                    c =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary three)
-
-                    expected =
-                        ComplexNumbers.add (ComplexNumbers.add a b) c
-
-                    listOfMonoids =
-                        [ a, b, c ]
-                in
-                Monoid.concat ComplexNumbers.sum listOfMonoids
-                    |> Expect.equal expected
         , Test.fuzz3 Fuzz.float Fuzz.float Fuzz.float "tests ComplexNumbers addition is commutative" <|
             \one two three ->
                 let
@@ -95,38 +66,6 @@ suite =
                 in
                 testValueOne
                     |> Expect.equal testValueTwo
-        , Test.fuzz2 (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) "tests ComplexNumberCartesian empty or identity value for product" <|
-            \real imaginary ->
-                let
-                    expected =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
-
-                    result =
-                        ComplexNumbers.equal (Monoid.append ComplexNumbers.product expected (Monoid.empty ComplexNumbers.product)) expected
-                in
-                Expect.true "equal" result
-        , Test.fuzz3 (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) "tests monoidally product" <|
-            \one two three ->
-                let
-                    a =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
-
-                    b =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
-
-                    c =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary three)
-
-                    expected =
-                        ComplexNumbers.multiply (ComplexNumbers.multiply a b) c
-
-                    listOfMonoids =
-                        [ a, b, c ]
-
-                    result =
-                        ComplexNumbers.equal (Monoid.concat ComplexNumbers.product listOfMonoids) expected
-                in
-                Expect.true "equal" result
         , Test.fuzz3 Fuzz.float Fuzz.float Fuzz.float "tests ComplexNumbers multiplication is commutative" <|
             \one two three ->
                 let
@@ -195,10 +134,13 @@ suite =
                     testValue =
                         ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
 
+                    zero =
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real 0) (ComplexNumbers.Imaginary 0)
+
                     expected =
                         testValue
                 in
-                ComplexNumbers.subtract testValue (Monoid.empty ComplexNumbers.sum)
+                ComplexNumbers.subtract testValue zero
                     |> Expect.equal expected
         , Test.fuzz3 Fuzz.float Fuzz.float Fuzz.float "tests ComplexNumbers division" <|
             \one two three ->
