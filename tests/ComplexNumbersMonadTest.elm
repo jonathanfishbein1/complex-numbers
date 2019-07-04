@@ -4,7 +4,6 @@ import ComplexNumbers
 import Expect
 import Fuzz
 import Internal.ComplexNumbers
-import Monoid
 import Test
 
 
