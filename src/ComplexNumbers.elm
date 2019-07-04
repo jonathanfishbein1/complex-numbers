@@ -68,11 +68,11 @@ module ComplexNumbers exposing
 
 -}
 
-import Equal
 import Float.Extra
 import Internal.ComplexNumbers
 import Monoid
 import Parser exposing ((|.), (|=))
+import Typeclasses.Classes.Equality
 
 
 
@@ -270,14 +270,14 @@ power n complexNumber =
 
 {-| `Equal` type for `ComplexNumber`.
 -}
-complexNumberEqual : Equal.Equal (ComplexNumberCartesian Float)
+complexNumberEqual : Typeclasses.Classes.Equality.Equality (ComplexNumberCartesian Float)
 complexNumberEqual =
-    Equal.Equal equalImplementation
+    Typeclasses.Classes.Equality.eq equalImplementation
 
 
 equal : ComplexNumberCartesian Float -> ComplexNumberCartesian Float -> Bool
 equal =
-    Equal.equal complexNumberEqual
+    complexNumberEqual.eq
 
 
 print : ComplexNumberCartesian Float -> String
