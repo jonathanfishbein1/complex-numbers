@@ -70,9 +70,10 @@ module ComplexNumbers exposing
 
 import Float.Extra
 import Internal.ComplexNumbers
-import Monoid
 import Parser exposing ((|.), (|=))
 import Typeclasses.Classes.Equality
+import Typeclasses.Classes.Monoid
+import Typeclasses.Classes.Semigroup
 
 
 
@@ -139,9 +140,9 @@ sumEmpty =
 
 {-| Monoidally add two complex numbers together
 -}
-sum : Monoid.Monoid (ComplexNumberCartesian number)
+sum : Typeclasses.Classes.Monoid.Monoid (ComplexNumberCartesian number)
 sum =
-    Monoid.monoid sumEmpty add
+    Typeclasses.Classes.Monoid.semigroupAndIdentity (Typeclasses.Classes.Semigroup.prepend add) sumEmpty
 
 
 {-| Multiply two complex numbers together
@@ -163,9 +164,9 @@ productEmpty =
 
 {-| Monoidally multiply two complex numbers together
 -}
-product : Monoid.Monoid (ComplexNumberCartesian Float)
+product : Typeclasses.Classes.Monoid.Monoid (ComplexNumberCartesian Float)
 product =
-    Monoid.monoid productEmpty multiply
+    Typeclasses.Classes.Monoid.semigroupAndIdentity (Typeclasses.Classes.Semigroup.prepend multiply) productEmpty
 
 
 {-| Subtract two complex numbers together

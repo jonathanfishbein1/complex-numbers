@@ -4,7 +4,6 @@ import ComplexNumbers
 import Expect
 import Fuzz
 import Internal.ComplexNumbers
-import Monoid
 import Test
 
 
@@ -17,7 +16,7 @@ suite =
                     expected =
                         ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
                 in
-                Monoid.append ComplexNumbers.sum expected (Monoid.empty ComplexNumbers.sum)
+                ComplexNumbers.sum.semigroup.prepend expected ComplexNumbers.sum.identity
                     |> Expect.equal expected
         , Test.fuzz3 Fuzz.int Fuzz.int Fuzz.int "tests monoidally add" <|
             \one two three ->
@@ -37,7 +36,7 @@ suite =
                     listOfMonoids =
                         [ a, b, c ]
                 in
-                Monoid.concat ComplexNumbers.sum listOfMonoids
+                ComplexNumbers.sum.concat listOfMonoids
                     |> Expect.equal expected
         , Test.fuzz2 (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) "tests ComplexNumberCartesian empty or identity value for product" <|
             \real imaginary ->
@@ -46,7 +45,7 @@ suite =
                         ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
 
                     result =
-                        ComplexNumbers.equal (Monoid.append ComplexNumbers.product expected (Monoid.empty ComplexNumbers.product)) expected
+                        ComplexNumbers.equal (ComplexNumbers.product.semigroup.prepend expected ComplexNumbers.product.identity) expected
                 in
                 Expect.true "equal" result
         , Test.fuzz3 (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) "tests monoidally product" <|
@@ -68,7 +67,7 @@ suite =
                         [ a, b, c ]
 
                     result =
-                        ComplexNumbers.equal (Monoid.concat ComplexNumbers.product listOfMonoids) expected
+                        ComplexNumbers.equal (ComplexNumbers.product.concat listOfMonoids) expected
                 in
                 Expect.true "equal" result
         ]
