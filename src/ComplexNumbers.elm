@@ -306,7 +306,7 @@ parseReal =
     Parser.succeed Real
         |. Parser.keyword "Real"
         |. Parser.spaces
-        |= myNumber
+        |= positiveOrNegativeFloat
 
 
 parseImaginary : Parser.Parser (Imaginary Float)
@@ -314,7 +314,7 @@ parseImaginary =
     Parser.succeed Imaginary
         |. Parser.keyword "Imaginary"
         |. Parser.spaces
-        |= myNumber
+        |= positiveOrNegativeFloat
 
 
 float : Parser.Parser Float
@@ -328,8 +328,8 @@ float =
         }
 
 
-myNumber : Parser.Parser Float
-myNumber =
+positiveOrNegativeFloat : Parser.Parser Float
+positiveOrNegativeFloat =
     Parser.oneOf
         [ Parser.succeed negate
             |. Parser.symbol "-"
