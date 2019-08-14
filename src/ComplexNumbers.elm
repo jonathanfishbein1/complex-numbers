@@ -269,17 +269,22 @@ complexNumberEqual : Typeclasses.Classes.Equality.Equality (ComplexNumberCartesi
 complexNumberEqual =
     Typeclasses.Classes.Equality.eq equalImplementation
 
-
+{-| Compare two ComplexNumbers for equality
+-}
 equal : ComplexNumberCartesian Float -> ComplexNumberCartesian Float -> Bool
 equal =
     complexNumberEqual.eq
 
 
+{-| Print ComplexNumber
+-}
 print : ComplexNumberCartesian Float -> String
 print (ComplexNumberCartesian (Real real) (Imaginary imaginary)) =
     "ComplexNumberCartesian Real " ++ String.fromFloat real ++ " Imaginary " ++ String.fromFloat imaginary
 
 
+{-| Read ComplexNumber
+-}
 read : String -> Result (List Parser.DeadEnd) (ComplexNumberCartesian Float)
 read vectorString =
     Parser.run parseComplexNumber vectorString
