@@ -30,10 +30,7 @@ module ComplexNumbers exposing
 
 @docs Real
 @docs Imaginary
-@docs Modulus
-@docs Theta
 @docs ComplexNumberCartesian
-@docs ComplexNumberPolar
 
 
 # Arithmetic operations on complex numbers
@@ -42,8 +39,6 @@ module ComplexNumbers exposing
 @docs zero
 @docs realPart
 @docs imaginaryPart
-@docs modulusPart
-@docs thetaPart
 @docs add
 @docs sum
 @docs multiply
@@ -54,17 +49,10 @@ module ComplexNumbers exposing
 @docs conjugate
 @docs convertFromCartesianToPolar
 @docs convertFromPolarToCartesian
-@docs multiplyPolar
-@docs dividePolar
-@docs power
 @docs mapCartesian
-@docs mapPolar
 @docs pureCartesian
-@docs purePolar
 @docs applyCartesian
-@docs applyPolar
 @docs bindCartesian
-@docs bindPolar
 
 -}
 
