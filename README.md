@@ -2,7 +2,7 @@
 
 ## Summary
 
-A module to define complex number and basic arithmetic operations on them
+A module to define complex numbers and basic arithmetic operations on them
 
 Examples of complex numbers
 
