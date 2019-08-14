@@ -20,7 +20,9 @@ module ComplexNumbers exposing
     , pureCartesian
     , applyCartesian
     , bindCartesian
-    , equal, print, read
+    , equal
+    , read
+    , print
     )
 
 {-| A module for complex numbers
@@ -53,6 +55,10 @@ module ComplexNumbers exposing
 @docs pureCartesian
 @docs applyCartesian
 @docs bindCartesian
+@docs equal
+
+@docs read
+@docs print
 
 -}
 
