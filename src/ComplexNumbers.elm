@@ -23,6 +23,7 @@ module ComplexNumbers exposing
     , equal
     , read
     , print
+    , power
     )
 
 {-| A module for complex numbers
@@ -268,6 +269,7 @@ power n complexNumber =
 complexNumberEqual : Typeclasses.Classes.Equality.Equality (ComplexNumberCartesian Float)
 complexNumberEqual =
     Typeclasses.Classes.Equality.eq equalImplementation
+
 
 {-| Compare two ComplexNumbers for equality
 -}
