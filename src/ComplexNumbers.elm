@@ -21,6 +21,7 @@ module ComplexNumbers exposing
     , applyCartesian
     , bindCartesian
     , equal
+    , power
     , read
     , print
     )
@@ -56,6 +57,7 @@ module ComplexNumbers exposing
 @docs applyCartesian
 @docs bindCartesian
 @docs equal
+@docs power
 
 @docs read
 @docs print
@@ -268,6 +270,7 @@ power n complexNumber =
 complexNumberEqual : Typeclasses.Classes.Equality.Equality (ComplexNumberCartesian Float)
 complexNumberEqual =
     Typeclasses.Classes.Equality.eq equalImplementation
+
 
 {-| Compare two ComplexNumbers for equality
 -}
