@@ -21,9 +21,9 @@ module ComplexNumbers exposing
     , applyCartesian
     , bindCartesian
     , equal
+    , power
     , read
     , print
-    , power
     )
 
 {-| A module for complex numbers
@@ -57,6 +57,7 @@ module ComplexNumbers exposing
 @docs applyCartesian
 @docs bindCartesian
 @docs equal
+@docs power
 
 @docs read
 @docs print
