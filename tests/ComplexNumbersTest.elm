@@ -183,27 +183,24 @@ suite =
                 in
                 testValueOne
                     |> Expect.equal testValueTwo
-        , Test.fuzz3 Fuzz.float Fuzz.float Fuzz.float "tests ComplexNumbers polar division" <|
-            \one two three ->
-                let
-                    dividend =
-                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus one) (Internal.ComplexNumbers.Theta two)
 
-                    divisor =
-                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus two) (Internal.ComplexNumbers.Theta three)
-
-                    (Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus modulusDivisor) _) =
-                        divisor
-
-                    quotient =
-                        Internal.ComplexNumbers.dividePolar dividend divisor
-                in
-                case round modulusDivisor of
-                    0 ->
-                        Expect.err quotient
-
-                    _ ->
-                        Expect.ok quotient
+        -- , Test.fuzz3 Fuzz.float Fuzz.float Fuzz.float "tests ComplexNumbers polar division" <|
+        --     \one two three ->
+        --         let
+        --             dividend =
+        --                 Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus one) (Internal.ComplexNumbers.Theta two)
+        --             divisor =
+        --                 Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus two) (Internal.ComplexNumbers.Theta three)
+        --             (Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus modulusDivisor) _) =
+        --                 divisor
+        --             quotient =
+        --                 Internal.ComplexNumbers.dividePolar dividend divisor
+        --         in
+        --         case round modulusDivisor of
+        --             0 ->
+        --                 Expect.err quotient
+        --             _ ->
+        --                 Expect.ok quotient
         , Test.fuzz2 Fuzz.int Fuzz.int "tests power" <|
             \one two ->
                 let

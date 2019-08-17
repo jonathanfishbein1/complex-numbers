@@ -2,16 +2,16 @@ module Internal.ComplexNumbers exposing
     ( ComplexNumberPolar(..)
     , Modulus(..)
     , Theta(..)
+    , applyPolar
+    , bindPolar
     , dividePolar
+    , liftPolar
     , mapPolar
     , modulusPart
     , multiplyPolar
     , power
     , purePolar
     , thetaPart
-    , applyPolar
-    , bindPolar
-    , liftPolar
     )
 
 {-| Modulus or magnitude portion
@@ -57,14 +57,9 @@ multiplyPolar (ComplexNumberPolar (Modulus roOne) (Theta thetaOne)) (ComplexNumb
 
 {-| Divide two complex numbers in polar representations together
 -}
-dividePolar : ComplexNumberPolar Float -> ComplexNumberPolar Float -> Result String (ComplexNumberPolar Float)
+dividePolar : ComplexNumberPolar Float -> ComplexNumberPolar Float -> ComplexNumberPolar Float
 dividePolar (ComplexNumberPolar (Modulus roOne) (Theta thetaOne)) (ComplexNumberPolar (Modulus roTwo) (Theta thetaTwo)) =
-    case round roTwo of
-        0 ->
-            Err "Divisor is zero"
-
-        _ ->
-            Ok <| ComplexNumberPolar (Modulus <| roOne / roTwo) (Theta <| thetaOne - thetaTwo)
+    ComplexNumberPolar (Modulus <| roOne / roTwo) (Theta <| thetaOne - thetaTwo)
 
 
 {-| Calculate a complex number raised to a power
