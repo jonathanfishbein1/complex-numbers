@@ -174,10 +174,10 @@ subtract complexNumberOne complexNumberTwo =
 
 {-| Divide two complex numbers together
 -}
-divide : ComplexNumberCartesian Float -> ComplexNumberCartesian Float -> Result String (ComplexNumberCartesian Float)
+divide : ComplexNumberCartesian Float -> ComplexNumberCartesian Float -> ComplexNumberCartesian Float
 divide complexNumberDividend complexNumberCartesianDivisor =
     Internal.ComplexNumbers.dividePolar (convertFromCartesianToPolar complexNumberDividend) (convertFromCartesianToPolar complexNumberCartesianDivisor)
-        |> Result.map convertFromPolarToCartesian
+        |> convertFromPolarToCartesian
 
 
 {-| Calculate the modulus of a complex number
