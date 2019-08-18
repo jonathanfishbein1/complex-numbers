@@ -183,17 +183,19 @@ suite =
                 in
                 testValueOne
                     |> Expect.equal testValueTwo
-        , Test.fuzz3 Fuzz.float Fuzz.float Fuzz.float "tests ComplexNumbers polar division" <|
-            \one two three ->
+        , Test.test "tests ComplexNumbers polar division" <|
+            \_ ->
                 let
-                    dividend =
-                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus 2) (Internal.ComplexNumbers.Theta 0)
+                    complexNumberDividend =
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real 2) (ComplexNumbers.Imaginary 0)
+                            |> ComplexNumbers.convertFromCartesianToPolar
 
-                    divisor =
-                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus 1) (Internal.ComplexNumbers.Theta 1)
+                    complexNumberDivisor =
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real 1) (ComplexNumbers.Imaginary 1)
+                            |> ComplexNumbers.convertFromCartesianToPolar
 
                     quotient =
-                        Internal.ComplexNumbers.dividePolar dividend divisor
+                        Debug.log "quotient " <| Internal.ComplexNumbers.dividePolar complexNumberDividend complexNumberDivisor
 
                     quotientMod =
                         Internal.ComplexNumbers.modulusPart quotient
@@ -203,8 +205,11 @@ suite =
 
                     quotientCartesian =
                         ComplexNumbers.convertFromPolarToCartesian quotient
+
+                    expected =
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real (quotientMod * Basics.cos quotientPhase)) (ComplexNumbers.Imaginary (quotientMod * Basics.sin quotientPhase))
                 in
-                Expect.equal quotientCartesian (ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real (quotientMod * Basics.cos quotientPhase)) (ComplexNumbers.Imaginary (quotientMod * Basics.sin quotientPhase)))
+                Expect.equal quotientCartesian (Debug.log "Expected " expected)
         , Test.fuzz2 Fuzz.int Fuzz.int "tests power" <|
             \one two ->
                 let
