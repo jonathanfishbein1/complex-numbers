@@ -4,6 +4,7 @@ module ComplexNumbers exposing
     , ComplexNumberCartesian(..)
     , i
     , zero
+    , one
     , realPart
     , imaginaryPart
     , add
@@ -40,6 +41,7 @@ module ComplexNumbers exposing
 
 @docs i
 @docs zero
+@docs one
 @docs realPart
 @docs imaginaryPart
 @docs add
@@ -101,6 +103,13 @@ zero =
     ComplexNumberCartesian (Real 0) (Imaginary 0)
 
 
+{-| one
+-}
+one : ComplexNumberCartesian number
+one =
+    ComplexNumberCartesian (Real 1) (Imaginary 0)
+
+
 {-| The number i
 -}
 i : ComplexNumberCartesian number
@@ -155,7 +164,7 @@ multiply complexNumberOne complexNumberTwo =
 
 productEmpty : ComplexNumberCartesian number
 productEmpty =
-    ComplexNumberCartesian (Real 1) (Imaginary 0)
+    one
 
 
 {-| Monoidally multiply two complex numbers together
