@@ -25,6 +25,7 @@ module ComplexNumbers exposing
     , power
     , read
     , print
+    , complexField
     )
 
 {-| A module for complex numbers
@@ -66,6 +67,7 @@ module ComplexNumbers exposing
 
 -}
 
+import Field
 import Float.Extra
 import Internal.ComplexNumbers
 import Parser exposing ((|.), (|=))
@@ -268,9 +270,9 @@ equalImplementation (ComplexNumberCartesian (Real realOne) (Imaginary imaginaryO
 
 {-| Calculate a complex number raised to a power
 -}
-power : Float -> ComplexNumberCartesian Float -> ComplexNumberCartesian Float
+power : Int -> ComplexNumberCartesian Float -> ComplexNumberCartesian Float
 power n complexNumber =
-    Internal.ComplexNumbers.power n (convertFromCartesianToPolar complexNumber)
+    Internal.ComplexNumbers.power (toFloat n) (convertFromCartesianToPolar complexNumber)
         |> convertFromPolarToCartesian
 
 
@@ -347,3 +349,17 @@ positiveOrNegativeFloat =
             |= float
         , float
         ]
+
+
+{-| Field for Real numbers
+-}
+complexField : Field.Field (ComplexNumberCartesian Float)
+complexField =
+    { zero = zero
+    , one = one
+    , add = add
+    , subtract = subtract
+    , multiply = multiply
+    , divide = divide
+    , power = power
+    }
