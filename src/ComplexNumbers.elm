@@ -23,9 +23,9 @@ module ComplexNumbers exposing
     , bindCartesian
     , equal
     , power
+    , complexField
     , read
     , print
-    , complexField
     )
 
 {-| A module for complex numbers
@@ -61,6 +61,7 @@ module ComplexNumbers exposing
 @docs bindCartesian
 @docs equal
 @docs power
+@docs complexField
 
 @docs read
 @docs print
@@ -351,7 +352,7 @@ positiveOrNegativeFloat =
         ]
 
 
-{-| Field for Real numbers
+{-| Field for Complex numbers
 -}
 complexField : Field.Field (ComplexNumberCartesian Float)
 complexField =
