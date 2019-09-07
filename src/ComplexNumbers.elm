@@ -271,9 +271,9 @@ equalImplementation (ComplexNumberCartesian (Real realOne) (Imaginary imaginaryO
 
 {-| Calculate a complex number raised to a power
 -}
-power : Int -> ComplexNumberCartesian Float -> ComplexNumberCartesian Float
+power : Float -> ComplexNumberCartesian Float -> ComplexNumberCartesian Float
 power n complexNumber =
-    Internal.ComplexNumbers.power (toFloat n) (convertFromCartesianToPolar complexNumber)
+    Internal.ComplexNumbers.power n (convertFromCartesianToPolar complexNumber)
         |> convertFromPolarToCartesian
 
 
