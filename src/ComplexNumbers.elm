@@ -24,6 +24,7 @@ module ComplexNumbers exposing
     , equal
     , power
     , complexField
+    , parseComplexNumber
     , read
     , print
     )
@@ -63,6 +64,7 @@ module ComplexNumbers exposing
 @docs power
 @docs complexField
 
+@docs parseComplexNumber
 @docs read
 @docs print
 
@@ -305,6 +307,8 @@ read vectorString =
     Parser.run parseComplexNumber vectorString
 
 
+{-| Parse ComplexNumber
+-}
 parseComplexNumber : Parser.Parser (ComplexNumberCartesian Float)
 parseComplexNumber =
     Parser.succeed ComplexNumberCartesian
