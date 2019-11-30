@@ -367,4 +367,5 @@ complexField =
     , multiply = multiply
     , divide = divide
     , power = power
+    , negate = multiply (ComplexNumberCartesian (Real -1) (Imaginary 0))
     }
