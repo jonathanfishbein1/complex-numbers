@@ -10,14 +10,17 @@ import Test
 suite : Test.Test
 suite =
     Test.describe "The ComplexNumbers module"
-        [ Test.fuzz2 Fuzz.float
+        [ Test.fuzz2
+            Fuzz.float
             Fuzz.float
             "tests ComplexNumbers modulus"
           <|
             \one two ->
                 let
                     number =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+                        ComplexNumbers.ComplexNumberCartesian
+                            (ComplexNumbers.Real one)
+                            (ComplexNumbers.Imaginary two)
 
                     (ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real real) _) =
                         number
@@ -34,7 +37,8 @@ suite =
                 in
                 ComplexNumbers.modulus number
                     |> Expect.within (Expect.Absolute 0.000000001) length
-        , Test.fuzz3 (Fuzz.map toFloat (Fuzz.intRange -10 10))
+        , Test.fuzz3
+            (Fuzz.map toFloat (Fuzz.intRange -10 10))
             (Fuzz.map toFloat (Fuzz.intRange -10 10))
             (Fuzz.map toFloat (Fuzz.intRange -10 10))
             "tests |c1||c2| = |c1c2|"
@@ -42,10 +46,14 @@ suite =
             \one two three ->
                 let
                     numberOne =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+                        ComplexNumbers.ComplexNumberCartesian
+                            (ComplexNumbers.Real one)
+                            (ComplexNumbers.Imaginary two)
 
                     numberTwo =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
+                        ComplexNumbers.ComplexNumberCartesian
+                            (ComplexNumbers.Real two)
+                            (ComplexNumbers.Imaginary three)
 
                     lengthOne =
                         ComplexNumbers.modulus numberOne
@@ -61,7 +69,8 @@ suite =
                             |> ComplexNumbers.modulus
                 in
                 Expect.within (Expect.Absolute 10) productLengthOneLengthTwo modulesOfProductOfNumberOneNumberTwo
-        , Test.fuzz3 (Fuzz.map toFloat (Fuzz.intRange -10 10))
+        , Test.fuzz3
+            (Fuzz.map toFloat (Fuzz.intRange -10 10))
             (Fuzz.map toFloat (Fuzz.intRange -10 10))
             (Fuzz.map toFloat (Fuzz.intRange -10 10))
             "tests |c1 + c2| <= |c1| + |c2| (triangle inequality rule)"
@@ -69,10 +78,14 @@ suite =
             \one two three ->
                 let
                     numberOne =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+                        ComplexNumbers.ComplexNumberCartesian
+                            (ComplexNumbers.Real one)
+                            (ComplexNumbers.Imaginary two)
 
                     numberTwo =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
+                        ComplexNumbers.ComplexNumberCartesian
+                            (ComplexNumbers.Real two)
+                            (ComplexNumbers.Imaginary three)
 
                     modulesOfSumOfNumberOneNumberTwo =
                         ComplexNumbers.add numberOne numberTwo
@@ -88,34 +101,48 @@ suite =
                         modulusOne + modulusTwo
                 in
                 modulesOfSumOfNumberOneNumberTwo |> Expect.atMost sumLengthOneLengthTwo
-        , Test.fuzz2 Fuzz.float
+        , Test.fuzz2
+            Fuzz.float
             Fuzz.float
             "tests ComplexNumbers conjugate"
           <|
             \real imaginary ->
                 let
                     testValue =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
+                        ComplexNumbers.ComplexNumberCartesian
+                            (ComplexNumbers.Real real)
+                            (ComplexNumbers.Imaginary imaginary)
 
                     expected =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real <| real) (ComplexNumbers.Imaginary <| -imaginary)
+                        ComplexNumbers.ComplexNumberCartesian
+                            (ComplexNumbers.Real <| real)
+                            (ComplexNumbers.Imaginary <| -imaginary)
                 in
                 ComplexNumbers.conjugate testValue
                     |> Expect.equal expected
-        , Test.fuzz2 Fuzz.float Fuzz.float "tests ComplexNumbers conjugate of conjugate equals original CompleNumber" <|
+        , Test.fuzz2
+            Fuzz.float
+            Fuzz.float
+            "tests ComplexNumbers conjugate of conjugate equals original CompleNumber"
+          <|
             \real imaginary ->
                 let
                     testValue =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
+                        ComplexNumbers.ComplexNumberCartesian
+                            (ComplexNumbers.Real real)
+                            (ComplexNumbers.Imaginary imaginary)
 
                     conjugate =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real <| real) (ComplexNumbers.Imaginary <| -imaginary)
+                        ComplexNumbers.ComplexNumberCartesian
+                            (ComplexNumbers.Real <| real)
+                            (ComplexNumbers.Imaginary <| -imaginary)
 
                     conjugateConjugate =
                         ComplexNumbers.conjugate conjugate
                 in
                 Expect.equal conjugateConjugate testValue
-        , Test.fuzz3 Fuzz.int
+        , Test.fuzz3
+            Fuzz.int
             Fuzz.int
             Fuzz.int
             "tests conjugation respects addition"
@@ -123,10 +150,14 @@ suite =
             \one two three ->
                 let
                     numberOne =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+                        ComplexNumbers.ComplexNumberCartesian
+                            (ComplexNumbers.Real one)
+                            (ComplexNumbers.Imaginary two)
 
                     numberTwo =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
+                        ComplexNumbers.ComplexNumberCartesian
+                            (ComplexNumbers.Real two)
+                            (ComplexNumbers.Imaginary three)
 
                     conjugateOne =
                         ComplexNumbers.conjugate numberOne
@@ -144,7 +175,8 @@ suite =
                         ComplexNumbers.conjugate sumOfNumberOneNumberTwo
                 in
                 Expect.equal sumOfconjugateOneconjugateTwo conjugateOfsumOfNumberOneNumberTwo
-        , Test.fuzz3 Fuzz.int
+        , Test.fuzz3
+            Fuzz.int
             Fuzz.int
             Fuzz.int
             "tests conjugation respects multiplication"
@@ -152,10 +184,14 @@ suite =
             \one two three ->
                 let
                     numberOne =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+                        ComplexNumbers.ComplexNumberCartesian
+                            (ComplexNumbers.Real one)
+                            (ComplexNumbers.Imaginary two)
 
                     numberTwo =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
+                        ComplexNumbers.ComplexNumberCartesian
+                            (ComplexNumbers.Real two)
+                            (ComplexNumbers.Imaginary three)
 
                     conjugateOne =
                         ComplexNumbers.conjugate numberOne
@@ -173,14 +209,17 @@ suite =
                         ComplexNumbers.conjugate productOfNumberOneNumberTwo
                 in
                 Expect.equal productOfconjugateOneconjugateTwo conjugateOfproductOfNumberOneNumberTwo
-        , Test.fuzz2 (Fuzz.map toFloat (Fuzz.intRange -10 10))
+        , Test.fuzz2
+            (Fuzz.map toFloat (Fuzz.intRange -10 10))
             (Fuzz.map toFloat (Fuzz.intRange -10 10))
             "tests complex conjugates multiplied equals modulus squared"
           <|
             \real imaginary ->
                 let
                     testValue =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
+                        ComplexNumbers.ComplexNumberCartesian
+                            (ComplexNumbers.Real real)
+                            (ComplexNumbers.Imaginary imaginary)
 
                     conjugate =
                         ComplexNumbers.conjugate testValue
@@ -193,14 +232,17 @@ suite =
                         ComplexNumbers.modulus testValue ^ 2
                 in
                 Expect.within (Expect.Absolute 0.000000001) producttestValueconjugate expected
-        , Test.fuzz2 (Fuzz.map toFloat (Fuzz.intRange -10 10))
+        , Test.fuzz2
+            (Fuzz.map toFloat (Fuzz.intRange -10 10))
             (Fuzz.map toFloat (Fuzz.intRange -10 10))
             "tests convertFromCartesianToPolar |> convertFromPolarToCartesian round trips"
           <|
             \real imaginary ->
                 let
                     cartesianTestValue =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
+                        ComplexNumbers.ComplexNumberCartesian
+                            (ComplexNumbers.Real real)
+                            (ComplexNumbers.Imaginary imaginary)
 
                     polarTestValue =
                         ComplexNumbers.convertFromCartesianToPolar cartesianTestValue
@@ -212,7 +254,8 @@ suite =
                         ComplexNumbers.equal cartesianTestValue conversionResult
                 in
                 Expect.true "Should be equal" result
-        , Test.fuzz3 Fuzz.float
+        , Test.fuzz3
+            Fuzz.float
             Fuzz.float
             Fuzz.float
             "tests ComplexNumbers polar multiplication is commutative"
@@ -220,10 +263,14 @@ suite =
             \one two three ->
                 let
                     a =
-                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus one) (Internal.ComplexNumbers.Theta two)
+                        Internal.ComplexNumbers.ComplexNumberPolar
+                            (Internal.ComplexNumbers.Modulus one)
+                            (Internal.ComplexNumbers.Theta two)
 
                     b =
-                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus two) (Internal.ComplexNumbers.Theta three)
+                        Internal.ComplexNumbers.ComplexNumberPolar
+                            (Internal.ComplexNumbers.Modulus two)
+                            (Internal.ComplexNumbers.Theta three)
 
                     testValueOne =
                         Internal.ComplexNumbers.multiplyPolar a b
@@ -233,7 +280,8 @@ suite =
                 in
                 testValueOne
                     |> Expect.equal testValueTwo
-        , Test.fuzz3 (Fuzz.intRange -10 10)
+        , Test.fuzz3
+            (Fuzz.intRange -10 10)
             (Fuzz.intRange -10 10)
             (Fuzz.intRange -10 10)
             "tests ComplexNumbers polar multiplication is associative"
@@ -241,16 +289,24 @@ suite =
             \one two three ->
                 let
                     a =
-                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus one) (Internal.ComplexNumbers.Theta two)
+                        Internal.ComplexNumbers.ComplexNumberPolar
+                            (Internal.ComplexNumbers.Modulus one)
+                            (Internal.ComplexNumbers.Theta two)
 
                     b =
-                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus two) (Internal.ComplexNumbers.Theta three)
+                        Internal.ComplexNumbers.ComplexNumberPolar
+                            (Internal.ComplexNumbers.Modulus two)
+                            (Internal.ComplexNumbers.Theta three)
 
                     c =
-                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus one) (Internal.ComplexNumbers.Theta three)
+                        Internal.ComplexNumbers.ComplexNumberPolar
+                            (Internal.ComplexNumbers.Modulus one)
+                            (Internal.ComplexNumbers.Theta three)
 
                     testValueOne =
-                        Internal.ComplexNumbers.multiplyPolar (Internal.ComplexNumbers.multiplyPolar a b) c
+                        Internal.ComplexNumbers.multiplyPolar
+                            (Internal.ComplexNumbers.multiplyPolar a b)
+                            c
 
                     testValueTwo =
                         Internal.ComplexNumbers.multiplyPolar a (Internal.ComplexNumbers.multiplyPolar b c)
@@ -288,14 +344,17 @@ suite =
                             (ComplexNumbers.Imaginary (quotientMod * Basics.sin quotientPhase))
                 in
                 Expect.equal quotientCartesian expected
-        , Test.fuzz2 Fuzz.int
+        , Test.fuzz2
+            Fuzz.int
             Fuzz.int
             "tests power"
           <|
             \one two ->
                 let
                     complexNumber =
-                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus one) (Internal.ComplexNumbers.Theta two)
+                        Internal.ComplexNumbers.ComplexNumberPolar
+                            (Internal.ComplexNumbers.Modulus one)
+                            (Internal.ComplexNumbers.Theta two)
 
                     powerResult =
                         Internal.ComplexNumbers.power 2 complexNumber
@@ -305,14 +364,17 @@ suite =
                 in
                 powerResult
                     |> Expect.equal productResult
-        , Test.fuzz2 Fuzz.float
+        , Test.fuzz2
+            Fuzz.float
             Fuzz.float
             "print ComplexNumberCartesian"
           <|
             \one two ->
                 let
                     complexNumber =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+                        ComplexNumbers.ComplexNumberCartesian
+                            (ComplexNumbers.Real one)
+                            (ComplexNumbers.Imaginary two)
 
                     printedComplexNumber =
                         ComplexNumbers.print complexNumber

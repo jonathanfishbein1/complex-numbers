@@ -10,33 +10,51 @@ import Test
 suite : Test.Test
 suite =
     Test.describe "The ComplexNumbers Functor abstraction"
-        [ Test.fuzz2 Fuzz.int Fuzz.int "tests ComplexNumbers map identity" <|
+        [ Test.fuzz2
+            Fuzz.int
+            Fuzz.int
+            "tests ComplexNumbers map identity"
+          <|
             \one two ->
                 let
                     complexNumber =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+                        ComplexNumbers.ComplexNumberCartesian
+                            (ComplexNumbers.Real one)
+                            (ComplexNumbers.Imaginary two)
 
                     mapResult =
                         ComplexNumbers.mapCartesian identity complexNumber
                 in
                 mapResult
                     |> Expect.equal complexNumber
-        , Test.fuzz2 Fuzz.int Fuzz.int "tests ComplexNumbers map identity polar representation" <|
+        , Test.fuzz2
+            Fuzz.int
+            Fuzz.int
+            "tests ComplexNumbers map identity polar representation"
+          <|
             \one two ->
                 let
                     complexNumber =
-                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus one) (Internal.ComplexNumbers.Theta two)
+                        Internal.ComplexNumbers.ComplexNumberPolar
+                            (Internal.ComplexNumbers.Modulus one)
+                            (Internal.ComplexNumbers.Theta two)
 
                     mapResult =
                         Internal.ComplexNumbers.mapPolar identity complexNumber
                 in
                 mapResult
                     |> Expect.equal complexNumber
-        , Test.fuzz2 Fuzz.int Fuzz.int "tests ComplexNumbers Functor composition" <|
+        , Test.fuzz2
+            Fuzz.int
+            Fuzz.int
+            "tests ComplexNumbers Functor composition"
+          <|
             \one two ->
                 let
                     complexNumber =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+                        ComplexNumbers.ComplexNumberCartesian
+                            (ComplexNumbers.Real one)
+                            (ComplexNumbers.Imaginary two)
 
                     f =
                         (*) 2
@@ -52,11 +70,17 @@ suite =
                 in
                 mapResult
                     |> Expect.equal (ComplexNumbers.mapCartesian f (ComplexNumbers.mapCartesian g complexNumber))
-        , Test.fuzz2 Fuzz.int Fuzz.int "tests ComplexNumbers Functor composition polar representation" <|
+        , Test.fuzz2
+            Fuzz.int
+            Fuzz.int
+            "tests ComplexNumbers Functor composition polar representation"
+          <|
             \one two ->
                 let
                     complexNumber =
-                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus one) (Internal.ComplexNumbers.Theta two)
+                        Internal.ComplexNumbers.ComplexNumberPolar
+                            (Internal.ComplexNumbers.Modulus one)
+                            (Internal.ComplexNumbers.Theta two)
 
                     f =
                         (*) 2

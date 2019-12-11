@@ -12,20 +12,30 @@ suite =
     Test.describe "The ComplexNumbers Monad abstraction"
         [ Test.describe
             "ComplexNumbers Cartesian Monad tests"
-            [ Test.fuzz Fuzz.int "tests ComplexNumbers Monad left identity" <|
+            [ Test.fuzz
+                Fuzz.int
+                "tests ComplexNumbers Monad left identity"
+              <|
                 \one ->
                     let
                         f a =
-                            ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real <| a * 2) (ComplexNumbers.Imaginary <| a * 2)
+                            ComplexNumbers.ComplexNumberCartesian
+                                (ComplexNumbers.Real <| a * 2)
+                                (ComplexNumbers.Imaginary <| a * 2)
 
                         leftSide =
-                            ComplexNumbers.bindCartesian (ComplexNumbers.pureCartesian one) f
+                            ComplexNumbers.bindCartesian
+                                (ComplexNumbers.pureCartesian one)
+                                f
 
                         rightSide =
                             f one
                     in
                     Expect.equal leftSide rightSide
-            , Test.fuzz Fuzz.int "tests ComplexNumbers Cartesian Monad right identity" <|
+            , Test.fuzz
+                Fuzz.int
+                "tests ComplexNumbers Cartesian Monad right identity"
+              <|
                 \one ->
                     let
                         m =
@@ -35,20 +45,29 @@ suite =
                             ComplexNumbers.bindCartesian m ComplexNumbers.pureCartesian
                     in
                     Expect.equal leftSide m
-            , Test.fuzz Fuzz.int "tests ComplexNumbers Cartesian Monad associativity" <|
+            , Test.fuzz
+                Fuzz.int
+                "tests ComplexNumbers Cartesian Monad associativity"
+              <|
                 \one ->
                     let
                         m =
                             ComplexNumbers.pureCartesian one
 
                         f a =
-                            ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real <| a * 2) (ComplexNumbers.Imaginary <| a * 2)
+                            ComplexNumbers.ComplexNumberCartesian
+                                (ComplexNumbers.Real <| a * 2)
+                                (ComplexNumbers.Imaginary <| a * 2)
 
                         g a =
-                            ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real <| a * 3) (ComplexNumbers.Imaginary <| a * 3)
+                            ComplexNumbers.ComplexNumberCartesian
+                                (ComplexNumbers.Real <| a * 3)
+                                (ComplexNumbers.Imaginary <| a * 3)
 
                         leftSide =
-                            ComplexNumbers.bindCartesian (ComplexNumbers.bindCartesian m f) g
+                            ComplexNumbers.bindCartesian
+                                (ComplexNumbers.bindCartesian m f)
+                                g
 
                         rightSide =
                             ComplexNumbers.bindCartesian m (\x -> ComplexNumbers.bindCartesian (f x) g)
@@ -57,20 +76,30 @@ suite =
             ]
         , Test.describe
             "ComplexNumbers Polar Monad tests"
-            [ Test.fuzz Fuzz.int "tests ComplexNumbers Monad left identity" <|
+            [ Test.fuzz
+                Fuzz.int
+                "tests ComplexNumbers Monad left identity"
+              <|
                 \one ->
                     let
                         f a =
-                            Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus <| a * 2) (Internal.ComplexNumbers.Theta <| a * 2)
+                            Internal.ComplexNumbers.ComplexNumberPolar
+                                (Internal.ComplexNumbers.Modulus <| a * 2)
+                                (Internal.ComplexNumbers.Theta <| a * 2)
 
                         leftSide =
-                            Internal.ComplexNumbers.bindPolar (Internal.ComplexNumbers.purePolar one) f
+                            Internal.ComplexNumbers.bindPolar
+                                (Internal.ComplexNumbers.purePolar one)
+                                f
 
                         rightSide =
                             f one
                     in
                     Expect.equal leftSide rightSide
-            , Test.fuzz Fuzz.int "tests ComplexNumbers Polar Monad right identity" <|
+            , Test.fuzz
+                Fuzz.int
+                "tests ComplexNumbers Polar Monad right identity"
+              <|
                 \one ->
                     let
                         m =
@@ -80,20 +109,29 @@ suite =
                             Internal.ComplexNumbers.bindPolar m Internal.ComplexNumbers.purePolar
                     in
                     Expect.equal leftSide m
-            , Test.fuzz Fuzz.int "tests ComplexNumbers Polar Monad associativity" <|
+            , Test.fuzz
+                Fuzz.int
+                "tests ComplexNumbers Polar Monad associativity"
+              <|
                 \one ->
                     let
                         m =
                             Internal.ComplexNumbers.purePolar one
 
                         f a =
-                            Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus <| a * 2) (Internal.ComplexNumbers.Theta <| a * 2)
+                            Internal.ComplexNumbers.ComplexNumberPolar
+                                (Internal.ComplexNumbers.Modulus <| a * 2)
+                                (Internal.ComplexNumbers.Theta <| a * 2)
 
                         g a =
-                            Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus <| a * 3) (Internal.ComplexNumbers.Theta <| a * 3)
+                            Internal.ComplexNumbers.ComplexNumberPolar
+                                (Internal.ComplexNumbers.Modulus <| a * 3)
+                                (Internal.ComplexNumbers.Theta <| a * 3)
 
                         leftSide =
-                            Internal.ComplexNumbers.bindPolar (Internal.ComplexNumbers.bindPolar m f) g
+                            Internal.ComplexNumbers.bindPolar
+                                (Internal.ComplexNumbers.bindPolar m f)
+                                g
 
                         rightSide =
                             Internal.ComplexNumbers.bindPolar m (\x -> Internal.ComplexNumbers.bindPolar (f x) g)

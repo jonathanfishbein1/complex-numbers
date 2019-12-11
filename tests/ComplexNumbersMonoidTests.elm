@@ -10,7 +10,8 @@ import Test
 suite : Test.Test
 suite =
     Test.describe "The ComplexNumbers module"
-        [ Test.fuzz2 Fuzz.float
+        [ Test.fuzz2
+            Fuzz.float
             Fuzz.float
             "tests ComplexNumberCartesian empty or identity value for sum"
           <|
@@ -21,7 +22,8 @@ suite =
                 in
                 ComplexNumbers.sum.semigroup.prepend expected ComplexNumbers.sum.identity
                     |> Expect.equal expected
-        , Test.fuzz3 Fuzz.int
+        , Test.fuzz3
+            Fuzz.int
             Fuzz.int
             Fuzz.int
             "tests monoidally add"
@@ -29,13 +31,19 @@ suite =
             \one two three ->
                 let
                     a =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+                        ComplexNumbers.ComplexNumberCartesian
+                            (ComplexNumbers.Real one)
+                            (ComplexNumbers.Imaginary two)
 
                     b =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
+                        ComplexNumbers.ComplexNumberCartesian
+                            (ComplexNumbers.Real two)
+                            (ComplexNumbers.Imaginary three)
 
                     c =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary three)
+                        ComplexNumbers.ComplexNumberCartesian
+                            (ComplexNumbers.Real one)
+                            (ComplexNumbers.Imaginary three)
 
                     expected =
                         ComplexNumbers.add (ComplexNumbers.add a b) c
@@ -45,7 +53,8 @@ suite =
                 in
                 ComplexNumbers.sum.concat listOfMonoids
                     |> Expect.equal expected
-        , Test.fuzz2 (Fuzz.map toFloat (Fuzz.intRange -10 10))
+        , Test.fuzz2
+            (Fuzz.map toFloat (Fuzz.intRange -10 10))
             (Fuzz.map toFloat (Fuzz.intRange -10 10))
             "tests ComplexNumberCartesian empty or identity value for product"
           <|
@@ -58,7 +67,8 @@ suite =
                         ComplexNumbers.equal (ComplexNumbers.product.semigroup.prepend expected ComplexNumbers.product.identity) expected
                 in
                 Expect.true "equal" result
-        , Test.fuzz3 (Fuzz.map toFloat (Fuzz.intRange -10 10))
+        , Test.fuzz3
+            (Fuzz.map toFloat (Fuzz.intRange -10 10))
             (Fuzz.map toFloat (Fuzz.intRange -10 10))
             (Fuzz.map toFloat (Fuzz.intRange -10 10))
             "tests monoidally product"
@@ -66,13 +76,19 @@ suite =
             \one two three ->
                 let
                     a =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+                        ComplexNumbers.ComplexNumberCartesian
+                            (ComplexNumbers.Real one)
+                            (ComplexNumbers.Imaginary two)
 
                     b =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
+                        ComplexNumbers.ComplexNumberCartesian
+                            (ComplexNumbers.Real two)
+                            (ComplexNumbers.Imaginary three)
 
                     c =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary three)
+                        ComplexNumbers.ComplexNumberCartesian
+                            (ComplexNumbers.Real one)
+                            (ComplexNumbers.Imaginary three)
 
                     expected =
                         ComplexNumbers.multiply (ComplexNumbers.multiply a b) c
