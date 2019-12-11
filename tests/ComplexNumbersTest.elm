@@ -233,7 +233,7 @@ suite =
                             |> ComplexNumbers.convertFromCartesianToPolar
 
                     quotient =
-                        Debug.log "quotient " <| Internal.ComplexNumbers.dividePolar complexNumberDividend complexNumberDivisor
+                        Internal.ComplexNumbers.dividePolar complexNumberDividend complexNumberDivisor
 
                     quotientMod =
                         Internal.ComplexNumbers.modulusPart quotient
@@ -247,7 +247,7 @@ suite =
                     expected =
                         ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real (quotientMod * Basics.cos quotientPhase)) (ComplexNumbers.Imaginary (quotientMod * Basics.sin quotientPhase))
                 in
-                Expect.equal quotientCartesian (Debug.log "Expected " expected)
+                Expect.equal quotientCartesian expected
         , Test.fuzz2 Fuzz.int Fuzz.int "tests power" <|
             \one two ->
                 let
