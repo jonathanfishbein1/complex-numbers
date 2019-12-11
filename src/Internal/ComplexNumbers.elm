@@ -50,14 +50,20 @@ thetaPart (ComplexNumberPolar _ (Theta theta)) =
 
 {-| Multiply two complex numbers in polar representations together
 -}
-multiplyPolar : ComplexNumberPolar number -> ComplexNumberPolar number -> ComplexNumberPolar number
+multiplyPolar :
+    ComplexNumberPolar number
+    -> ComplexNumberPolar number
+    -> ComplexNumberPolar number
 multiplyPolar (ComplexNumberPolar (Modulus roOne) (Theta thetaOne)) (ComplexNumberPolar (Modulus roTwo) (Theta thetaTwo)) =
     ComplexNumberPolar (Modulus <| roOne * roTwo) (Theta <| thetaOne + thetaTwo)
 
 
 {-| Divide two complex numbers in polar representations together
 -}
-dividePolar : ComplexNumberPolar Float -> ComplexNumberPolar Float -> ComplexNumberPolar Float
+dividePolar :
+    ComplexNumberPolar Float
+    -> ComplexNumberPolar Float
+    -> ComplexNumberPolar Float
 dividePolar (ComplexNumberPolar (Modulus roOne) (Theta thetaOne)) (ComplexNumberPolar (Modulus roTwo) (Theta thetaTwo)) =
     ComplexNumberPolar (Modulus <| roOne / roTwo) (Theta <| thetaOne - thetaTwo)
 
@@ -85,18 +91,28 @@ purePolar a =
 
 {-| Apply for Complex Number polar representaiton applicative
 -}
-applyPolar : ComplexNumberPolar (a -> b) -> ComplexNumberPolar a -> ComplexNumberPolar b
+applyPolar :
+    ComplexNumberPolar (a -> b)
+    -> ComplexNumberPolar a
+    -> ComplexNumberPolar b
 applyPolar (ComplexNumberPolar (Modulus fRo) (Theta fTheta)) (ComplexNumberPolar (Modulus ro) (Theta theta)) =
     ComplexNumberPolar (Modulus <| fRo ro) (Theta <| fTheta theta)
 
 
 {-| Monadic bind for Complex Number polar representaiton
 -}
-bindPolar : ComplexNumberPolar a -> (a -> ComplexNumberPolar b) -> ComplexNumberPolar b
+bindPolar :
+    ComplexNumberPolar a
+    -> (a -> ComplexNumberPolar b)
+    -> ComplexNumberPolar b
 bindPolar (ComplexNumberPolar (Modulus previousModulus) (Theta previousTheta)) f =
     ComplexNumberPolar (Modulus <| modulusPart <| f previousModulus) (Theta <| thetaPart <| f previousTheta)
 
 
-liftPolar : (a -> b -> c) -> ComplexNumberPolar a -> ComplexNumberPolar b -> ComplexNumberPolar c
+liftPolar :
+    (a -> b -> c)
+    -> ComplexNumberPolar a
+    -> ComplexNumberPolar b
+    -> ComplexNumberPolar c
 liftPolar f a b =
     applyPolar (mapPolar f a) b
