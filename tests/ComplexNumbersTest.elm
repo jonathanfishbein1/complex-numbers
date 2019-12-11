@@ -113,6 +113,31 @@ suite =
                         ComplexNumbers.conjugate sumOfNumberOneNumberTwo
                 in
                 Expect.equal sumOfconjugateOneconjugateTwo conjugateOfsumOfNumberOneNumberTwo
+        , Test.fuzz3 Fuzz.int Fuzz.int Fuzz.int "tests conjugation respects multiplication" <|
+            \one two three ->
+                let
+                    numberOne =
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+
+                    numberTwo =
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
+
+                    conjugateOne =
+                        ComplexNumbers.conjugate numberOne
+
+                    conjugateTwo =
+                        ComplexNumbers.conjugate numberTwo
+
+                    productOfconjugateOneconjugateTwo =
+                        ComplexNumbers.add conjugateOne conjugateTwo
+
+                    productOfNumberOneNumberTwo =
+                        ComplexNumbers.add numberOne numberTwo
+
+                    conjugateOfproductOfNumberOneNumberTwo =
+                        ComplexNumbers.conjugate productOfNumberOneNumberTwo
+                in
+                Expect.equal productOfconjugateOneconjugateTwo conjugateOfproductOfNumberOneNumberTwo
         , Test.fuzz2 (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) "tests complex conjugates multiplied equals modulus squared" <|
             \real imaginary ->
                 let
