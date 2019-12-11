@@ -75,7 +75,11 @@ suite =
                 in
                 testValueOne
                     |> Expect.equal testValueTwo
-        , Test.fuzz3 (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) "tests ComplexNumbers multiplication is associative" <|
+        , Test.fuzz3 (Fuzz.map toFloat (Fuzz.intRange -10 10))
+            (Fuzz.map toFloat (Fuzz.intRange -10 10))
+            (Fuzz.map toFloat (Fuzz.intRange -10 10))
+            "tests ComplexNumbers multiplication is associative"
+          <|
             \one two three ->
                 let
                     a =
@@ -105,7 +109,11 @@ suite =
                 in
                 ComplexNumbers.add testValue ComplexNumbers.zero
                     |> Expect.equal testValue
-        , Test.fuzz3 (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) "tests ComplexNumbers multiplication distributes over addition" <|
+        , Test.fuzz3 (Fuzz.map toFloat (Fuzz.intRange -10 10))
+            (Fuzz.map toFloat (Fuzz.intRange -10 10))
+            (Fuzz.map toFloat (Fuzz.intRange -10 10))
+            "tests ComplexNumbers multiplication distributes over addition"
+          <|
             \one two three ->
                 let
                     a =

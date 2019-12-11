@@ -10,7 +10,10 @@ import Test
 suite : Test.Test
 suite =
     Test.describe "The ComplexNumbers module"
-        [ Test.fuzz2 Fuzz.float Fuzz.float "tests ComplexNumbers modulus" <|
+        [ Test.fuzz2 Fuzz.float
+            Fuzz.float
+            "tests ComplexNumbers modulus"
+          <|
             \one two ->
                 let
                     number =
@@ -85,7 +88,10 @@ suite =
                         modulusOne + modulusTwo
                 in
                 modulesOfSumOfNumberOneNumberTwo |> Expect.atMost sumLengthOneLengthTwo
-        , Test.fuzz2 Fuzz.float Fuzz.float "tests ComplexNumbers conjugate" <|
+        , Test.fuzz2 Fuzz.float
+            Fuzz.float
+            "tests ComplexNumbers conjugate"
+          <|
             \real imaginary ->
                 let
                     testValue =
@@ -109,7 +115,11 @@ suite =
                         ComplexNumbers.conjugate conjugate
                 in
                 Expect.equal conjugateConjugate testValue
-        , Test.fuzz3 Fuzz.int Fuzz.int Fuzz.int "tests conjugation respects addition" <|
+        , Test.fuzz3 Fuzz.int
+            Fuzz.int
+            Fuzz.int
+            "tests conjugation respects addition"
+          <|
             \one two three ->
                 let
                     numberOne =
@@ -134,7 +144,11 @@ suite =
                         ComplexNumbers.conjugate sumOfNumberOneNumberTwo
                 in
                 Expect.equal sumOfconjugateOneconjugateTwo conjugateOfsumOfNumberOneNumberTwo
-        , Test.fuzz3 Fuzz.int Fuzz.int Fuzz.int "tests conjugation respects multiplication" <|
+        , Test.fuzz3 Fuzz.int
+            Fuzz.int
+            Fuzz.int
+            "tests conjugation respects multiplication"
+          <|
             \one two three ->
                 let
                     numberOne =
@@ -198,7 +212,11 @@ suite =
                         ComplexNumbers.equal cartesianTestValue conversionResult
                 in
                 Expect.true "Should be equal" result
-        , Test.fuzz3 Fuzz.float Fuzz.float Fuzz.float "tests ComplexNumbers polar multiplication is commutative" <|
+        , Test.fuzz3 Fuzz.float
+            Fuzz.float
+            Fuzz.float
+            "tests ComplexNumbers polar multiplication is commutative"
+          <|
             \one two three ->
                 let
                     a =
@@ -239,7 +257,9 @@ suite =
                 in
                 testValueOne
                     |> Expect.equal testValueTwo
-        , Test.test "tests ComplexNumbers polar division" <|
+        , Test.test
+            "tests ComplexNumbers polar division"
+          <|
             \_ ->
                 let
                     complexNumberDividend =
@@ -268,7 +288,10 @@ suite =
                             (ComplexNumbers.Imaginary (quotientMod * Basics.sin quotientPhase))
                 in
                 Expect.equal quotientCartesian expected
-        , Test.fuzz2 Fuzz.int Fuzz.int "tests power" <|
+        , Test.fuzz2 Fuzz.int
+            Fuzz.int
+            "tests power"
+          <|
             \one two ->
                 let
                     complexNumber =
@@ -282,7 +305,10 @@ suite =
                 in
                 powerResult
                     |> Expect.equal productResult
-        , Test.fuzz2 Fuzz.float Fuzz.float "print ComplexNumberCartesian" <|
+        , Test.fuzz2 Fuzz.float
+            Fuzz.float
+            "print ComplexNumberCartesian"
+          <|
             \one two ->
                 let
                     complexNumber =
