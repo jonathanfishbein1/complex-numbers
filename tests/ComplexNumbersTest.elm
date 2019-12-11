@@ -31,7 +31,11 @@ suite =
                 in
                 ComplexNumbers.modulus number
                     |> Expect.within (Expect.Absolute 0.000000001) length
-        , Test.fuzz3 (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) "tests |c1||c2| = |c1c2|" <|
+        , Test.fuzz3 (Fuzz.map toFloat (Fuzz.intRange -10 10))
+            (Fuzz.map toFloat (Fuzz.intRange -10 10))
+            (Fuzz.map toFloat (Fuzz.intRange -10 10))
+            "tests |c1||c2| = |c1c2|"
+          <|
             \one two three ->
                 let
                     numberOne =
@@ -54,7 +58,11 @@ suite =
                             |> ComplexNumbers.modulus
                 in
                 Expect.within (Expect.Absolute 10) productLengthOneLengthTwo modulesOfProductOfNumberOneNumberTwo
-        , Test.fuzz3 (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) "tests |c1 + c2| <= |c1| + |c2| (triangle inequality rule)" <|
+        , Test.fuzz3 (Fuzz.map toFloat (Fuzz.intRange -10 10))
+            (Fuzz.map toFloat (Fuzz.intRange -10 10))
+            (Fuzz.map toFloat (Fuzz.intRange -10 10))
+            "tests |c1 + c2| <= |c1| + |c2| (triangle inequality rule)"
+          <|
             \one two three ->
                 let
                     numberOne =
@@ -151,7 +159,10 @@ suite =
                         ComplexNumbers.conjugate productOfNumberOneNumberTwo
                 in
                 Expect.equal productOfconjugateOneconjugateTwo conjugateOfproductOfNumberOneNumberTwo
-        , Test.fuzz2 (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) "tests complex conjugates multiplied equals modulus squared" <|
+        , Test.fuzz2 (Fuzz.map toFloat (Fuzz.intRange -10 10))
+            (Fuzz.map toFloat (Fuzz.intRange -10 10))
+            "tests complex conjugates multiplied equals modulus squared"
+          <|
             \real imaginary ->
                 let
                     testValue =
@@ -168,7 +179,10 @@ suite =
                         ComplexNumbers.modulus testValue ^ 2
                 in
                 Expect.within (Expect.Absolute 0.000000001) producttestValueconjugate expected
-        , Test.fuzz2 (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) "tests convertFromCartesianToPolar |> convertFromPolarToCartesian round trips" <|
+        , Test.fuzz2 (Fuzz.map toFloat (Fuzz.intRange -10 10))
+            (Fuzz.map toFloat (Fuzz.intRange -10 10))
+            "tests convertFromCartesianToPolar |> convertFromPolarToCartesian round trips"
+          <|
             \real imaginary ->
                 let
                     cartesianTestValue =
@@ -201,7 +215,11 @@ suite =
                 in
                 testValueOne
                     |> Expect.equal testValueTwo
-        , Test.fuzz3 (Fuzz.intRange -10 10) (Fuzz.intRange -10 10) (Fuzz.intRange -10 10) "tests ComplexNumbers polar multiplication is associative" <|
+        , Test.fuzz3 (Fuzz.intRange -10 10)
+            (Fuzz.intRange -10 10)
+            (Fuzz.intRange -10 10)
+            "tests ComplexNumbers polar multiplication is associative"
+          <|
             \one two three ->
                 let
                     a =
@@ -245,7 +263,9 @@ suite =
                         ComplexNumbers.convertFromPolarToCartesian quotient
 
                     expected =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real (quotientMod * Basics.cos quotientPhase)) (ComplexNumbers.Imaginary (quotientMod * Basics.sin quotientPhase))
+                        ComplexNumbers.ComplexNumberCartesian
+                            (ComplexNumbers.Real (quotientMod * Basics.cos quotientPhase))
+                            (ComplexNumbers.Imaginary (quotientMod * Basics.sin quotientPhase))
                 in
                 Expect.equal quotientCartesian expected
         , Test.fuzz2 Fuzz.int Fuzz.int "tests power" <|
