@@ -142,26 +142,4 @@ suite =
                 in
                 ComplexNumbers.subtract testValue zero
                     |> Expect.equal expected
-
-        -- , Test.fuzz3 Fuzz.float Fuzz.float Fuzz.float "tests ComplexNumbers division" <|
-        --     \one two three ->
-        --         let
-        --             dividend =
-        --                 ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
-        --             divisor =
-        --                 ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
-        --             (ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real realDivisor) _) =
-        --                 divisor
-        --             (ComplexNumbers.ComplexNumberCartesian _ (ComplexNumbers.Imaginary imaginaryDivisor)) =
-        --                 divisor
-        --             ( ro, theta ) =
-        --                 toPolar ( two, three )
-        --             quotient =
-        --                 ComplexNumbers.divide dividend divisor
-        --         in
-        --         case round ro of
-        --             0 ->
-        --                 Expect.err quotient
-        --             _ ->
-        --                 Expect.ok quotient
         ]

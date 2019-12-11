@@ -88,6 +88,19 @@ suite =
                 in
                 ComplexNumbers.conjugate testValue
                     |> Expect.equal expected
+        , Test.fuzz2 Fuzz.float Fuzz.float "tests ComplexNumbers conjugate of conjugate equals original CompleNumber" <|
+            \real imaginary ->
+                let
+                    testValue =
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
+
+                    conjugate =
+                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real <| real) (ComplexNumbers.Imaginary <| -imaginary)
+
+                    conjugateConjugate =
+                        ComplexNumbers.conjugate conjugate
+                in
+                Expect.equal conjugateConjugate testValue
         , Test.fuzz3 Fuzz.int Fuzz.int Fuzz.int "tests conjugation respects addition" <|
             \one two three ->
                 let
