@@ -212,7 +212,7 @@ suite =
         , Test.fuzz2
             (Fuzz.map toFloat (Fuzz.intRange -10 10))
             (Fuzz.map toFloat (Fuzz.intRange -10 10))
-            "tests complex conjugates multiplied equals modulus squared"
+            "tests complex number multipled by conjugate equals modulus squared"
           <|
             \real imaginary ->
                 let
@@ -232,6 +232,38 @@ suite =
                         ComplexNumbers.modulus testValue ^ 2
                 in
                 Expect.within (Expect.Absolute 0.000000001) producttestValueconjugate expected
+        , Test.fuzz2
+            (Fuzz.map toFloat (Fuzz.intRange 1 10))
+            (Fuzz.map toFloat (Fuzz.intRange 1 10))
+            "tests reciprocal of complex number equals conjugate divided by modules squared"
+          <|
+            \real imaginary ->
+                let
+                    testValue =
+                        ComplexNumbers.ComplexNumberCartesian
+                            (ComplexNumbers.Real real)
+                            (ComplexNumbers.Imaginary imaginary)
+
+                    reciprocal =
+                        ComplexNumbers.divide ComplexNumbers.one testValue
+
+                    conjugate =
+                        ComplexNumbers.conjugate testValue
+
+                    modulusSquared =
+                        ComplexNumbers.modulus testValue ^ 2
+
+                    modulusSquaredComplexNumber =
+                        ComplexNumbers.ComplexNumberCartesian
+                            (ComplexNumbers.Real modulusSquared)
+                            (ComplexNumbers.Imaginary 0)
+
+                    conjugateDividedByModulesSquared =
+                        ComplexNumbers.divide conjugate modulusSquaredComplexNumber
+                in
+                Expect.true
+                    "reciprecal and conjugate divided by modules squared equal"
+                    (ComplexNumbers.equal reciprocal conjugateDividedByModulesSquared)
         , Test.fuzz2
             (Fuzz.map toFloat (Fuzz.intRange -10 10))
             (Fuzz.map toFloat (Fuzz.intRange -10 10))
