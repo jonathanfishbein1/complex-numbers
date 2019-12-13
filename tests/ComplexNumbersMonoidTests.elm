@@ -54,8 +54,8 @@ suite =
                 ComplexNumbers.sum.concat listOfMonoids
                     |> Expect.equal expected
         , Test.fuzz2
-            (Fuzz.map toFloat (Fuzz.intRange -10 10))
-            (Fuzz.map toFloat (Fuzz.intRange -10 10))
+            (Fuzz.floatRange -10 10)
+            (Fuzz.floatRange -10 10)
             "tests ComplexNumberCartesian empty or identity value for product"
           <|
             \real imaginary ->
@@ -68,9 +68,9 @@ suite =
                 in
                 Expect.true "equal" result
         , Test.fuzz3
-            (Fuzz.map toFloat (Fuzz.intRange -10 10))
-            (Fuzz.map toFloat (Fuzz.intRange -10 10))
-            (Fuzz.map toFloat (Fuzz.intRange -10 10))
+            (Fuzz.floatRange -10 10)
+            (Fuzz.floatRange -10 10)
+            (Fuzz.floatRange -10 10)
             "tests monoidally product"
           <|
             \one two three ->

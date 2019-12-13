@@ -38,9 +38,9 @@ suite =
                 ComplexNumbers.modulus number
                     |> Expect.within (Expect.Absolute 0.000000001) length
         , Test.fuzz3
-            (Fuzz.map toFloat (Fuzz.intRange -10 10))
-            (Fuzz.map toFloat (Fuzz.intRange -10 10))
-            (Fuzz.map toFloat (Fuzz.intRange -10 10))
+            (Fuzz.floatRange -10 10)
+            (Fuzz.floatRange -10 10)
+            (Fuzz.floatRange -10 10)
             "tests |c1||c2| = |c1c2|"
           <|
             \one two three ->
@@ -70,9 +70,9 @@ suite =
                 in
                 Expect.within (Expect.Absolute 10) productLengthOneLengthTwo modulesOfProductOfNumberOneNumberTwo
         , Test.fuzz3
-            (Fuzz.map toFloat (Fuzz.intRange -10 10))
-            (Fuzz.map toFloat (Fuzz.intRange -10 10))
-            (Fuzz.map toFloat (Fuzz.intRange -10 10))
+            (Fuzz.floatRange -10 10)
+            (Fuzz.floatRange -10 10)
+            (Fuzz.floatRange -10 10)
             "tests |c1 + c2| <= |c1| + |c2| (triangle inequality rule)"
           <|
             \one two three ->
@@ -210,8 +210,8 @@ suite =
                 in
                 Expect.equal productOfconjugateOneconjugateTwo conjugateOfproductOfNumberOneNumberTwo
         , Test.fuzz2
-            (Fuzz.map toFloat (Fuzz.intRange -10 10))
-            (Fuzz.map toFloat (Fuzz.intRange -10 10))
+            (Fuzz.floatRange -10 10)
+            (Fuzz.floatRange -10 10)
             "tests complex number multipled by conjugate equals modulus squared"
           <|
             \real imaginary ->
@@ -233,8 +233,8 @@ suite =
                 in
                 Expect.within (Expect.Absolute 0.000000001) producttestValueconjugate expected
         , Test.fuzz2
-            (Fuzz.map toFloat (Fuzz.intRange 1 10))
-            (Fuzz.map toFloat (Fuzz.intRange 1 10))
+            (Fuzz.floatRange 1 10)
+            (Fuzz.floatRange 1 10)
             "tests reciprocal of complex number equals conjugate divided by modules squared"
           <|
             \real imaginary ->
@@ -265,8 +265,8 @@ suite =
                     "reciprecal and conjugate divided by modules squared equal"
                     (ComplexNumbers.equal reciprocal conjugateDividedByModulesSquared)
         , Test.fuzz2
-            (Fuzz.map toFloat (Fuzz.intRange 1 10))
-            (Fuzz.map toFloat (Fuzz.intRange 1 10))
+            (Fuzz.floatRange 1 10)
+            (Fuzz.floatRange 1 10)
             "tests conjuage of z divided by w equals the conjugate of z divided by the conjuaget of w: with w not equal to zero"
           <|
             \real imaginary ->
@@ -336,8 +336,8 @@ suite =
                 zLength
                     |> Expect.all [ Expect.notWithin (Expect.Absolute 0.0000000001) 0 ]
         , Test.fuzz2
-            (Fuzz.map toFloat (Fuzz.intRange -10 10))
-            (Fuzz.map toFloat (Fuzz.intRange -10 10))
+            (Fuzz.floatRange -10 10)
+            (Fuzz.floatRange -10 10)
             "tests convertFromCartesianToPolar |> convertFromPolarToCartesian round trips"
           <|
             \real imaginary ->
