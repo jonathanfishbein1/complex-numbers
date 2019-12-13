@@ -265,6 +265,41 @@ suite =
                     "reciprecal and conjugate divided by modules squared equal"
                     (ComplexNumbers.equal reciprocal conjugateDividedByModulesSquared)
         , Test.fuzz2
+            (Fuzz.map toFloat (Fuzz.intRange 1 10))
+            (Fuzz.map toFloat (Fuzz.intRange 1 10))
+            "tests conjuage of z divided by w equals the conjugate of z divided by the conjuaget of w: with w not equal to zero"
+          <|
+            \real imaginary ->
+                let
+                    z =
+                        ComplexNumbers.ComplexNumberCartesian
+                            (ComplexNumbers.Real real)
+                            (ComplexNumbers.Imaginary imaginary)
+
+                    w =
+                        ComplexNumbers.ComplexNumberCartesian
+                            (ComplexNumbers.Real real)
+                            (ComplexNumbers.Imaginary imaginary)
+
+                    zDividedByW =
+                        ComplexNumbers.divide z w
+
+                    conjugateZDividedByW =
+                        ComplexNumbers.conjugate zDividedByW
+
+                    zConjugate =
+                        ComplexNumbers.conjugate z
+
+                    wConjugate =
+                        ComplexNumbers.conjugate w
+
+                    zConjugateDividedBywConjugate =
+                        ComplexNumbers.divide zConjugate wConjugate
+                in
+                Expect.true
+                    "conjugate of z divided by w equals the conjugate of z divided by the conjugate of w"
+                    (ComplexNumbers.equal conjugateZDividedByW zConjugateDividedBywConjugate)
+        , Test.fuzz2
             (Fuzz.map toFloat (Fuzz.intRange -10 10))
             (Fuzz.map toFloat (Fuzz.intRange -10 10))
             "tests convertFromCartesianToPolar |> convertFromPolarToCartesian round trips"
