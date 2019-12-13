@@ -299,6 +299,42 @@ suite =
                 Expect.true
                     "conjugate of z divided by w equals the conjugate of z divided by the conjugate of w"
                     (ComplexNumbers.equal conjugateZDividedByW zConjugateDividedBywConjugate)
+        , Test.test
+            "length of z is 0 if z real and imaginary parts are 0"
+          <|
+            \_ ->
+                let
+                    z =
+                        ComplexNumbers.ComplexNumberCartesian
+                            (ComplexNumbers.Real 0)
+                            (ComplexNumbers.Imaginary 0)
+
+                    zLength =
+                        ComplexNumbers.modulus z
+                in
+                zLength
+                    |> Expect.all [ Expect.within (Expect.Absolute 0.0000000001) 0 ]
+        , Test.fuzz2
+            (Fuzz.oneOf
+                [ Fuzz.floatRange 1 10 ]
+            )
+            (Fuzz.oneOf
+                [ Fuzz.floatRange -10 -1 ]
+            )
+            "length of z is not 0 if z real and imaginary parts are not 0"
+          <|
+            \real imaginary ->
+                let
+                    z =
+                        ComplexNumbers.ComplexNumberCartesian
+                            (ComplexNumbers.Real real)
+                            (ComplexNumbers.Imaginary imaginary)
+
+                    zLength =
+                        ComplexNumbers.modulus z
+                in
+                zLength
+                    |> Expect.all [ Expect.notWithin (Expect.Absolute 0.0000000001) 0 ]
         , Test.fuzz2
             (Fuzz.map toFloat (Fuzz.intRange -10 10))
             (Fuzz.map toFloat (Fuzz.intRange -10 10))

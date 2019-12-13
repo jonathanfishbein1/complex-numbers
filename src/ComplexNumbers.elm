@@ -213,8 +213,8 @@ divide complexNumberDividend complexNumberCartesianDivisor =
 {-| Calculate the modulus of a complex number
 -}
 modulus : ComplexNumberCartesian Float -> Float
-modulus (ComplexNumberCartesian (Real realTwo) (Imaginary imaginaryTwo)) =
-    (realTwo ^ 2 + imaginaryTwo ^ 2)
+modulus (ComplexNumberCartesian (Real real) (Imaginary imaginary)) =
+    (real ^ 2 + imaginary ^ 2)
         |> sqrt
 
 
