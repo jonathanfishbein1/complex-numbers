@@ -405,3 +405,10 @@ complexField =
     , power = power
     , negate = multiply (ComplexNumberCartesian (Real -1) (Imaginary 0))
     }
+
+
+{-| Euler's equation
+-}
+euler : Float -> ComplexNumberCartesian Float
+euler theta =
+    ComplexNumberCartesian (Real <| Basics.cos theta) (Imaginary <| Basics.sin theta)
