@@ -482,4 +482,17 @@ suite =
                         ComplexNumbers.read printedComplexNumber
                 in
                 Expect.equal readComplexNumber (Ok complexNumber)
+        , Test.test
+            "test Euler identity"
+          <|
+            \_ ->
+                let
+                    complexNumberAtPi =
+                        ComplexNumbers.euler Basics.pi
+                in
+                Expect.true "e ^ (i * pi) + 1 = 0"
+                    (ComplexNumbers.equal
+                        (ComplexNumbers.add complexNumberAtPi ComplexNumbers.one)
+                        ComplexNumbers.zero
+                    )
         ]

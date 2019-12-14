@@ -27,6 +27,7 @@ module ComplexNumbers exposing
     , parseComplexNumber
     , read
     , print
+    , euler
     )
 
 {-| A module for complex numbers
