@@ -315,12 +315,8 @@ suite =
                 zLength
                     |> Expect.all [ Expect.within (Expect.Absolute 0.0000000001) 0 ]
         , Test.fuzz2
-            (Fuzz.oneOf
-                [ Fuzz.floatRange 1 10 ]
-            )
-            (Fuzz.oneOf
-                [ Fuzz.floatRange -10 -1 ]
-            )
+            (Fuzz.floatRange 1 10)
+            (Fuzz.floatRange -10 -1)
             "length of z is not 0 if z real and imaginary parts are not 0"
           <|
             \real imaginary ->
