@@ -506,4 +506,21 @@ suite =
                 in
                 ComplexNumbers.modulus complexNumber
                     |> Expect.within (Expect.Absolute 0.000000001) 1
+        , Test.fuzz
+            Fuzz.float
+            "conjugate of e ^ (i * theta) = e ^ -i * theta)"
+          <|
+            \one ->
+                let
+                    complexNumber =
+                        ComplexNumbers.euler one
+
+                    complexNumberConjugate =
+                        ComplexNumbers.conjugate complexNumber
+
+                    complexNumberNegativeTheta =
+                        ComplexNumbers.euler -one
+                in
+                Expect.true "conjugate of e ^ (i * theta) = e ^ -i * theta)"
+                    (ComplexNumbers.equal complexNumberConjugate complexNumberNegativeTheta)
         ]
