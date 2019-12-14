@@ -495,4 +495,15 @@ suite =
                         (ComplexNumbers.add complexNumberAtPi ComplexNumbers.one)
                         ComplexNumbers.zero
                     )
+        , Test.fuzz
+            Fuzz.float
+            "test length of e ^ (i * theta)"
+          <|
+            \one ->
+                let
+                    complexNumber =
+                        ComplexNumbers.euler one
+                in
+                ComplexNumbers.modulus complexNumber
+                    |> Expect.within (Expect.Absolute 0.000000001) 1
         ]
