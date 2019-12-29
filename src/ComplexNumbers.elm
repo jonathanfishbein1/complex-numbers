@@ -17,10 +17,10 @@ module ComplexNumbers exposing
     , conjugate
     , convertFromCartesianToPolar
     , convertFromPolarToCartesian
-    , mapCartesian
-    , pureCartesian
-    , applyCartesian
-    , bindCartesian
+    , map
+    , pure
+    , apply
+    , bind
     , equal
     , power
     , complexField
@@ -57,10 +57,10 @@ module ComplexNumbers exposing
 @docs conjugate
 @docs convertFromCartesianToPolar
 @docs convertFromPolarToCartesian
-@docs mapCartesian
-@docs pureCartesian
-@docs applyCartesian
-@docs bindCartesian
+@docs map
+@docs pure
+@docs apply
+@docs bind
 @docs equal
 @docs power
 @docs complexField
@@ -144,7 +144,7 @@ add :
     -> ComplexNumber number
     -> ComplexNumber number
 add complexOne complexTwo =
-    liftCartesian (+) complexOne complexTwo
+    liftA2 (+) complexOne complexTwo
 
 
 sumEmpty : ComplexNumber number
@@ -195,7 +195,7 @@ subtract :
     -> ComplexNumber number
     -> ComplexNumber number
 subtract complexNumberOne complexNumberTwo =
-    liftCartesian (-) complexNumberOne complexNumberTwo
+    liftA2 (-) complexNumberOne complexNumberTwo
 
 
 {-| Divide two complex numbers together
@@ -254,45 +254,45 @@ convertFromPolarToCartesian (Internal.ComplexNumbers.ComplexNumber (Internal.Com
 
 {-| Map over a complex number
 -}
-mapCartesian : (a -> b) -> ComplexNumber a -> ComplexNumber b
-mapCartesian f (ComplexNumber (Real realOne) (Imaginary imaginaryOne)) =
+map : (a -> b) -> ComplexNumber a -> ComplexNumber b
+map f (ComplexNumber (Real realOne) (Imaginary imaginaryOne)) =
     ComplexNumber (Real <| f realOne) (Imaginary <| f imaginaryOne)
 
 
 {-| Place a value in the minimal Complex Number Cartesian context
 -}
-pureCartesian : a -> ComplexNumber a
-pureCartesian a =
+pure : a -> ComplexNumber a
+pure a =
     ComplexNumber (Real a) (Imaginary a)
 
 
 {-| Apply for Complex Number Cartesian representaiton applicative
 -}
-applyCartesian :
+apply :
     ComplexNumber (a -> b)
     -> ComplexNumber a
     -> ComplexNumber b
-applyCartesian (ComplexNumber (Real fReal) (Imaginary fImaginary)) (ComplexNumber (Real rl) (Imaginary imag)) =
+apply (ComplexNumber (Real fReal) (Imaginary fImaginary)) (ComplexNumber (Real rl) (Imaginary imag)) =
     ComplexNumber (Real <| fReal rl) (Imaginary <| fImaginary imag)
 
 
 {-| Monadic bind for Complex Number Cartesian representaiton
 -}
-bindCartesian :
+bind :
     ComplexNumber a
     -> (a -> ComplexNumber b)
     -> ComplexNumber b
-bindCartesian (ComplexNumber (Real previousReal) (Imaginary previousImaginary)) f =
+bind (ComplexNumber (Real previousReal) (Imaginary previousImaginary)) f =
     ComplexNumber (Real <| real <| f previousReal) (Imaginary <| imaginary <| f previousImaginary)
 
 
-liftCartesian :
+liftA2 :
     (a -> b -> c)
     -> ComplexNumber a
     -> ComplexNumber b
     -> ComplexNumber c
-liftCartesian f a b =
-    applyCartesian (mapCartesian f a) b
+liftA2 f a b =
+    apply (map f a) b
 
 
 {-| Equality of Complex Numbers

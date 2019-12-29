@@ -24,8 +24,8 @@ suite =
                                 (ComplexNumbers.Imaginary <| a * 2)
 
                         leftSide =
-                            ComplexNumbers.bindCartesian
-                                (ComplexNumbers.pureCartesian one)
+                            ComplexNumbers.bind
+                                (ComplexNumbers.pure one)
                                 f
 
                         rightSide =
@@ -39,10 +39,10 @@ suite =
                 \one ->
                     let
                         m =
-                            ComplexNumbers.pureCartesian one
+                            ComplexNumbers.pure one
 
                         leftSide =
-                            ComplexNumbers.bindCartesian m ComplexNumbers.pureCartesian
+                            ComplexNumbers.bind m ComplexNumbers.pure
                     in
                     Expect.equal leftSide m
             , Test.fuzz
@@ -52,7 +52,7 @@ suite =
                 \one ->
                     let
                         m =
-                            ComplexNumbers.pureCartesian one
+                            ComplexNumbers.pure one
 
                         f a =
                             ComplexNumbers.ComplexNumber
@@ -65,12 +65,12 @@ suite =
                                 (ComplexNumbers.Imaginary <| a * 3)
 
                         leftSide =
-                            ComplexNumbers.bindCartesian
-                                (ComplexNumbers.bindCartesian m f)
+                            ComplexNumbers.bind
+                                (ComplexNumbers.bind m f)
                                 g
 
                         rightSide =
-                            ComplexNumbers.bindCartesian m (\x -> ComplexNumbers.bindCartesian (f x) g)
+                            ComplexNumbers.bind m (\x -> ComplexNumbers.bind (f x) g)
                     in
                     Expect.equal leftSide rightSide
             ]

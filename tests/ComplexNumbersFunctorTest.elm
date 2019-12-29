@@ -23,7 +23,7 @@ suite =
                             (ComplexNumbers.Imaginary two)
 
                     mapResult =
-                        ComplexNumbers.mapCartesian identity complexNumber
+                        ComplexNumbers.map identity complexNumber
                 in
                 mapResult
                     |> Expect.equal complexNumber
@@ -66,10 +66,10 @@ suite =
                         f << g
 
                     mapResult =
-                        ComplexNumbers.mapCartesian fdotG complexNumber
+                        ComplexNumbers.map fdotG complexNumber
                 in
                 mapResult
-                    |> Expect.equal (ComplexNumbers.mapCartesian f (ComplexNumbers.mapCartesian g complexNumber))
+                    |> Expect.equal (ComplexNumbers.map f (ComplexNumbers.map g complexNumber))
         , Test.fuzz2
             Fuzz.int
             Fuzz.int

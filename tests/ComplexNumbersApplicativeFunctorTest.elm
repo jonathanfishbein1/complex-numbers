@@ -19,7 +19,7 @@ suite =
                 \one two ->
                     let
                         cIdentity =
-                            ComplexNumbers.pureCartesian identity
+                            ComplexNumbers.pure identity
 
                         c =
                             ComplexNumbers.ComplexNumber
@@ -31,7 +31,7 @@ suite =
                                 )
 
                         cApplied =
-                            ComplexNumbers.applyCartesian cIdentity c
+                            ComplexNumbers.apply cIdentity c
                     in
                     Expect.equal cApplied c
             , Test.fuzz
@@ -44,13 +44,13 @@ suite =
                             (<<)
 
                         fPure =
-                            ComplexNumbers.pureCartesian f
+                            ComplexNumbers.pure f
 
                         u =
-                            ComplexNumbers.pureCartesian identity
+                            ComplexNumbers.pure identity
 
                         v =
-                            ComplexNumbers.pureCartesian identity
+                            ComplexNumbers.pure identity
 
                         w =
                             ComplexNumbers.ComplexNumber
@@ -62,14 +62,14 @@ suite =
                                 )
 
                         leftSide =
-                            ComplexNumbers.applyCartesian
-                                (ComplexNumbers.applyCartesian (ComplexNumbers.applyCartesian fPure u) v)
+                            ComplexNumbers.apply
+                                (ComplexNumbers.apply (ComplexNumbers.apply fPure u) v)
                                 w
 
                         rightSide =
-                            ComplexNumbers.applyCartesian
+                            ComplexNumbers.apply
                                 u
-                                (ComplexNumbers.applyCartesian v w)
+                                (ComplexNumbers.apply v w)
                     in
                     Expect.equal leftSide rightSide
             , Test.fuzz
@@ -82,16 +82,16 @@ suite =
                             (*) 2
 
                         pureF =
-                            ComplexNumbers.pureCartesian f
+                            ComplexNumbers.pure f
 
                         pureOne =
-                            ComplexNumbers.pureCartesian one
+                            ComplexNumbers.pure one
 
                         expected =
-                            ComplexNumbers.pureCartesian <| f one
+                            ComplexNumbers.pure <| f one
 
                         cApplied =
-                            ComplexNumbers.applyCartesian pureF pureOne
+                            ComplexNumbers.apply pureF pureOne
                     in
                     Expect.equal cApplied expected
             , Test.fuzz
@@ -101,17 +101,17 @@ suite =
                 \one ->
                     let
                         pureOne =
-                            ComplexNumbers.pureCartesian identity
+                            ComplexNumbers.pure identity
 
                         pureTwo =
-                            ComplexNumbers.pureCartesian one
+                            ComplexNumbers.pure one
 
                         leftSide =
-                            ComplexNumbers.applyCartesian pureOne pureTwo
+                            ComplexNumbers.apply pureOne pureTwo
 
                         rightSide =
-                            ComplexNumbers.applyCartesian
-                                (ComplexNumbers.pureCartesian (Basics.always one))
+                            ComplexNumbers.apply
+                                (ComplexNumbers.pure (Basics.always one))
                                 pureOne
                     in
                     Expect.equal leftSide rightSide
@@ -236,10 +236,10 @@ suite =
                         (*) 2
 
                     fMapX =
-                        ComplexNumbers.mapCartesian f complexNumber
+                        ComplexNumbers.map f complexNumber
 
                     pureFApplyX =
-                        ComplexNumbers.applyCartesian (ComplexNumbers.pureCartesian f) complexNumber
+                        ComplexNumbers.apply (ComplexNumbers.pure f) complexNumber
                 in
                 pureFApplyX
                     |> Expect.equal fMapX
@@ -287,10 +287,10 @@ suite =
                         (+)
 
                     fMapX =
-                        ComplexNumbers.mapCartesian f complexNumber
+                        ComplexNumbers.map f complexNumber
 
                     pureFApplyX =
-                        ComplexNumbers.applyCartesian fMapX complexNumber
+                        ComplexNumbers.apply fMapX complexNumber
                 in
                 pureFApplyX
                     |> Expect.equal doubleComplexNumber
@@ -310,10 +310,10 @@ suite =
                         (-)
 
                     fMapX =
-                        ComplexNumbers.mapCartesian f complexNumber
+                        ComplexNumbers.map f complexNumber
 
                     pureFApplyX =
-                        ComplexNumbers.applyCartesian fMapX complexNumber
+                        ComplexNumbers.apply fMapX complexNumber
                 in
                 pureFApplyX
                     |> Expect.equal (ComplexNumbers.ComplexNumber (ComplexNumbers.Real 0) (ComplexNumbers.Imaginary 0))
