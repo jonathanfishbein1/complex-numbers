@@ -5,7 +5,7 @@ module ComplexNumbers exposing
     , i
     , zero
     , one
-    , realPart
+    , real
     , imaginaryPart
     , add
     , sum
@@ -45,7 +45,7 @@ module ComplexNumbers exposing
 @docs i
 @docs zero
 @docs one
-@docs realPart
+@docs real
 @docs imaginaryPart
 @docs add
 @docs sum
@@ -125,9 +125,9 @@ i =
 
 {-| Extracts the real part of a complex number
 -}
-realPart : ComplexNumber a -> a
-realPart (ComplexNumber (Real real) _) =
-    real
+real : ComplexNumber a -> a
+real (ComplexNumber (Real rl) _) =
+    rl
 
 
 {-| Extracts the imaginary part of a complex number
@@ -214,16 +214,16 @@ divide complexNumberDividend complexNumberCartesianDivisor =
 {-| Calculate the modulus of a complex number
 -}
 modulus : ComplexNumber Float -> Float
-modulus (ComplexNumber (Real real) (Imaginary imaginary)) =
-    (real ^ 2 + imaginary ^ 2)
+modulus (ComplexNumber (Real rl) (Imaginary imaginary)) =
+    (rl ^ 2 + imaginary ^ 2)
         |> sqrt
 
 
 {-| Calculate the conjugate of a complex number
 -}
 conjugate : ComplexNumber number -> ComplexNumber number
-conjugate (ComplexNumber real (Imaginary imaginaryOne)) =
-    ComplexNumber real (Imaginary -imaginaryOne)
+conjugate (ComplexNumber rl (Imaginary imaginaryOne)) =
+    ComplexNumber rl (Imaginary -imaginaryOne)
 
 
 {-| Convert from the Cartesian representation of a complex number to the polar representation
@@ -231,10 +231,10 @@ conjugate (ComplexNumber real (Imaginary imaginaryOne)) =
 convertFromCartesianToPolar :
     ComplexNumber Float
     -> Internal.ComplexNumbers.ComplexNumber Float
-convertFromCartesianToPolar (ComplexNumber (Real real) (Imaginary imaginary)) =
+convertFromCartesianToPolar (ComplexNumber (Real rl) (Imaginary imaginary)) =
     let
         polar =
-            toPolar ( real, imaginary )
+            toPolar ( rl, imaginary )
     in
     Internal.ComplexNumbers.ComplexNumber (Internal.ComplexNumbers.Modulus <| Tuple.first polar) (Internal.ComplexNumbers.Theta <| Tuple.second polar)
 
@@ -272,8 +272,8 @@ applyCartesian :
     ComplexNumber (a -> b)
     -> ComplexNumber a
     -> ComplexNumber b
-applyCartesian (ComplexNumber (Real fReal) (Imaginary fImaginary)) (ComplexNumber (Real real) (Imaginary imaginary)) =
-    ComplexNumber (Real <| fReal real) (Imaginary <| fImaginary imaginary)
+applyCartesian (ComplexNumber (Real fReal) (Imaginary fImaginary)) (ComplexNumber (Real rl) (Imaginary imaginary)) =
+    ComplexNumber (Real <| fReal rl) (Imaginary <| fImaginary imaginary)
 
 
 {-| Monadic bind for Complex Number Cartesian representaiton
@@ -283,7 +283,7 @@ bindCartesian :
     -> (a -> ComplexNumber b)
     -> ComplexNumber b
 bindCartesian (ComplexNumber (Real previousReal) (Imaginary previousImaginary)) f =
-    ComplexNumber (Real <| realPart <| f previousReal) (Imaginary <| imaginaryPart <| f previousImaginary)
+    ComplexNumber (Real <| real <| f previousReal) (Imaginary <| imaginaryPart <| f previousImaginary)
 
 
 liftCartesian :
@@ -330,9 +330,9 @@ equal =
 {-| Print ComplexNumber
 -}
 print : ComplexNumber Float -> String
-print (ComplexNumber (Real real) (Imaginary imaginary)) =
+print (ComplexNumber (Real rl) (Imaginary imaginary)) =
     "ComplexNumber Real "
-        ++ String.fromFloat real
+        ++ String.fromFloat rl
         ++ " Imaginary "
         ++ String.fromFloat imaginary
 
