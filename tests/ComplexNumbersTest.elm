@@ -432,7 +432,7 @@ suite =
                         Internal.ComplexNumbers.modulus quotient
 
                     quotientPhase =
-                        Internal.ComplexNumbers.thetaPart quotient
+                        Internal.ComplexNumbers.theta quotient
 
                     quotientCartesian =
                         ComplexNumbers.convertFromPolarToCartesian quotient
