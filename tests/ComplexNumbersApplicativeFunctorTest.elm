@@ -123,7 +123,7 @@ suite =
                 \one two ->
                     let
                         cIdentity =
-                            Internal.ComplexNumbers.purePolar identity
+                            Internal.ComplexNumbers.pure identity
 
                         c =
                             Internal.ComplexNumbers.ComplexNumberPolar
@@ -135,7 +135,7 @@ suite =
                                 )
 
                         cApplied =
-                            Internal.ComplexNumbers.applyPolar cIdentity c
+                            Internal.ComplexNumbers.apply cIdentity c
                     in
                     Expect.equal cApplied c
             , Test.fuzz
@@ -148,13 +148,13 @@ suite =
                             (<<)
 
                         fPure =
-                            Internal.ComplexNumbers.purePolar f
+                            Internal.ComplexNumbers.pure f
 
                         u =
-                            Internal.ComplexNumbers.purePolar identity
+                            Internal.ComplexNumbers.pure identity
 
                         v =
-                            Internal.ComplexNumbers.purePolar identity
+                            Internal.ComplexNumbers.pure identity
 
                         w =
                             Internal.ComplexNumbers.ComplexNumberPolar
@@ -166,14 +166,14 @@ suite =
                                 )
 
                         leftSide =
-                            Internal.ComplexNumbers.applyPolar
-                                (Internal.ComplexNumbers.applyPolar (Internal.ComplexNumbers.applyPolar fPure u) v)
+                            Internal.ComplexNumbers.apply
+                                (Internal.ComplexNumbers.apply (Internal.ComplexNumbers.apply fPure u) v)
                                 w
 
                         rightSide =
-                            Internal.ComplexNumbers.applyPolar
+                            Internal.ComplexNumbers.apply
                                 u
-                                (Internal.ComplexNumbers.applyPolar v w)
+                                (Internal.ComplexNumbers.apply v w)
                     in
                     Expect.equal leftSide rightSide
             , Test.fuzz
@@ -186,16 +186,16 @@ suite =
                             (*) 2
 
                         pureF =
-                            Internal.ComplexNumbers.purePolar f
+                            Internal.ComplexNumbers.pure f
 
                         pureOne =
-                            Internal.ComplexNumbers.purePolar one
+                            Internal.ComplexNumbers.pure one
 
                         expected =
-                            Internal.ComplexNumbers.purePolar <| f one
+                            Internal.ComplexNumbers.pure <| f one
 
                         cApplied =
-                            Internal.ComplexNumbers.applyPolar pureF pureOne
+                            Internal.ComplexNumbers.apply pureF pureOne
                     in
                     Expect.equal cApplied expected
             , Test.fuzz
@@ -205,17 +205,17 @@ suite =
                 \one ->
                     let
                         pureOne =
-                            Internal.ComplexNumbers.purePolar identity
+                            Internal.ComplexNumbers.pure identity
 
                         pureTwo =
-                            Internal.ComplexNumbers.purePolar one
+                            Internal.ComplexNumbers.pure one
 
                         leftSide =
-                            Internal.ComplexNumbers.applyPolar pureOne pureTwo
+                            Internal.ComplexNumbers.apply pureOne pureTwo
 
                         rightSide =
-                            Internal.ComplexNumbers.applyPolar
-                                (Internal.ComplexNumbers.purePolar (Basics.always one))
+                            Internal.ComplexNumbers.apply
+                                (Internal.ComplexNumbers.pure (Basics.always one))
                                 pureOne
                     in
                     Expect.equal leftSide rightSide
@@ -262,8 +262,8 @@ suite =
                         Internal.ComplexNumbers.mapPolar f complexNumber
 
                     pureFApplyX =
-                        Internal.ComplexNumbers.applyPolar
-                            (Internal.ComplexNumbers.purePolar f)
+                        Internal.ComplexNumbers.apply
+                            (Internal.ComplexNumbers.pure f)
                             complexNumber
                 in
                 pureFApplyX
@@ -334,7 +334,7 @@ suite =
                         Internal.ComplexNumbers.mapPolar f complexNumber
 
                     pureFApplyX =
-                        Internal.ComplexNumbers.applyPolar (Internal.ComplexNumbers.purePolar f) complexNumber
+                        Internal.ComplexNumbers.apply (Internal.ComplexNumbers.pure f) complexNumber
                 in
                 pureFApplyX
                     |> Expect.equal fMapX
@@ -359,8 +359,8 @@ suite =
                         Internal.ComplexNumbers.mapPolar f complexNumber
 
                     pureFApplyX =
-                        Internal.ComplexNumbers.applyPolar
-                            (Internal.ComplexNumbers.purePolar f)
+                        Internal.ComplexNumbers.apply
+                            (Internal.ComplexNumbers.pure f)
                             complexNumber
                 in
                 pureFApplyX

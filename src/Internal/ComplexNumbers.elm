@@ -2,15 +2,15 @@ module Internal.ComplexNumbers exposing
     ( ComplexNumberPolar(..)
     , Modulus(..)
     , Theta(..)
-    , applyPolar
-    , bindPolar
+    , apply
+    , bind
     , dividePolar
-    , liftPolar
+    , liftA2
     , mapPolar
     , modulus
     , multiplyPolar
     , power
-    , purePolar
+    , pure
     , theta
     )
 
@@ -84,35 +84,35 @@ mapPolar f (ComplexNumberPolar (Modulus ro) (Theta thta)) =
 
 {-| Place a value in the minimal Complex Number polar context
 -}
-purePolar : a -> ComplexNumberPolar a
-purePolar a =
+pure : a -> ComplexNumberPolar a
+pure a =
     ComplexNumberPolar (Modulus a) (Theta a)
 
 
 {-| Apply for Complex Number polar representaiton applicative
 -}
-applyPolar :
+apply :
     ComplexNumberPolar (a -> b)
     -> ComplexNumberPolar a
     -> ComplexNumberPolar b
-applyPolar (ComplexNumberPolar (Modulus fRo) (Theta fTheta)) (ComplexNumberPolar (Modulus ro) (Theta thta)) =
+apply (ComplexNumberPolar (Modulus fRo) (Theta fTheta)) (ComplexNumberPolar (Modulus ro) (Theta thta)) =
     ComplexNumberPolar (Modulus <| fRo ro) (Theta <| fTheta thta)
 
 
 {-| Monadic bind for Complex Number polar representaiton
 -}
-bindPolar :
+bind :
     ComplexNumberPolar a
     -> (a -> ComplexNumberPolar b)
     -> ComplexNumberPolar b
-bindPolar (ComplexNumberPolar (Modulus previousModulus) (Theta previousTheta)) f =
+bind (ComplexNumberPolar (Modulus previousModulus) (Theta previousTheta)) f =
     ComplexNumberPolar (Modulus <| modulus <| f previousModulus) (Theta <| theta <| f previousTheta)
 
 
-liftPolar :
+liftA2 :
     (a -> b -> c)
     -> ComplexNumberPolar a
     -> ComplexNumberPolar b
     -> ComplexNumberPolar c
-liftPolar f a b =
-    applyPolar (mapPolar f a) b
+liftA2 f a b =
+    apply (mapPolar f a) b
