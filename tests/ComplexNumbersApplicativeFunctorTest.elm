@@ -126,7 +126,7 @@ suite =
                             Internal.ComplexNumbers.pure identity
 
                         c =
-                            Internal.ComplexNumbers.ComplexNumberPolar
+                            Internal.ComplexNumbers.ComplexNumber
                                 (Internal.ComplexNumbers.Modulus
                                     one
                                 )
@@ -157,7 +157,7 @@ suite =
                             Internal.ComplexNumbers.pure identity
 
                         w =
-                            Internal.ComplexNumbers.ComplexNumberPolar
+                            Internal.ComplexNumbers.ComplexNumber
                                 (Internal.ComplexNumbers.Modulus
                                     one
                                 )
@@ -251,7 +251,7 @@ suite =
             \one two ->
                 let
                     complexNumber =
-                        Internal.ComplexNumbers.ComplexNumberPolar
+                        Internal.ComplexNumbers.ComplexNumber
                             (Internal.ComplexNumbers.Modulus one)
                             (Internal.ComplexNumbers.Theta two)
 
@@ -325,10 +325,10 @@ suite =
             \one two ->
                 let
                     complexNumber =
-                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus one) (Internal.ComplexNumbers.Theta two)
+                        Internal.ComplexNumbers.ComplexNumber (Internal.ComplexNumbers.Modulus one) (Internal.ComplexNumbers.Theta two)
 
                     f _ =
-                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus (*)) (Internal.ComplexNumbers.Theta (+))
+                        Internal.ComplexNumbers.ComplexNumber (Internal.ComplexNumbers.Modulus (*)) (Internal.ComplexNumbers.Theta (+))
 
                     fMapX =
                         Internal.ComplexNumbers.mapPolar f complexNumber
@@ -346,12 +346,12 @@ suite =
             \one two ->
                 let
                     complexNumber =
-                        Internal.ComplexNumbers.ComplexNumberPolar
+                        Internal.ComplexNumbers.ComplexNumber
                             (Internal.ComplexNumbers.Modulus one)
                             (Internal.ComplexNumbers.Theta two)
 
                     f _ =
-                        Internal.ComplexNumbers.ComplexNumberPolar
+                        Internal.ComplexNumbers.ComplexNumber
                             (Internal.ComplexNumbers.Modulus (/))
                             (Internal.ComplexNumbers.Theta (-))
 

@@ -83,7 +83,7 @@ suite =
                 \one ->
                     let
                         f a =
-                            Internal.ComplexNumbers.ComplexNumberPolar
+                            Internal.ComplexNumbers.ComplexNumber
                                 (Internal.ComplexNumbers.Modulus <| a * 2)
                                 (Internal.ComplexNumbers.Theta <| a * 2)
 
@@ -119,12 +119,12 @@ suite =
                             Internal.ComplexNumbers.pure one
 
                         f a =
-                            Internal.ComplexNumbers.ComplexNumberPolar
+                            Internal.ComplexNumbers.ComplexNumber
                                 (Internal.ComplexNumbers.Modulus <| a * 2)
                                 (Internal.ComplexNumbers.Theta <| a * 2)
 
                         g a =
-                            Internal.ComplexNumbers.ComplexNumberPolar
+                            Internal.ComplexNumbers.ComplexNumber
                                 (Internal.ComplexNumbers.Modulus <| a * 3)
                                 (Internal.ComplexNumbers.Theta <| a * 3)
 

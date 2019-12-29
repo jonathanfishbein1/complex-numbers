@@ -230,21 +230,21 @@ conjugate (ComplexNumberCartesian real (Imaginary imaginaryOne)) =
 -}
 convertFromCartesianToPolar :
     ComplexNumberCartesian Float
-    -> Internal.ComplexNumbers.ComplexNumberPolar Float
+    -> Internal.ComplexNumbers.ComplexNumber Float
 convertFromCartesianToPolar (ComplexNumberCartesian (Real real) (Imaginary imaginary)) =
     let
         polar =
             toPolar ( real, imaginary )
     in
-    Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus <| Tuple.first polar) (Internal.ComplexNumbers.Theta <| Tuple.second polar)
+    Internal.ComplexNumbers.ComplexNumber (Internal.ComplexNumbers.Modulus <| Tuple.first polar) (Internal.ComplexNumbers.Theta <| Tuple.second polar)
 
 
 {-| Convert from the polar representation of a complex number to the Cartesian representation
 -}
 convertFromPolarToCartesian :
-    Internal.ComplexNumbers.ComplexNumberPolar Float
+    Internal.ComplexNumbers.ComplexNumber Float
     -> ComplexNumberCartesian Float
-convertFromPolarToCartesian (Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus ro) (Internal.ComplexNumbers.Theta theta)) =
+convertFromPolarToCartesian (Internal.ComplexNumbers.ComplexNumber (Internal.ComplexNumbers.Modulus ro) (Internal.ComplexNumbers.Theta theta)) =
     let
         cartesian =
             fromPolar ( ro, theta )

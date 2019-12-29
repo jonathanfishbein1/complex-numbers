@@ -362,12 +362,12 @@ suite =
             \one two three ->
                 let
                     a =
-                        Internal.ComplexNumbers.ComplexNumberPolar
+                        Internal.ComplexNumbers.ComplexNumber
                             (Internal.ComplexNumbers.Modulus one)
                             (Internal.ComplexNumbers.Theta two)
 
                     b =
-                        Internal.ComplexNumbers.ComplexNumberPolar
+                        Internal.ComplexNumbers.ComplexNumber
                             (Internal.ComplexNumbers.Modulus two)
                             (Internal.ComplexNumbers.Theta three)
 
@@ -388,17 +388,17 @@ suite =
             \one two three ->
                 let
                     a =
-                        Internal.ComplexNumbers.ComplexNumberPolar
+                        Internal.ComplexNumbers.ComplexNumber
                             (Internal.ComplexNumbers.Modulus one)
                             (Internal.ComplexNumbers.Theta two)
 
                     b =
-                        Internal.ComplexNumbers.ComplexNumberPolar
+                        Internal.ComplexNumbers.ComplexNumber
                             (Internal.ComplexNumbers.Modulus two)
                             (Internal.ComplexNumbers.Theta three)
 
                     c =
-                        Internal.ComplexNumbers.ComplexNumberPolar
+                        Internal.ComplexNumbers.ComplexNumber
                             (Internal.ComplexNumbers.Modulus one)
                             (Internal.ComplexNumbers.Theta three)
 
@@ -451,7 +451,7 @@ suite =
             \one two ->
                 let
                     complexNumber =
-                        Internal.ComplexNumbers.ComplexNumberPolar
+                        Internal.ComplexNumbers.ComplexNumber
                             (Internal.ComplexNumbers.Modulus one)
                             (Internal.ComplexNumbers.Theta two)
 

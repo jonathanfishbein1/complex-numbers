@@ -35,7 +35,7 @@ suite =
             \one two ->
                 let
                     complexNumber =
-                        Internal.ComplexNumbers.ComplexNumberPolar
+                        Internal.ComplexNumbers.ComplexNumber
                             (Internal.ComplexNumbers.Modulus one)
                             (Internal.ComplexNumbers.Theta two)
 
@@ -78,7 +78,7 @@ suite =
             \one two ->
                 let
                     complexNumber =
-                        Internal.ComplexNumbers.ComplexNumberPolar
+                        Internal.ComplexNumbers.ComplexNumber
                             (Internal.ComplexNumbers.Modulus one)
                             (Internal.ComplexNumbers.Theta two)
 
