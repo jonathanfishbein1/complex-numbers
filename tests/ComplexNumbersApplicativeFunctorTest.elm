@@ -259,7 +259,7 @@ suite =
                         (*) 2
 
                     fMapX =
-                        Internal.ComplexNumbers.mapPolar f complexNumber
+                        Internal.ComplexNumbers.map f complexNumber
 
                     pureFApplyX =
                         Internal.ComplexNumbers.apply
@@ -331,7 +331,7 @@ suite =
                         Internal.ComplexNumbers.ComplexNumber (Internal.ComplexNumbers.Modulus (*)) (Internal.ComplexNumbers.Theta (+))
 
                     fMapX =
-                        Internal.ComplexNumbers.mapPolar f complexNumber
+                        Internal.ComplexNumbers.map f complexNumber
 
                     pureFApplyX =
                         Internal.ComplexNumbers.apply (Internal.ComplexNumbers.pure f) complexNumber
@@ -356,7 +356,7 @@ suite =
                             (Internal.ComplexNumbers.Theta (-))
 
                     fMapX =
-                        Internal.ComplexNumbers.mapPolar f complexNumber
+                        Internal.ComplexNumbers.map f complexNumber
 
                     pureFApplyX =
                         Internal.ComplexNumbers.apply

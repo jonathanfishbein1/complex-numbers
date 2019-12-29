@@ -40,7 +40,7 @@ suite =
                             (Internal.ComplexNumbers.Theta two)
 
                     mapResult =
-                        Internal.ComplexNumbers.mapPolar identity complexNumber
+                        Internal.ComplexNumbers.map identity complexNumber
                 in
                 mapResult
                     |> Expect.equal complexNumber
@@ -92,8 +92,8 @@ suite =
                         f << g
 
                     mapResult =
-                        Internal.ComplexNumbers.mapPolar fdotG complexNumber
+                        Internal.ComplexNumbers.map fdotG complexNumber
                 in
                 mapResult
-                    |> Expect.equal (Internal.ComplexNumbers.mapPolar f (Internal.ComplexNumbers.mapPolar g complexNumber))
+                    |> Expect.equal (Internal.ComplexNumbers.map f (Internal.ComplexNumbers.map g complexNumber))
         ]

@@ -6,7 +6,7 @@ module Internal.ComplexNumbers exposing
     , bind
     , dividePolar
     , liftA2
-    , mapPolar
+    , map
     , modulus
     , multiplyPolar
     , power
@@ -77,8 +77,8 @@ power n (ComplexNumber (Modulus roOne) (Theta thetaOne)) =
 
 {-| Map over a complex number in polar representation
 -}
-mapPolar : (a -> b) -> ComplexNumber a -> ComplexNumber b
-mapPolar f (ComplexNumber (Modulus ro) (Theta thta)) =
+map : (a -> b) -> ComplexNumber a -> ComplexNumber b
+map f (ComplexNumber (Modulus ro) (Theta thta)) =
     ComplexNumber (Modulus <| f ro) (Theta <| f thta)
 
 
@@ -115,4 +115,4 @@ liftA2 :
     -> ComplexNumber b
     -> ComplexNumber c
 liftA2 f a b =
-    apply (mapPolar f a) b
+    apply (map f a) b
