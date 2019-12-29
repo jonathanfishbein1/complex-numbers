@@ -429,7 +429,7 @@ suite =
                         Internal.ComplexNumbers.dividePolar complexNumberDividend complexNumberDivisor
 
                     quotientMod =
-                        Internal.ComplexNumbers.modulusPart quotient
+                        Internal.ComplexNumbers.modulus quotient
 
                     quotientPhase =
                         Internal.ComplexNumbers.thetaPart quotient

@@ -7,7 +7,7 @@ module Internal.ComplexNumbers exposing
     , dividePolar
     , liftPolar
     , mapPolar
-    , modulusPart
+    , modulus
     , multiplyPolar
     , power
     , purePolar
@@ -36,8 +36,8 @@ type ComplexNumberPolar a
 
 {-| Extracts the modulus part of a complex number
 -}
-modulusPart : ComplexNumberPolar a -> a
-modulusPart (ComplexNumberPolar (Modulus ro) _) =
+modulus : ComplexNumberPolar a -> a
+modulus (ComplexNumberPolar (Modulus ro) _) =
     ro
 
 
@@ -106,7 +106,7 @@ bindPolar :
     -> (a -> ComplexNumberPolar b)
     -> ComplexNumberPolar b
 bindPolar (ComplexNumberPolar (Modulus previousModulus) (Theta previousTheta)) f =
-    ComplexNumberPolar (Modulus <| modulusPart <| f previousModulus) (Theta <| thetaPart <| f previousTheta)
+    ComplexNumberPolar (Modulus <| modulus <| f previousModulus) (Theta <| thetaPart <| f previousTheta)
 
 
 liftPolar :
