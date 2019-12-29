@@ -111,7 +111,9 @@ bind :
     -> (a -> ComplexNumber b)
     -> ComplexNumber b
 bind (ComplexNumber (Modulus previousModulus) (Theta previousTheta)) f =
-    ComplexNumber (Modulus <| modulus <| f previousModulus) (Theta <| theta <| f previousTheta)
+    ComplexNumber
+        (Modulus <| modulus <| f previousModulus)
+        (Theta <| theta <| f previousTheta)
 
 
 liftA2 :
