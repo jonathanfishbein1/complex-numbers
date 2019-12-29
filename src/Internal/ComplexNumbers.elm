@@ -10,12 +10,17 @@ module Internal.ComplexNumbers exposing
     , modulus
     , multiply
     , power
+    , product
+    , productEmpty
     , pure
     , theta
     )
 
 {-| Modulus or magnitude portion
 -}
+
+import Typeclasses.Classes.Monoid
+import Typeclasses.Classes.Semigroup
 
 
 type Modulus m
@@ -116,3 +121,24 @@ liftA2 :
     -> ComplexNumber c
 liftA2 f a b =
     apply (map f a) b
+
+
+{-| one
+-}
+one : ComplexNumber number
+one =
+    ComplexNumber (Modulus 1) (Theta 0)
+
+
+productEmpty : ComplexNumber number
+productEmpty =
+    one
+
+
+{-| Monoidally multiply two complex numbers together
+-}
+product : Typeclasses.Classes.Monoid.Monoid (ComplexNumber Float)
+product =
+    Typeclasses.Classes.Monoid.semigroupAndIdentity
+        (Typeclasses.Classes.Semigroup.prepend multiply)
+        productEmpty
