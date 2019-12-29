@@ -168,7 +168,7 @@ multiply :
     -> ComplexNumberCartesian Float
     -> ComplexNumberCartesian Float
 multiply complexNumberOne complexNumberTwo =
-    Internal.ComplexNumbers.multiplyPolar
+    Internal.ComplexNumbers.multiply
         (convertFromCartesianToPolar complexNumberOne)
         (convertFromCartesianToPolar complexNumberTwo)
         |> convertFromPolarToCartesian
@@ -205,7 +205,7 @@ divide :
     -> ComplexNumberCartesian Float
     -> ComplexNumberCartesian Float
 divide complexNumberDividend complexNumberCartesianDivisor =
-    Internal.ComplexNumbers.dividePolar
+    Internal.ComplexNumbers.divide
         (convertFromCartesianToPolar complexNumberDividend)
         (convertFromCartesianToPolar complexNumberCartesianDivisor)
         |> convertFromPolarToCartesian

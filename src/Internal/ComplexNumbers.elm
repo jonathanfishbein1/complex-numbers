@@ -4,11 +4,11 @@ module Internal.ComplexNumbers exposing
     , Theta(..)
     , apply
     , bind
-    , dividePolar
+    , divide
     , liftA2
     , map
     , modulus
-    , multiplyPolar
+    , multiply
     , power
     , pure
     , theta
@@ -50,21 +50,21 @@ theta (ComplexNumber _ (Theta thta)) =
 
 {-| Multiply two complex numbers in polar representations together
 -}
-multiplyPolar :
+multiply :
     ComplexNumber number
     -> ComplexNumber number
     -> ComplexNumber number
-multiplyPolar (ComplexNumber (Modulus roOne) (Theta thetaOne)) (ComplexNumber (Modulus roTwo) (Theta thetaTwo)) =
+multiply (ComplexNumber (Modulus roOne) (Theta thetaOne)) (ComplexNumber (Modulus roTwo) (Theta thetaTwo)) =
     ComplexNumber (Modulus <| roOne * roTwo) (Theta <| thetaOne + thetaTwo)
 
 
 {-| Divide two complex numbers in polar representations together
 -}
-dividePolar :
+divide :
     ComplexNumber Float
     -> ComplexNumber Float
     -> ComplexNumber Float
-dividePolar (ComplexNumber (Modulus roOne) (Theta thetaOne)) (ComplexNumber (Modulus roTwo) (Theta thetaTwo)) =
+divide (ComplexNumber (Modulus roOne) (Theta thetaOne)) (ComplexNumber (Modulus roTwo) (Theta thetaTwo)) =
     ComplexNumber (Modulus <| roOne / roTwo) (Theta <| thetaOne - thetaTwo)
 
 

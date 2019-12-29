@@ -372,10 +372,10 @@ suite =
                             (Internal.ComplexNumbers.Theta three)
 
                     testValueOne =
-                        Internal.ComplexNumbers.multiplyPolar a b
+                        Internal.ComplexNumbers.multiply a b
 
                     testValueTwo =
-                        Internal.ComplexNumbers.multiplyPolar b a
+                        Internal.ComplexNumbers.multiply b a
                 in
                 testValueOne
                     |> Expect.equal testValueTwo
@@ -403,12 +403,12 @@ suite =
                             (Internal.ComplexNumbers.Theta three)
 
                     testValueOne =
-                        Internal.ComplexNumbers.multiplyPolar
-                            (Internal.ComplexNumbers.multiplyPolar a b)
+                        Internal.ComplexNumbers.multiply
+                            (Internal.ComplexNumbers.multiply a b)
                             c
 
                     testValueTwo =
-                        Internal.ComplexNumbers.multiplyPolar a (Internal.ComplexNumbers.multiplyPolar b c)
+                        Internal.ComplexNumbers.multiply a (Internal.ComplexNumbers.multiply b c)
                 in
                 testValueOne
                     |> Expect.equal testValueTwo
@@ -426,7 +426,7 @@ suite =
                             |> ComplexNumbers.convertFromCartesianToPolar
 
                     quotient =
-                        Internal.ComplexNumbers.dividePolar complexNumberDividend complexNumberDivisor
+                        Internal.ComplexNumbers.divide complexNumberDividend complexNumberDivisor
 
                     quotientMod =
                         Internal.ComplexNumbers.modulus quotient
@@ -459,7 +459,7 @@ suite =
                         Internal.ComplexNumbers.power 2 complexNumber
 
                     productResult =
-                        Internal.ComplexNumbers.multiplyPolar complexNumber complexNumber
+                        Internal.ComplexNumbers.multiply complexNumber complexNumber
                 in
                 powerResult
                     |> Expect.equal productResult
