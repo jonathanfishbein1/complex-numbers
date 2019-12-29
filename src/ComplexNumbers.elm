@@ -236,7 +236,9 @@ convertFromCartesianToPolar (ComplexNumber (Real rl) (Imaginary imag)) =
         polar =
             toPolar ( rl, imag )
     in
-    Internal.ComplexNumbers.ComplexNumber (Internal.ComplexNumbers.Modulus <| Tuple.first polar) (Internal.ComplexNumbers.Theta <| Tuple.second polar)
+    Internal.ComplexNumbers.ComplexNumber
+        (Internal.ComplexNumbers.Modulus <| Tuple.first polar)
+        (Internal.ComplexNumbers.Theta <| Tuple.second polar)
 
 
 {-| Convert from the polar representation of a complex number to the Cartesian representation
@@ -283,7 +285,9 @@ bind :
     -> (a -> ComplexNumber b)
     -> ComplexNumber b
 bind (ComplexNumber (Real previousReal) (Imaginary previousImaginary)) f =
-    ComplexNumber (Real <| real <| f previousReal) (Imaginary <| imaginary <| f previousImaginary)
+    ComplexNumber
+        (Real <| real <| f previousReal)
+        (Imaginary <| imaginary <| f previousImaginary)
 
 
 liftA2 :
@@ -302,7 +306,8 @@ equalImplementation :
     -> ComplexNumber Float
     -> Bool
 equalImplementation (ComplexNumber (Real realOne) (Imaginary imaginaryOne)) (ComplexNumber (Real realTwo) (Imaginary imaginaryTwo)) =
-    Float.Extra.equalWithin 0.000000001 realOne realTwo && Float.Extra.equalWithin 0.000000001 imaginaryOne imaginaryTwo
+    Float.Extra.equalWithin 0.000000001 realOne realTwo
+        && Float.Extra.equalWithin 0.000000001 imaginaryOne imaginaryTwo
 
 
 {-| Calculate a complex number raised to a power
