@@ -362,20 +362,20 @@ suite =
             \one two three ->
                 let
                     a =
-                        Internal.ComplexNumbers.ComplexNumberPolar
+                        Internal.ComplexNumbers.ComplexNumber
                             (Internal.ComplexNumbers.Modulus one)
                             (Internal.ComplexNumbers.Theta two)
 
                     b =
-                        Internal.ComplexNumbers.ComplexNumberPolar
+                        Internal.ComplexNumbers.ComplexNumber
                             (Internal.ComplexNumbers.Modulus two)
                             (Internal.ComplexNumbers.Theta three)
 
                     testValueOne =
-                        Internal.ComplexNumbers.multiplyPolar a b
+                        Internal.ComplexNumbers.multiply a b
 
                     testValueTwo =
-                        Internal.ComplexNumbers.multiplyPolar b a
+                        Internal.ComplexNumbers.multiply b a
                 in
                 testValueOne
                     |> Expect.equal testValueTwo
@@ -388,27 +388,27 @@ suite =
             \one two three ->
                 let
                     a =
-                        Internal.ComplexNumbers.ComplexNumberPolar
+                        Internal.ComplexNumbers.ComplexNumber
                             (Internal.ComplexNumbers.Modulus one)
                             (Internal.ComplexNumbers.Theta two)
 
                     b =
-                        Internal.ComplexNumbers.ComplexNumberPolar
+                        Internal.ComplexNumbers.ComplexNumber
                             (Internal.ComplexNumbers.Modulus two)
                             (Internal.ComplexNumbers.Theta three)
 
                     c =
-                        Internal.ComplexNumbers.ComplexNumberPolar
+                        Internal.ComplexNumbers.ComplexNumber
                             (Internal.ComplexNumbers.Modulus one)
                             (Internal.ComplexNumbers.Theta three)
 
                     testValueOne =
-                        Internal.ComplexNumbers.multiplyPolar
-                            (Internal.ComplexNumbers.multiplyPolar a b)
+                        Internal.ComplexNumbers.multiply
+                            (Internal.ComplexNumbers.multiply a b)
                             c
 
                     testValueTwo =
-                        Internal.ComplexNumbers.multiplyPolar a (Internal.ComplexNumbers.multiplyPolar b c)
+                        Internal.ComplexNumbers.multiply a (Internal.ComplexNumbers.multiply b c)
                 in
                 testValueOne
                     |> Expect.equal testValueTwo
@@ -426,13 +426,13 @@ suite =
                             |> ComplexNumbers.convertFromCartesianToPolar
 
                     quotient =
-                        Internal.ComplexNumbers.dividePolar complexNumberDividend complexNumberDivisor
+                        Internal.ComplexNumbers.divide complexNumberDividend complexNumberDivisor
 
                     quotientMod =
-                        Internal.ComplexNumbers.modulusPart quotient
+                        Internal.ComplexNumbers.modulus quotient
 
                     quotientPhase =
-                        Internal.ComplexNumbers.thetaPart quotient
+                        Internal.ComplexNumbers.theta quotient
 
                     quotientCartesian =
                         ComplexNumbers.convertFromPolarToCartesian quotient
@@ -451,7 +451,7 @@ suite =
             \one two ->
                 let
                     complexNumber =
-                        Internal.ComplexNumbers.ComplexNumberPolar
+                        Internal.ComplexNumbers.ComplexNumber
                             (Internal.ComplexNumbers.Modulus one)
                             (Internal.ComplexNumbers.Theta two)
 
@@ -459,7 +459,7 @@ suite =
                         Internal.ComplexNumbers.power 2 complexNumber
 
                     productResult =
-                        Internal.ComplexNumbers.multiplyPolar complexNumber complexNumber
+                        Internal.ComplexNumbers.multiply complexNumber complexNumber
                 in
                 powerResult
                     |> Expect.equal productResult
@@ -482,4 +482,45 @@ suite =
                         ComplexNumbers.read printedComplexNumber
                 in
                 Expect.equal readComplexNumber (Ok complexNumber)
+        , Test.test
+            "test Euler identity"
+          <|
+            \_ ->
+                let
+                    complexNumberAtPi =
+                        ComplexNumbers.euler Basics.pi
+                in
+                Expect.true "e ^ (i * pi) + 1 = 0"
+                    (ComplexNumbers.equal
+                        (ComplexNumbers.add complexNumberAtPi ComplexNumbers.one)
+                        ComplexNumbers.zero
+                    )
+        , Test.fuzz
+            Fuzz.float
+            "test length of e ^ (i * theta)"
+          <|
+            \one ->
+                let
+                    complexNumber =
+                        ComplexNumbers.euler one
+                in
+                ComplexNumbers.modulus complexNumber
+                    |> Expect.within (Expect.Absolute 0.000000001) 1
+        , Test.fuzz
+            Fuzz.float
+            "conjugate of e ^ (i * theta) = e ^ -i * theta)"
+          <|
+            \one ->
+                let
+                    complexNumber =
+                        ComplexNumbers.euler one
+
+                    complexNumberConjugate =
+                        ComplexNumbers.conjugate complexNumber
+
+                    complexNumberNegativeTheta =
+                        ComplexNumbers.euler -one
+                in
+                Expect.true "conjugate of e ^ (i * theta) = e ^ -i * theta)"
+                    (ComplexNumbers.equal complexNumberConjugate complexNumberNegativeTheta)
         ]

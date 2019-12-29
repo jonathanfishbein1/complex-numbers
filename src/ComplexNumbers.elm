@@ -27,6 +27,7 @@ module ComplexNumbers exposing
     , parseComplexNumber
     , read
     , print
+    , euler
     )
 
 {-| A module for complex numbers
@@ -167,7 +168,7 @@ multiply :
     -> ComplexNumberCartesian Float
     -> ComplexNumberCartesian Float
 multiply complexNumberOne complexNumberTwo =
-    Internal.ComplexNumbers.multiplyPolar
+    Internal.ComplexNumbers.multiply
         (convertFromCartesianToPolar complexNumberOne)
         (convertFromCartesianToPolar complexNumberTwo)
         |> convertFromPolarToCartesian
@@ -204,7 +205,7 @@ divide :
     -> ComplexNumberCartesian Float
     -> ComplexNumberCartesian Float
 divide complexNumberDividend complexNumberCartesianDivisor =
-    Internal.ComplexNumbers.dividePolar
+    Internal.ComplexNumbers.divide
         (convertFromCartesianToPolar complexNumberDividend)
         (convertFromCartesianToPolar complexNumberCartesianDivisor)
         |> convertFromPolarToCartesian
@@ -229,21 +230,21 @@ conjugate (ComplexNumberCartesian real (Imaginary imaginaryOne)) =
 -}
 convertFromCartesianToPolar :
     ComplexNumberCartesian Float
-    -> Internal.ComplexNumbers.ComplexNumberPolar Float
+    -> Internal.ComplexNumbers.ComplexNumber Float
 convertFromCartesianToPolar (ComplexNumberCartesian (Real real) (Imaginary imaginary)) =
     let
         polar =
             toPolar ( real, imaginary )
     in
-    Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus <| Tuple.first polar) (Internal.ComplexNumbers.Theta <| Tuple.second polar)
+    Internal.ComplexNumbers.ComplexNumber (Internal.ComplexNumbers.Modulus <| Tuple.first polar) (Internal.ComplexNumbers.Theta <| Tuple.second polar)
 
 
 {-| Convert from the polar representation of a complex number to the Cartesian representation
 -}
 convertFromPolarToCartesian :
-    Internal.ComplexNumbers.ComplexNumberPolar Float
+    Internal.ComplexNumbers.ComplexNumber Float
     -> ComplexNumberCartesian Float
-convertFromPolarToCartesian (Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus ro) (Internal.ComplexNumbers.Theta theta)) =
+convertFromPolarToCartesian (Internal.ComplexNumbers.ComplexNumber (Internal.ComplexNumbers.Modulus ro) (Internal.ComplexNumbers.Theta theta)) =
     let
         cartesian =
             fromPolar ( ro, theta )
@@ -405,3 +406,10 @@ complexField =
     , power = power
     , negate = multiply (ComplexNumberCartesian (Real -1) (Imaginary 0))
     }
+
+
+{-| Euler's equation
+-}
+euler : Float -> ComplexNumberCartesian Float
+euler theta =
+    ComplexNumberCartesian (Real <| Basics.cos theta) (Imaginary <| Basics.sin theta)

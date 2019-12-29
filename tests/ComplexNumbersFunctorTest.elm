@@ -35,12 +35,12 @@ suite =
             \one two ->
                 let
                     complexNumber =
-                        Internal.ComplexNumbers.ComplexNumberPolar
+                        Internal.ComplexNumbers.ComplexNumber
                             (Internal.ComplexNumbers.Modulus one)
                             (Internal.ComplexNumbers.Theta two)
 
                     mapResult =
-                        Internal.ComplexNumbers.mapPolar identity complexNumber
+                        Internal.ComplexNumbers.map identity complexNumber
                 in
                 mapResult
                     |> Expect.equal complexNumber
@@ -78,7 +78,7 @@ suite =
             \one two ->
                 let
                     complexNumber =
-                        Internal.ComplexNumbers.ComplexNumberPolar
+                        Internal.ComplexNumbers.ComplexNumber
                             (Internal.ComplexNumbers.Modulus one)
                             (Internal.ComplexNumbers.Theta two)
 
@@ -92,8 +92,8 @@ suite =
                         f << g
 
                     mapResult =
-                        Internal.ComplexNumbers.mapPolar fdotG complexNumber
+                        Internal.ComplexNumbers.map fdotG complexNumber
                 in
                 mapResult
-                    |> Expect.equal (Internal.ComplexNumbers.mapPolar f (Internal.ComplexNumbers.mapPolar g complexNumber))
+                    |> Expect.equal (Internal.ComplexNumbers.map f (Internal.ComplexNumbers.map g complexNumber))
         ]

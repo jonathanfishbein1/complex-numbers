@@ -1,17 +1,17 @@
 module Internal.ComplexNumbers exposing
-    ( ComplexNumberPolar(..)
+    ( ComplexNumber(..)
     , Modulus(..)
     , Theta(..)
-    , applyPolar
-    , bindPolar
-    , dividePolar
-    , liftPolar
-    , mapPolar
-    , modulusPart
-    , multiplyPolar
+    , apply
+    , bind
+    , divide
+    , liftA2
+    , map
+    , modulus
+    , multiply
     , power
-    , purePolar
-    , thetaPart
+    , pure
+    , theta
     )
 
 {-| Modulus or magnitude portion
@@ -30,89 +30,89 @@ type Theta t
 
 {-| Polar representation of a complex number
 -}
-type ComplexNumberPolar a
-    = ComplexNumberPolar (Modulus a) (Theta a)
+type ComplexNumber a
+    = ComplexNumber (Modulus a) (Theta a)
 
 
 {-| Extracts the modulus part of a complex number
 -}
-modulusPart : ComplexNumberPolar a -> a
-modulusPart (ComplexNumberPolar (Modulus ro) _) =
+modulus : ComplexNumber a -> a
+modulus (ComplexNumber (Modulus ro) _) =
     ro
 
 
 {-| Extracts the imaginary part of a complex number
 -}
-thetaPart : ComplexNumberPolar a -> a
-thetaPart (ComplexNumberPolar _ (Theta theta)) =
-    theta
+theta : ComplexNumber a -> a
+theta (ComplexNumber _ (Theta thta)) =
+    thta
 
 
 {-| Multiply two complex numbers in polar representations together
 -}
-multiplyPolar :
-    ComplexNumberPolar number
-    -> ComplexNumberPolar number
-    -> ComplexNumberPolar number
-multiplyPolar (ComplexNumberPolar (Modulus roOne) (Theta thetaOne)) (ComplexNumberPolar (Modulus roTwo) (Theta thetaTwo)) =
-    ComplexNumberPolar (Modulus <| roOne * roTwo) (Theta <| thetaOne + thetaTwo)
+multiply :
+    ComplexNumber number
+    -> ComplexNumber number
+    -> ComplexNumber number
+multiply (ComplexNumber (Modulus roOne) (Theta thetaOne)) (ComplexNumber (Modulus roTwo) (Theta thetaTwo)) =
+    ComplexNumber (Modulus <| roOne * roTwo) (Theta <| thetaOne + thetaTwo)
 
 
 {-| Divide two complex numbers in polar representations together
 -}
-dividePolar :
-    ComplexNumberPolar Float
-    -> ComplexNumberPolar Float
-    -> ComplexNumberPolar Float
-dividePolar (ComplexNumberPolar (Modulus roOne) (Theta thetaOne)) (ComplexNumberPolar (Modulus roTwo) (Theta thetaTwo)) =
-    ComplexNumberPolar (Modulus <| roOne / roTwo) (Theta <| thetaOne - thetaTwo)
+divide :
+    ComplexNumber Float
+    -> ComplexNumber Float
+    -> ComplexNumber Float
+divide (ComplexNumber (Modulus roOne) (Theta thetaOne)) (ComplexNumber (Modulus roTwo) (Theta thetaTwo)) =
+    ComplexNumber (Modulus <| roOne / roTwo) (Theta <| thetaOne - thetaTwo)
 
 
 {-| Calculate a complex number raised to a power
 -}
-power : number -> ComplexNumberPolar number -> ComplexNumberPolar number
-power n (ComplexNumberPolar (Modulus roOne) (Theta thetaOne)) =
-    ComplexNumberPolar (Modulus <| roOne ^ n) (Theta <| n * thetaOne)
+power : number -> ComplexNumber number -> ComplexNumber number
+power n (ComplexNumber (Modulus roOne) (Theta thetaOne)) =
+    ComplexNumber (Modulus <| roOne ^ n) (Theta <| n * thetaOne)
 
 
 {-| Map over a complex number in polar representation
 -}
-mapPolar : (a -> b) -> ComplexNumberPolar a -> ComplexNumberPolar b
-mapPolar f (ComplexNumberPolar (Modulus ro) (Theta theta)) =
-    ComplexNumberPolar (Modulus <| f ro) (Theta <| f theta)
+map : (a -> b) -> ComplexNumber a -> ComplexNumber b
+map f (ComplexNumber (Modulus ro) (Theta thta)) =
+    ComplexNumber (Modulus <| f ro) (Theta <| f thta)
 
 
 {-| Place a value in the minimal Complex Number polar context
 -}
-purePolar : a -> ComplexNumberPolar a
-purePolar a =
-    ComplexNumberPolar (Modulus a) (Theta a)
+pure : a -> ComplexNumber a
+pure a =
+    ComplexNumber (Modulus a) (Theta a)
 
 
 {-| Apply for Complex Number polar representaiton applicative
 -}
-applyPolar :
-    ComplexNumberPolar (a -> b)
-    -> ComplexNumberPolar a
-    -> ComplexNumberPolar b
-applyPolar (ComplexNumberPolar (Modulus fRo) (Theta fTheta)) (ComplexNumberPolar (Modulus ro) (Theta theta)) =
-    ComplexNumberPolar (Modulus <| fRo ro) (Theta <| fTheta theta)
+apply :
+    ComplexNumber (a -> b)
+    -> ComplexNumber a
+    -> ComplexNumber b
+apply (ComplexNumber (Modulus fRo) (Theta fTheta)) (ComplexNumber (Modulus ro) (Theta thta)) =
+    ComplexNumber (Modulus <| fRo ro) (Theta <| fTheta thta)
 
 
 {-| Monadic bind for Complex Number polar representaiton
 -}
-bindPolar :
-    ComplexNumberPolar a
-    -> (a -> ComplexNumberPolar b)
-    -> ComplexNumberPolar b
-bindPolar (ComplexNumberPolar (Modulus previousModulus) (Theta previousTheta)) f =
-    ComplexNumberPolar (Modulus <| modulusPart <| f previousModulus) (Theta <| thetaPart <| f previousTheta)
+bind :
+    ComplexNumber a
+    -> (a -> ComplexNumber b)
+    -> ComplexNumber b
+bind (ComplexNumber (Modulus previousModulus) (Theta previousTheta)) f =
+    ComplexNumber (Modulus <| modulus <| f previousModulus) (Theta <| theta <| f previousTheta)
 
 
-liftPolar :
+liftA2 :
     (a -> b -> c)
-    -> ComplexNumberPolar a
-    -> ComplexNumberPolar b
-    -> ComplexNumberPolar c
-liftPolar f a b =
-    applyPolar (mapPolar f a) b
+    -> ComplexNumber a
+    -> ComplexNumber b
+    -> ComplexNumber c
+liftA2 f a b =
+    apply (map f a) b

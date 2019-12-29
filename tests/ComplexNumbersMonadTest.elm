@@ -83,13 +83,13 @@ suite =
                 \one ->
                     let
                         f a =
-                            Internal.ComplexNumbers.ComplexNumberPolar
+                            Internal.ComplexNumbers.ComplexNumber
                                 (Internal.ComplexNumbers.Modulus <| a * 2)
                                 (Internal.ComplexNumbers.Theta <| a * 2)
 
                         leftSide =
-                            Internal.ComplexNumbers.bindPolar
-                                (Internal.ComplexNumbers.purePolar one)
+                            Internal.ComplexNumbers.bind
+                                (Internal.ComplexNumbers.pure one)
                                 f
 
                         rightSide =
@@ -103,10 +103,10 @@ suite =
                 \one ->
                     let
                         m =
-                            Internal.ComplexNumbers.purePolar one
+                            Internal.ComplexNumbers.pure one
 
                         leftSide =
-                            Internal.ComplexNumbers.bindPolar m Internal.ComplexNumbers.purePolar
+                            Internal.ComplexNumbers.bind m Internal.ComplexNumbers.pure
                     in
                     Expect.equal leftSide m
             , Test.fuzz
@@ -116,25 +116,25 @@ suite =
                 \one ->
                     let
                         m =
-                            Internal.ComplexNumbers.purePolar one
+                            Internal.ComplexNumbers.pure one
 
                         f a =
-                            Internal.ComplexNumbers.ComplexNumberPolar
+                            Internal.ComplexNumbers.ComplexNumber
                                 (Internal.ComplexNumbers.Modulus <| a * 2)
                                 (Internal.ComplexNumbers.Theta <| a * 2)
 
                         g a =
-                            Internal.ComplexNumbers.ComplexNumberPolar
+                            Internal.ComplexNumbers.ComplexNumber
                                 (Internal.ComplexNumbers.Modulus <| a * 3)
                                 (Internal.ComplexNumbers.Theta <| a * 3)
 
                         leftSide =
-                            Internal.ComplexNumbers.bindPolar
-                                (Internal.ComplexNumbers.bindPolar m f)
+                            Internal.ComplexNumbers.bind
+                                (Internal.ComplexNumbers.bind m f)
                                 g
 
                         rightSide =
-                            Internal.ComplexNumbers.bindPolar m (\x -> Internal.ComplexNumbers.bindPolar (f x) g)
+                            Internal.ComplexNumbers.bind m (\x -> Internal.ComplexNumbers.bind (f x) g)
                     in
                     Expect.equal leftSide rightSide
             ]
