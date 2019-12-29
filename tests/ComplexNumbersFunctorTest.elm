@@ -18,7 +18,7 @@ suite =
             \one two ->
                 let
                     complexNumber =
-                        ComplexNumbers.ComplexNumberCartesian
+                        ComplexNumbers.ComplexNumber
                             (ComplexNumbers.Real one)
                             (ComplexNumbers.Imaginary two)
 
@@ -52,7 +52,7 @@ suite =
             \one two ->
                 let
                     complexNumber =
-                        ComplexNumbers.ComplexNumberCartesian
+                        ComplexNumbers.ComplexNumber
                             (ComplexNumbers.Real one)
                             (ComplexNumbers.Imaginary two)
 

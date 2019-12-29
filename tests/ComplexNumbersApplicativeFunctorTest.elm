@@ -22,7 +22,7 @@ suite =
                             ComplexNumbers.pureCartesian identity
 
                         c =
-                            ComplexNumbers.ComplexNumberCartesian
+                            ComplexNumbers.ComplexNumber
                                 (ComplexNumbers.Real
                                     one
                                 )
@@ -53,7 +53,7 @@ suite =
                             ComplexNumbers.pureCartesian identity
 
                         w =
-                            ComplexNumbers.ComplexNumberCartesian
+                            ComplexNumbers.ComplexNumber
                                 (ComplexNumbers.Real
                                     one
                                 )
@@ -228,7 +228,7 @@ suite =
             \one two ->
                 let
                     complexNumber =
-                        ComplexNumbers.ComplexNumberCartesian
+                        ComplexNumbers.ComplexNumber
                             (ComplexNumbers.Real one)
                             (ComplexNumbers.Imaginary two)
 
@@ -276,7 +276,7 @@ suite =
             \one two ->
                 let
                     complexNumber =
-                        ComplexNumbers.ComplexNumberCartesian
+                        ComplexNumbers.ComplexNumber
                             (ComplexNumbers.Real one)
                             (ComplexNumbers.Imaginary two)
 
@@ -302,7 +302,7 @@ suite =
             \one two ->
                 let
                     complexNumber =
-                        ComplexNumbers.ComplexNumberCartesian
+                        ComplexNumbers.ComplexNumber
                             (ComplexNumbers.Real one)
                             (ComplexNumbers.Imaginary two)
 
@@ -316,7 +316,7 @@ suite =
                         ComplexNumbers.applyCartesian fMapX complexNumber
                 in
                 pureFApplyX
-                    |> Expect.equal (ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real 0) (ComplexNumbers.Imaginary 0))
+                    |> Expect.equal (ComplexNumbers.ComplexNumber (ComplexNumbers.Real 0) (ComplexNumbers.Imaginary 0))
         , Test.fuzz2
             Fuzz.int
             Fuzz.int

@@ -19,7 +19,7 @@ suite =
                 \one ->
                     let
                         f a =
-                            ComplexNumbers.ComplexNumberCartesian
+                            ComplexNumbers.ComplexNumber
                                 (ComplexNumbers.Real <| a * 2)
                                 (ComplexNumbers.Imaginary <| a * 2)
 
@@ -55,12 +55,12 @@ suite =
                             ComplexNumbers.pureCartesian one
 
                         f a =
-                            ComplexNumbers.ComplexNumberCartesian
+                            ComplexNumbers.ComplexNumber
                                 (ComplexNumbers.Real <| a * 2)
                                 (ComplexNumbers.Imaginary <| a * 2)
 
                         g a =
-                            ComplexNumbers.ComplexNumberCartesian
+                            ComplexNumbers.ComplexNumber
                                 (ComplexNumbers.Real <| a * 3)
                                 (ComplexNumbers.Imaginary <| a * 3)
 

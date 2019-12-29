@@ -13,12 +13,12 @@ suite =
         [ Test.fuzz2
             Fuzz.float
             Fuzz.float
-            "tests ComplexNumberCartesian empty or identity value for sum"
+            "tests ComplexNumber empty or identity value for sum"
           <|
             \real imaginary ->
                 let
                     expected =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
+                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
                 in
                 ComplexNumbers.sum.semigroup.prepend expected ComplexNumbers.sum.identity
                     |> Expect.equal expected
@@ -31,17 +31,17 @@ suite =
             \one two three ->
                 let
                     a =
-                        ComplexNumbers.ComplexNumberCartesian
+                        ComplexNumbers.ComplexNumber
                             (ComplexNumbers.Real one)
                             (ComplexNumbers.Imaginary two)
 
                     b =
-                        ComplexNumbers.ComplexNumberCartesian
+                        ComplexNumbers.ComplexNumber
                             (ComplexNumbers.Real two)
                             (ComplexNumbers.Imaginary three)
 
                     c =
-                        ComplexNumbers.ComplexNumberCartesian
+                        ComplexNumbers.ComplexNumber
                             (ComplexNumbers.Real one)
                             (ComplexNumbers.Imaginary three)
 
@@ -56,12 +56,12 @@ suite =
         , Test.fuzz2
             (Fuzz.floatRange -10 10)
             (Fuzz.floatRange -10 10)
-            "tests ComplexNumberCartesian empty or identity value for product"
+            "tests ComplexNumber empty or identity value for product"
           <|
             \real imaginary ->
                 let
                     expected =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
+                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
 
                     result =
                         ComplexNumbers.equal (ComplexNumbers.product.semigroup.prepend expected ComplexNumbers.product.identity) expected
@@ -76,17 +76,17 @@ suite =
             \one two three ->
                 let
                     a =
-                        ComplexNumbers.ComplexNumberCartesian
+                        ComplexNumbers.ComplexNumber
                             (ComplexNumbers.Real one)
                             (ComplexNumbers.Imaginary two)
 
                     b =
-                        ComplexNumbers.ComplexNumberCartesian
+                        ComplexNumbers.ComplexNumber
                             (ComplexNumbers.Real two)
                             (ComplexNumbers.Imaginary three)
 
                     c =
-                        ComplexNumbers.ComplexNumberCartesian
+                        ComplexNumbers.ComplexNumber
                             (ComplexNumbers.Real one)
                             (ComplexNumbers.Imaginary three)
 

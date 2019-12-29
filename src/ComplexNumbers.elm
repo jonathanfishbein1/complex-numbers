@@ -1,7 +1,7 @@
 module ComplexNumbers exposing
     ( Real(..)
     , Imaginary(..)
-    , ComplexNumberCartesian(..)
+    , ComplexNumber(..)
     , i
     , zero
     , one
@@ -37,7 +37,7 @@ module ComplexNumbers exposing
 
 @docs Real
 @docs Imaginary
-@docs ComplexNumberCartesian
+@docs ComplexNumber
 
 
 # Arithmetic operations on complex numbers
@@ -98,63 +98,63 @@ type Imaginary i
 
 {-| Cartesian representation of a complex number
 -}
-type ComplexNumberCartesian a
-    = ComplexNumberCartesian (Real a) (Imaginary a)
+type ComplexNumber a
+    = ComplexNumber (Real a) (Imaginary a)
 
 
 {-| zero
 -}
-zero : ComplexNumberCartesian number
+zero : ComplexNumber number
 zero =
-    ComplexNumberCartesian (Real 0) (Imaginary 0)
+    ComplexNumber (Real 0) (Imaginary 0)
 
 
 {-| one
 -}
-one : ComplexNumberCartesian number
+one : ComplexNumber number
 one =
-    ComplexNumberCartesian (Real 1) (Imaginary 0)
+    ComplexNumber (Real 1) (Imaginary 0)
 
 
 {-| The number i
 -}
-i : ComplexNumberCartesian number
+i : ComplexNumber number
 i =
-    ComplexNumberCartesian (Real 0) (Imaginary 1)
+    ComplexNumber (Real 0) (Imaginary 1)
 
 
 {-| Extracts the real part of a complex number
 -}
-realPart : ComplexNumberCartesian a -> a
-realPart (ComplexNumberCartesian (Real real) _) =
+realPart : ComplexNumber a -> a
+realPart (ComplexNumber (Real real) _) =
     real
 
 
 {-| Extracts the imaginary part of a complex number
 -}
-imaginaryPart : ComplexNumberCartesian a -> a
-imaginaryPart (ComplexNumberCartesian _ (Imaginary imaginary)) =
+imaginaryPart : ComplexNumber a -> a
+imaginaryPart (ComplexNumber _ (Imaginary imaginary)) =
     imaginary
 
 
 {-| Add two complex numbers together
 -}
 add :
-    ComplexNumberCartesian number
-    -> ComplexNumberCartesian number
-    -> ComplexNumberCartesian number
+    ComplexNumber number
+    -> ComplexNumber number
+    -> ComplexNumber number
 add complexOne complexTwo =
     liftCartesian (+) complexOne complexTwo
 
 
-sumEmpty : ComplexNumberCartesian number
+sumEmpty : ComplexNumber number
 sumEmpty =
-    ComplexNumberCartesian (Real 0) (Imaginary 0)
+    ComplexNumber (Real 0) (Imaginary 0)
 
 
 {-| Monoidally add two complex numbers together
 -}
-sum : Typeclasses.Classes.Monoid.Monoid (ComplexNumberCartesian number)
+sum : Typeclasses.Classes.Monoid.Monoid (ComplexNumber number)
 sum =
     Typeclasses.Classes.Monoid.semigroupAndIdentity
         (Typeclasses.Classes.Semigroup.prepend add)
@@ -164,9 +164,9 @@ sum =
 {-| Multiply two complex numbers together
 -}
 multiply :
-    ComplexNumberCartesian Float
-    -> ComplexNumberCartesian Float
-    -> ComplexNumberCartesian Float
+    ComplexNumber Float
+    -> ComplexNumber Float
+    -> ComplexNumber Float
 multiply complexNumberOne complexNumberTwo =
     Internal.ComplexNumbers.multiply
         (convertFromCartesianToPolar complexNumberOne)
@@ -174,14 +174,14 @@ multiply complexNumberOne complexNumberTwo =
         |> convertFromPolarToCartesian
 
 
-productEmpty : ComplexNumberCartesian number
+productEmpty : ComplexNumber number
 productEmpty =
     one
 
 
 {-| Monoidally multiply two complex numbers together
 -}
-product : Typeclasses.Classes.Monoid.Monoid (ComplexNumberCartesian Float)
+product : Typeclasses.Classes.Monoid.Monoid (ComplexNumber Float)
 product =
     Typeclasses.Classes.Monoid.semigroupAndIdentity
         (Typeclasses.Classes.Semigroup.prepend multiply)
@@ -191,9 +191,9 @@ product =
 {-| Subtract two complex numbers together
 -}
 subtract :
-    ComplexNumberCartesian number
-    -> ComplexNumberCartesian number
-    -> ComplexNumberCartesian number
+    ComplexNumber number
+    -> ComplexNumber number
+    -> ComplexNumber number
 subtract complexNumberOne complexNumberTwo =
     liftCartesian (-) complexNumberOne complexNumberTwo
 
@@ -201,9 +201,9 @@ subtract complexNumberOne complexNumberTwo =
 {-| Divide two complex numbers together
 -}
 divide :
-    ComplexNumberCartesian Float
-    -> ComplexNumberCartesian Float
-    -> ComplexNumberCartesian Float
+    ComplexNumber Float
+    -> ComplexNumber Float
+    -> ComplexNumber Float
 divide complexNumberDividend complexNumberCartesianDivisor =
     Internal.ComplexNumbers.divide
         (convertFromCartesianToPolar complexNumberDividend)
@@ -213,25 +213,25 @@ divide complexNumberDividend complexNumberCartesianDivisor =
 
 {-| Calculate the modulus of a complex number
 -}
-modulus : ComplexNumberCartesian Float -> Float
-modulus (ComplexNumberCartesian (Real real) (Imaginary imaginary)) =
+modulus : ComplexNumber Float -> Float
+modulus (ComplexNumber (Real real) (Imaginary imaginary)) =
     (real ^ 2 + imaginary ^ 2)
         |> sqrt
 
 
 {-| Calculate the conjugate of a complex number
 -}
-conjugate : ComplexNumberCartesian number -> ComplexNumberCartesian number
-conjugate (ComplexNumberCartesian real (Imaginary imaginaryOne)) =
-    ComplexNumberCartesian real (Imaginary -imaginaryOne)
+conjugate : ComplexNumber number -> ComplexNumber number
+conjugate (ComplexNumber real (Imaginary imaginaryOne)) =
+    ComplexNumber real (Imaginary -imaginaryOne)
 
 
 {-| Convert from the Cartesian representation of a complex number to the polar representation
 -}
 convertFromCartesianToPolar :
-    ComplexNumberCartesian Float
+    ComplexNumber Float
     -> Internal.ComplexNumbers.ComplexNumber Float
-convertFromCartesianToPolar (ComplexNumberCartesian (Real real) (Imaginary imaginary)) =
+convertFromCartesianToPolar (ComplexNumber (Real real) (Imaginary imaginary)) =
     let
         polar =
             toPolar ( real, imaginary )
@@ -243,54 +243,54 @@ convertFromCartesianToPolar (ComplexNumberCartesian (Real real) (Imaginary imagi
 -}
 convertFromPolarToCartesian :
     Internal.ComplexNumbers.ComplexNumber Float
-    -> ComplexNumberCartesian Float
+    -> ComplexNumber Float
 convertFromPolarToCartesian (Internal.ComplexNumbers.ComplexNumber (Internal.ComplexNumbers.Modulus ro) (Internal.ComplexNumbers.Theta theta)) =
     let
         cartesian =
             fromPolar ( ro, theta )
     in
-    ComplexNumberCartesian (Real <| Tuple.first cartesian) (Imaginary <| Tuple.second cartesian)
+    ComplexNumber (Real <| Tuple.first cartesian) (Imaginary <| Tuple.second cartesian)
 
 
 {-| Map over a complex number
 -}
-mapCartesian : (a -> b) -> ComplexNumberCartesian a -> ComplexNumberCartesian b
-mapCartesian f (ComplexNumberCartesian (Real realOne) (Imaginary imaginaryOne)) =
-    ComplexNumberCartesian (Real <| f realOne) (Imaginary <| f imaginaryOne)
+mapCartesian : (a -> b) -> ComplexNumber a -> ComplexNumber b
+mapCartesian f (ComplexNumber (Real realOne) (Imaginary imaginaryOne)) =
+    ComplexNumber (Real <| f realOne) (Imaginary <| f imaginaryOne)
 
 
 {-| Place a value in the minimal Complex Number Cartesian context
 -}
-pureCartesian : a -> ComplexNumberCartesian a
+pureCartesian : a -> ComplexNumber a
 pureCartesian a =
-    ComplexNumberCartesian (Real a) (Imaginary a)
+    ComplexNumber (Real a) (Imaginary a)
 
 
 {-| Apply for Complex Number Cartesian representaiton applicative
 -}
 applyCartesian :
-    ComplexNumberCartesian (a -> b)
-    -> ComplexNumberCartesian a
-    -> ComplexNumberCartesian b
-applyCartesian (ComplexNumberCartesian (Real fReal) (Imaginary fImaginary)) (ComplexNumberCartesian (Real real) (Imaginary imaginary)) =
-    ComplexNumberCartesian (Real <| fReal real) (Imaginary <| fImaginary imaginary)
+    ComplexNumber (a -> b)
+    -> ComplexNumber a
+    -> ComplexNumber b
+applyCartesian (ComplexNumber (Real fReal) (Imaginary fImaginary)) (ComplexNumber (Real real) (Imaginary imaginary)) =
+    ComplexNumber (Real <| fReal real) (Imaginary <| fImaginary imaginary)
 
 
 {-| Monadic bind for Complex Number Cartesian representaiton
 -}
 bindCartesian :
-    ComplexNumberCartesian a
-    -> (a -> ComplexNumberCartesian b)
-    -> ComplexNumberCartesian b
-bindCartesian (ComplexNumberCartesian (Real previousReal) (Imaginary previousImaginary)) f =
-    ComplexNumberCartesian (Real <| realPart <| f previousReal) (Imaginary <| imaginaryPart <| f previousImaginary)
+    ComplexNumber a
+    -> (a -> ComplexNumber b)
+    -> ComplexNumber b
+bindCartesian (ComplexNumber (Real previousReal) (Imaginary previousImaginary)) f =
+    ComplexNumber (Real <| realPart <| f previousReal) (Imaginary <| imaginaryPart <| f previousImaginary)
 
 
 liftCartesian :
     (a -> b -> c)
-    -> ComplexNumberCartesian a
-    -> ComplexNumberCartesian b
-    -> ComplexNumberCartesian c
+    -> ComplexNumber a
+    -> ComplexNumber b
+    -> ComplexNumber c
 liftCartesian f a b =
     applyCartesian (mapCartesian f a) b
 
@@ -298,16 +298,16 @@ liftCartesian f a b =
 {-| Equality of Complex Numbers
 -}
 equalImplementation :
-    ComplexNumberCartesian Float
-    -> ComplexNumberCartesian Float
+    ComplexNumber Float
+    -> ComplexNumber Float
     -> Bool
-equalImplementation (ComplexNumberCartesian (Real realOne) (Imaginary imaginaryOne)) (ComplexNumberCartesian (Real realTwo) (Imaginary imaginaryTwo)) =
+equalImplementation (ComplexNumber (Real realOne) (Imaginary imaginaryOne)) (ComplexNumber (Real realTwo) (Imaginary imaginaryTwo)) =
     Float.Extra.equalWithin 0.000000001 realOne realTwo && Float.Extra.equalWithin 0.000000001 imaginaryOne imaginaryTwo
 
 
 {-| Calculate a complex number raised to a power
 -}
-power : Float -> ComplexNumberCartesian Float -> ComplexNumberCartesian Float
+power : Float -> ComplexNumber Float -> ComplexNumber Float
 power n complexNumber =
     Internal.ComplexNumbers.power n (convertFromCartesianToPolar complexNumber)
         |> convertFromPolarToCartesian
@@ -315,23 +315,23 @@ power n complexNumber =
 
 {-| `Equal` type for `ComplexNumber`.
 -}
-complexNumberEqual : Typeclasses.Classes.Equality.Equality (ComplexNumberCartesian Float)
+complexNumberEqual : Typeclasses.Classes.Equality.Equality (ComplexNumber Float)
 complexNumberEqual =
     Typeclasses.Classes.Equality.eq equalImplementation
 
 
 {-| Compare two ComplexNumbers for equality
 -}
-equal : ComplexNumberCartesian Float -> ComplexNumberCartesian Float -> Bool
+equal : ComplexNumber Float -> ComplexNumber Float -> Bool
 equal =
     complexNumberEqual.eq
 
 
 {-| Print ComplexNumber
 -}
-print : ComplexNumberCartesian Float -> String
-print (ComplexNumberCartesian (Real real) (Imaginary imaginary)) =
-    "ComplexNumberCartesian Real "
+print : ComplexNumber Float -> String
+print (ComplexNumber (Real real) (Imaginary imaginary)) =
+    "ComplexNumber Real "
         ++ String.fromFloat real
         ++ " Imaginary "
         ++ String.fromFloat imaginary
@@ -339,17 +339,17 @@ print (ComplexNumberCartesian (Real real) (Imaginary imaginary)) =
 
 {-| Read ComplexNumber
 -}
-read : String -> Result (List Parser.DeadEnd) (ComplexNumberCartesian Float)
+read : String -> Result (List Parser.DeadEnd) (ComplexNumber Float)
 read vectorString =
     Parser.run parseComplexNumber vectorString
 
 
 {-| Parse ComplexNumber
 -}
-parseComplexNumber : Parser.Parser (ComplexNumberCartesian Float)
+parseComplexNumber : Parser.Parser (ComplexNumber Float)
 parseComplexNumber =
-    Parser.succeed ComplexNumberCartesian
-        |. Parser.keyword "ComplexNumberCartesian"
+    Parser.succeed ComplexNumber
+        |. Parser.keyword "ComplexNumber"
         |. Parser.spaces
         |= parseReal
         |. Parser.spaces
@@ -395,7 +395,7 @@ positiveOrNegativeFloat =
 
 {-| Field for Complex numbers
 -}
-complexField : Field.Field (ComplexNumberCartesian Float)
+complexField : Field.Field (ComplexNumber Float)
 complexField =
     { zero = zero
     , one = one
@@ -404,12 +404,12 @@ complexField =
     , multiply = multiply
     , divide = divide
     , power = power
-    , negate = multiply (ComplexNumberCartesian (Real -1) (Imaginary 0))
+    , negate = multiply (ComplexNumber (Real -1) (Imaginary 0))
     }
 
 
 {-| Euler's equation
 -}
-euler : Float -> ComplexNumberCartesian Float
+euler : Float -> ComplexNumber Float
 euler theta =
-    ComplexNumberCartesian (Real <| Basics.cos theta) (Imaginary <| Basics.sin theta)
+    ComplexNumber (Real <| Basics.cos theta) (Imaginary <| Basics.sin theta)
