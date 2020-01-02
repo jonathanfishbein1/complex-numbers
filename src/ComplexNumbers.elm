@@ -144,7 +144,7 @@ add :
     -> ComplexNumber number
     -> ComplexNumber number
 add complexOne complexTwo =
-    liftA2 (+) complexOne complexTwo
+    map2 (+) complexOne complexTwo
 
 
 sumEmpty : ComplexNumber number
@@ -195,7 +195,7 @@ subtract :
     -> ComplexNumber number
     -> ComplexNumber number
 subtract complexNumberOne complexNumberTwo =
-    liftA2 (-) complexNumberOne complexNumberTwo
+    map2 (-) complexNumberOne complexNumberTwo
 
 
 {-| Divide two complex numbers together
@@ -290,12 +290,14 @@ andThen (ComplexNumber (Real previousReal) (Imaginary previousImaginary)) f =
         (Imaginary <| imaginary <| f previousImaginary)
 
 
-liftA2 :
+{-| Lift a binary function to work with complex numbers
+-}
+map2 :
     (a -> b -> c)
     -> ComplexNumber a
     -> ComplexNumber b
     -> ComplexNumber c
-liftA2 f a b =
+map2 f a b =
     apply (map f a) b
 
 
