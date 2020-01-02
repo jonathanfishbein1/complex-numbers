@@ -2,8 +2,8 @@ module Internal.ComplexNumbers exposing
     ( ComplexNumber(..)
     , Modulus(..)
     , Theta(..)
+    , andMap
     , andThen
-    , apply
     , divide
     , map
     , map2
@@ -96,11 +96,11 @@ pure a =
 
 {-| Apply for Complex Number polar representaiton applicative
 -}
-apply :
+andMap :
     ComplexNumber (a -> b)
     -> ComplexNumber a
     -> ComplexNumber b
-apply (ComplexNumber (Modulus fRo) (Theta fTheta)) (ComplexNumber (Modulus ro) (Theta thta)) =
+andMap (ComplexNumber (Modulus fRo) (Theta fTheta)) (ComplexNumber (Modulus ro) (Theta thta)) =
     ComplexNumber (Modulus <| fRo ro) (Theta <| fTheta thta)
 
 
@@ -122,7 +122,7 @@ map2 :
     -> ComplexNumber b
     -> ComplexNumber c
 map2 f a b =
-    apply (map f a) b
+    andMap (map f a) b
 
 
 {-| one
