@@ -5,8 +5,8 @@ module Internal.ComplexNumbers exposing
     , andThen
     , apply
     , divide
-    , liftA2
     , map
+    , map2
     , modulus
     , multiply
     , power
@@ -116,12 +116,12 @@ andThen (ComplexNumber (Modulus previousModulus) (Theta previousTheta)) f =
         (Theta <| theta <| f previousTheta)
 
 
-liftA2 :
+map2 :
     (a -> b -> c)
     -> ComplexNumber a
     -> ComplexNumber b
     -> ComplexNumber c
-liftA2 f a b =
+map2 f a b =
     apply (map f a) b
 
 
