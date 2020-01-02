@@ -20,7 +20,7 @@ module ComplexNumbers exposing
     , map
     , pure
     , apply
-    , bind
+    , andThen
     , equal
     , power
     , complexField
@@ -60,7 +60,7 @@ module ComplexNumbers exposing
 @docs map
 @docs pure
 @docs apply
-@docs bind
+@docs andThen
 @docs equal
 @docs power
 @docs complexField
@@ -280,11 +280,11 @@ apply (ComplexNumber (Real fReal) (Imaginary fImaginary)) (ComplexNumber (Real r
 
 {-| Monadic bind for Complex Number Cartesian representaiton
 -}
-bind :
+andThen :
     ComplexNumber a
     -> (a -> ComplexNumber b)
     -> ComplexNumber b
-bind (ComplexNumber (Real previousReal) (Imaginary previousImaginary)) f =
+andThen (ComplexNumber (Real previousReal) (Imaginary previousImaginary)) f =
     ComplexNumber
         (Real <| real <| f previousReal)
         (Imaginary <| imaginary <| f previousImaginary)

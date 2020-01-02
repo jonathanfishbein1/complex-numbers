@@ -2,8 +2,8 @@ module Internal.ComplexNumbers exposing
     ( ComplexNumber(..)
     , Modulus(..)
     , Theta(..)
+    , andThen
     , apply
-    , bind
     , divide
     , liftA2
     , map
@@ -104,13 +104,13 @@ apply (ComplexNumber (Modulus fRo) (Theta fTheta)) (ComplexNumber (Modulus ro) (
     ComplexNumber (Modulus <| fRo ro) (Theta <| fTheta thta)
 
 
-{-| Monadic bind for Complex Number polar representaiton
+{-| Monadic andThen for Complex Number polar representaiton
 -}
-bind :
+andThen :
     ComplexNumber a
     -> (a -> ComplexNumber b)
     -> ComplexNumber b
-bind (ComplexNumber (Modulus previousModulus) (Theta previousTheta)) f =
+andThen (ComplexNumber (Modulus previousModulus) (Theta previousTheta)) f =
     ComplexNumber
         (Modulus <| modulus <| f previousModulus)
         (Theta <| theta <| f previousTheta)

@@ -24,7 +24,7 @@ suite =
                                 (ComplexNumbers.Imaginary <| a * 2)
 
                         leftSide =
-                            ComplexNumbers.bind
+                            ComplexNumbers.andThen
                                 (ComplexNumbers.pure one)
                                 f
 
@@ -42,7 +42,7 @@ suite =
                             ComplexNumbers.pure one
 
                         leftSide =
-                            ComplexNumbers.bind m ComplexNumbers.pure
+                            ComplexNumbers.andThen m ComplexNumbers.pure
                     in
                     Expect.equal leftSide m
             , Test.fuzz
@@ -65,12 +65,12 @@ suite =
                                 (ComplexNumbers.Imaginary <| a * 3)
 
                         leftSide =
-                            ComplexNumbers.bind
-                                (ComplexNumbers.bind m f)
+                            ComplexNumbers.andThen
+                                (ComplexNumbers.andThen m f)
                                 g
 
                         rightSide =
-                            ComplexNumbers.bind m (\x -> ComplexNumbers.bind (f x) g)
+                            ComplexNumbers.andThen m (\x -> ComplexNumbers.andThen (f x) g)
                     in
                     Expect.equal leftSide rightSide
             ]
@@ -88,7 +88,7 @@ suite =
                                 (Internal.ComplexNumbers.Theta <| a * 2)
 
                         leftSide =
-                            Internal.ComplexNumbers.bind
+                            Internal.ComplexNumbers.andThen
                                 (Internal.ComplexNumbers.pure one)
                                 f
 
@@ -106,7 +106,7 @@ suite =
                             Internal.ComplexNumbers.pure one
 
                         leftSide =
-                            Internal.ComplexNumbers.bind m Internal.ComplexNumbers.pure
+                            Internal.ComplexNumbers.andThen m Internal.ComplexNumbers.pure
                     in
                     Expect.equal leftSide m
             , Test.fuzz
@@ -129,12 +129,12 @@ suite =
                                 (Internal.ComplexNumbers.Theta <| a * 3)
 
                         leftSide =
-                            Internal.ComplexNumbers.bind
-                                (Internal.ComplexNumbers.bind m f)
+                            Internal.ComplexNumbers.andThen
+                                (Internal.ComplexNumbers.andThen m f)
                                 g
 
                         rightSide =
-                            Internal.ComplexNumbers.bind m (\x -> Internal.ComplexNumbers.bind (f x) g)
+                            Internal.ComplexNumbers.andThen m (\x -> Internal.ComplexNumbers.andThen (f x) g)
                     in
                     Expect.equal leftSide rightSide
             ]
