@@ -2,11 +2,11 @@ module Internal.ComplexNumbers exposing
     ( ComplexNumber(..)
     , Modulus(..)
     , Theta(..)
+    , andMap
     , andThen
-    , apply
     , divide
-    , liftA2
     , map
+    , map2
     , modulus
     , multiply
     , power
@@ -96,33 +96,33 @@ pure a =
 
 {-| Apply for Complex Number polar representaiton applicative
 -}
-apply :
-    ComplexNumber (a -> b)
-    -> ComplexNumber a
+andMap :
+    ComplexNumber a
+    -> ComplexNumber (a -> b)
     -> ComplexNumber b
-apply (ComplexNumber (Modulus fRo) (Theta fTheta)) (ComplexNumber (Modulus ro) (Theta thta)) =
+andMap (ComplexNumber (Modulus ro) (Theta thta)) (ComplexNumber (Modulus fRo) (Theta fTheta)) =
     ComplexNumber (Modulus <| fRo ro) (Theta <| fTheta thta)
 
 
 {-| Monadic andThen for Complex Number polar representaiton
 -}
 andThen :
-    ComplexNumber a
-    -> (a -> ComplexNumber b)
+    (a -> ComplexNumber b)
+    -> ComplexNumber a
     -> ComplexNumber b
-andThen (ComplexNumber (Modulus previousModulus) (Theta previousTheta)) f =
+andThen f (ComplexNumber (Modulus previousModulus) (Theta previousTheta)) =
     ComplexNumber
         (Modulus <| modulus <| f previousModulus)
         (Theta <| theta <| f previousTheta)
 
 
-liftA2 :
+map2 :
     (a -> b -> c)
     -> ComplexNumber a
     -> ComplexNumber b
     -> ComplexNumber c
-liftA2 f a b =
-    apply (map f a) b
+map2 f a b =
+    andMap b (map f a)
 
 
 {-| one

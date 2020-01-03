@@ -19,7 +19,7 @@ module ComplexNumbers exposing
     , convertFromPolarToCartesian
     , map
     , pure
-    , apply
+    , andMap
     , andThen
     , equal
     , power
@@ -59,7 +59,7 @@ module ComplexNumbers exposing
 @docs convertFromPolarToCartesian
 @docs map
 @docs pure
-@docs apply
+@docs andMap
 @docs andThen
 @docs equal
 @docs power
@@ -144,7 +144,7 @@ add :
     -> ComplexNumber number
     -> ComplexNumber number
 add complexOne complexTwo =
-    liftA2 (+) complexOne complexTwo
+    map2 (+) complexOne complexTwo
 
 
 sumEmpty : ComplexNumber number
@@ -195,7 +195,7 @@ subtract :
     -> ComplexNumber number
     -> ComplexNumber number
 subtract complexNumberOne complexNumberTwo =
-    liftA2 (-) complexNumberOne complexNumberTwo
+    map2 (-) complexNumberOne complexNumberTwo
 
 
 {-| Divide two complex numbers together
@@ -270,33 +270,35 @@ pure a =
 
 {-| Apply for Complex Number Cartesian representaiton applicative
 -}
-apply :
-    ComplexNumber (a -> b)
-    -> ComplexNumber a
+andMap :
+    ComplexNumber a
+    -> ComplexNumber (a -> b)
     -> ComplexNumber b
-apply (ComplexNumber (Real fReal) (Imaginary fImaginary)) (ComplexNumber (Real rl) (Imaginary imag)) =
+andMap (ComplexNumber (Real rl) (Imaginary imag)) (ComplexNumber (Real fReal) (Imaginary fImaginary)) =
     ComplexNumber (Real <| fReal rl) (Imaginary <| fImaginary imag)
 
 
 {-| Monadic bind for Complex Number Cartesian representaiton
 -}
 andThen :
-    ComplexNumber a
-    -> (a -> ComplexNumber b)
+    (a -> ComplexNumber b)
+    -> ComplexNumber a
     -> ComplexNumber b
-andThen (ComplexNumber (Real previousReal) (Imaginary previousImaginary)) f =
+andThen f (ComplexNumber (Real previousReal) (Imaginary previousImaginary)) =
     ComplexNumber
         (Real <| real <| f previousReal)
         (Imaginary <| imaginary <| f previousImaginary)
 
 
-liftA2 :
+{-| Lift a binary function to work with complex numbers
+-}
+map2 :
     (a -> b -> c)
     -> ComplexNumber a
     -> ComplexNumber b
     -> ComplexNumber c
-liftA2 f a b =
-    apply (map f a) b
+map2 f a b =
+    andMap b (map f a)
 
 
 {-| Equality of Complex Numbers

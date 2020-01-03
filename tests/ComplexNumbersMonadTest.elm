@@ -25,8 +25,8 @@ suite =
 
                         leftSide =
                             ComplexNumbers.andThen
-                                (ComplexNumbers.pure one)
                                 f
+                                (ComplexNumbers.pure one)
 
                         rightSide =
                             f one
@@ -42,7 +42,7 @@ suite =
                             ComplexNumbers.pure one
 
                         leftSide =
-                            ComplexNumbers.andThen m ComplexNumbers.pure
+                            ComplexNumbers.andThen ComplexNumbers.pure m
                     in
                     Expect.equal leftSide m
             , Test.fuzz
@@ -66,11 +66,11 @@ suite =
 
                         leftSide =
                             ComplexNumbers.andThen
-                                (ComplexNumbers.andThen m f)
                                 g
+                                (ComplexNumbers.andThen f m)
 
                         rightSide =
-                            ComplexNumbers.andThen m (\x -> ComplexNumbers.andThen (f x) g)
+                            ComplexNumbers.andThen (\x -> ComplexNumbers.andThen g (f x)) m
                     in
                     Expect.equal leftSide rightSide
             ]
@@ -89,8 +89,8 @@ suite =
 
                         leftSide =
                             Internal.ComplexNumbers.andThen
-                                (Internal.ComplexNumbers.pure one)
                                 f
+                                (Internal.ComplexNumbers.pure one)
 
                         rightSide =
                             f one
@@ -106,7 +106,7 @@ suite =
                             Internal.ComplexNumbers.pure one
 
                         leftSide =
-                            Internal.ComplexNumbers.andThen m Internal.ComplexNumbers.pure
+                            Internal.ComplexNumbers.andThen Internal.ComplexNumbers.pure m
                     in
                     Expect.equal leftSide m
             , Test.fuzz
@@ -130,11 +130,11 @@ suite =
 
                         leftSide =
                             Internal.ComplexNumbers.andThen
-                                (Internal.ComplexNumbers.andThen m f)
                                 g
+                                (Internal.ComplexNumbers.andThen f m)
 
                         rightSide =
-                            Internal.ComplexNumbers.andThen m (\x -> Internal.ComplexNumbers.andThen (f x) g)
+                            Internal.ComplexNumbers.andThen (\x -> Internal.ComplexNumbers.andThen g (f x)) m
                     in
                     Expect.equal leftSide rightSide
             ]
