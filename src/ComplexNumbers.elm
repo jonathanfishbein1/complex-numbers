@@ -281,10 +281,10 @@ andMap (ComplexNumber (Real rl) (Imaginary imag)) (ComplexNumber (Real fReal) (I
 {-| Monadic bind for Complex Number Cartesian representaiton
 -}
 andThen :
-    ComplexNumber a
-    -> (a -> ComplexNumber b)
+    (a -> ComplexNumber b)
+    -> ComplexNumber a
     -> ComplexNumber b
-andThen (ComplexNumber (Real previousReal) (Imaginary previousImaginary)) f =
+andThen f (ComplexNumber (Real previousReal) (Imaginary previousImaginary)) =
     ComplexNumber
         (Real <| real <| f previousReal)
         (Imaginary <| imaginary <| f previousImaginary)
