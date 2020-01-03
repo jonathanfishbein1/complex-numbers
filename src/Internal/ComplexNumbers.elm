@@ -107,10 +107,10 @@ andMap (ComplexNumber (Modulus ro) (Theta thta)) (ComplexNumber (Modulus fRo) (T
 {-| Monadic andThen for Complex Number polar representaiton
 -}
 andThen :
-    ComplexNumber a
-    -> (a -> ComplexNumber b)
+    (a -> ComplexNumber b)
+    -> ComplexNumber a
     -> ComplexNumber b
-andThen (ComplexNumber (Modulus previousModulus) (Theta previousTheta)) f =
+andThen f (ComplexNumber (Modulus previousModulus) (Theta previousTheta)) =
     ComplexNumber
         (Modulus <| modulus <| f previousModulus)
         (Theta <| theta <| f previousTheta)
