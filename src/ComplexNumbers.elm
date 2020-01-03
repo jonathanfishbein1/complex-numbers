@@ -271,10 +271,10 @@ pure a =
 {-| Apply for Complex Number Cartesian representaiton applicative
 -}
 andMap :
-    ComplexNumber (a -> b)
-    -> ComplexNumber a
+    ComplexNumber a
+    -> ComplexNumber (a -> b)
     -> ComplexNumber b
-andMap (ComplexNumber (Real fReal) (Imaginary fImaginary)) (ComplexNumber (Real rl) (Imaginary imag)) =
+andMap (ComplexNumber (Real rl) (Imaginary imag)) (ComplexNumber (Real fReal) (Imaginary fImaginary)) =
     ComplexNumber (Real <| fReal rl) (Imaginary <| fImaginary imag)
 
 
@@ -298,7 +298,7 @@ map2 :
     -> ComplexNumber b
     -> ComplexNumber c
 map2 f a b =
-    andMap (map f a) b
+    andMap b (map f a)
 
 
 {-| Equality of Complex Numbers
