@@ -97,10 +97,10 @@ pure a =
 {-| Apply for Complex Number polar representaiton applicative
 -}
 andMap :
-    ComplexNumber (a -> b)
-    -> ComplexNumber a
+    ComplexNumber a
+    -> ComplexNumber (a -> b)
     -> ComplexNumber b
-andMap (ComplexNumber (Modulus fRo) (Theta fTheta)) (ComplexNumber (Modulus ro) (Theta thta)) =
+andMap (ComplexNumber (Modulus ro) (Theta thta)) (ComplexNumber (Modulus fRo) (Theta fTheta)) =
     ComplexNumber (Modulus <| fRo ro) (Theta <| fTheta thta)
 
 
@@ -122,7 +122,7 @@ map2 :
     -> ComplexNumber b
     -> ComplexNumber c
 map2 f a b =
-    andMap (map f a) b
+    andMap b (map f a)
 
 
 {-| one

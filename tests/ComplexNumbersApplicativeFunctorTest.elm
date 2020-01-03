@@ -135,7 +135,7 @@ suite =
                                 )
 
                         cApplied =
-                            Internal.ComplexNumbers.andMap cIdentity c
+                            Internal.ComplexNumbers.andMap c cIdentity
                     in
                     Expect.equal cApplied c
             , Test.fuzz
@@ -167,13 +167,13 @@ suite =
 
                         leftSide =
                             Internal.ComplexNumbers.andMap
-                                (Internal.ComplexNumbers.andMap (Internal.ComplexNumbers.andMap fPure u) v)
                                 w
+                                (Internal.ComplexNumbers.andMap v (Internal.ComplexNumbers.andMap u fPure))
 
                         rightSide =
                             Internal.ComplexNumbers.andMap
+                                (Internal.ComplexNumbers.andMap w v)
                                 u
-                                (Internal.ComplexNumbers.andMap v w)
                     in
                     Expect.equal leftSide rightSide
             , Test.fuzz
@@ -195,7 +195,7 @@ suite =
                             Internal.ComplexNumbers.pure <| f one
 
                         cApplied =
-                            Internal.ComplexNumbers.andMap pureF pureOne
+                            Internal.ComplexNumbers.andMap pureOne pureF
                     in
                     Expect.equal cApplied expected
             , Test.fuzz
@@ -211,12 +211,12 @@ suite =
                             Internal.ComplexNumbers.pure one
 
                         leftSide =
-                            Internal.ComplexNumbers.andMap pureOne pureTwo
+                            Internal.ComplexNumbers.andMap pureTwo pureOne
 
                         rightSide =
                             Internal.ComplexNumbers.andMap
-                                (Internal.ComplexNumbers.pure (Basics.always one))
                                 pureOne
+                                (Internal.ComplexNumbers.pure (Basics.always one))
                     in
                     Expect.equal leftSide rightSide
             ]
@@ -263,8 +263,8 @@ suite =
 
                     pureFApplyX =
                         Internal.ComplexNumbers.andMap
-                            (Internal.ComplexNumbers.pure f)
                             complexNumber
+                            (Internal.ComplexNumbers.pure f)
                 in
                 pureFApplyX
                     |> Expect.equal fMapX
@@ -334,7 +334,7 @@ suite =
                         Internal.ComplexNumbers.map f complexNumber
 
                     pureFApplyX =
-                        Internal.ComplexNumbers.andMap (Internal.ComplexNumbers.pure f) complexNumber
+                        Internal.ComplexNumbers.andMap complexNumber (Internal.ComplexNumbers.pure f)
                 in
                 pureFApplyX
                     |> Expect.equal fMapX
@@ -360,8 +360,8 @@ suite =
 
                     pureFApplyX =
                         Internal.ComplexNumbers.andMap
-                            (Internal.ComplexNumbers.pure f)
                             complexNumber
+                            (Internal.ComplexNumbers.pure f)
                 in
                 pureFApplyX
                     |> Expect.equal fMapX
