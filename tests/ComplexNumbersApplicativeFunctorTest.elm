@@ -31,7 +31,7 @@ suite =
                                 )
 
                         cApplied =
-                            ComplexNumbers.apply cIdentity c
+                            ComplexNumbers.andMap cIdentity c
                     in
                     Expect.equal cApplied c
             , Test.fuzz
@@ -62,14 +62,14 @@ suite =
                                 )
 
                         leftSide =
-                            ComplexNumbers.apply
-                                (ComplexNumbers.apply (ComplexNumbers.apply fPure u) v)
+                            ComplexNumbers.andMap
+                                (ComplexNumbers.andMap (ComplexNumbers.andMap fPure u) v)
                                 w
 
                         rightSide =
-                            ComplexNumbers.apply
+                            ComplexNumbers.andMap
                                 u
-                                (ComplexNumbers.apply v w)
+                                (ComplexNumbers.andMap v w)
                     in
                     Expect.equal leftSide rightSide
             , Test.fuzz
@@ -91,7 +91,7 @@ suite =
                             ComplexNumbers.pure <| f one
 
                         cApplied =
-                            ComplexNumbers.apply pureF pureOne
+                            ComplexNumbers.andMap pureF pureOne
                     in
                     Expect.equal cApplied expected
             , Test.fuzz
@@ -107,10 +107,10 @@ suite =
                             ComplexNumbers.pure one
 
                         leftSide =
-                            ComplexNumbers.apply pureOne pureTwo
+                            ComplexNumbers.andMap pureOne pureTwo
 
                         rightSide =
-                            ComplexNumbers.apply
+                            ComplexNumbers.andMap
                                 (ComplexNumbers.pure (Basics.always one))
                                 pureOne
                     in
@@ -223,7 +223,7 @@ suite =
         , Test.fuzz2
             Fuzz.int
             Fuzz.int
-            "tests pure f apply x equal map f x"
+            "tests pure f andMap x equal map f x"
           <|
             \one two ->
                 let
@@ -239,14 +239,14 @@ suite =
                         ComplexNumbers.map f complexNumber
 
                     pureFApplyX =
-                        ComplexNumbers.apply (ComplexNumbers.pure f) complexNumber
+                        ComplexNumbers.andMap (ComplexNumbers.pure f) complexNumber
                 in
                 pureFApplyX
                     |> Expect.equal fMapX
         , Test.fuzz2
             Fuzz.int
             Fuzz.int
-            "tests pure f apply x equal map f x polar"
+            "tests pure f andMap x equal map f x polar"
           <|
             \one two ->
                 let
@@ -271,7 +271,7 @@ suite =
         , Test.fuzz2
             Fuzz.int
             Fuzz.int
-            "tests apply + equal to add"
+            "tests andMap + equal to add"
           <|
             \one two ->
                 let
@@ -290,14 +290,14 @@ suite =
                         ComplexNumbers.map f complexNumber
 
                     pureFApplyX =
-                        ComplexNumbers.apply fMapX complexNumber
+                        ComplexNumbers.andMap fMapX complexNumber
                 in
                 pureFApplyX
                     |> Expect.equal doubleComplexNumber
         , Test.fuzz2
             Fuzz.int
             Fuzz.int
-            "tests apply - equal to add"
+            "tests andMap - equal to add"
           <|
             \one two ->
                 let
@@ -313,14 +313,14 @@ suite =
                         ComplexNumbers.map f complexNumber
 
                     pureFApplyX =
-                        ComplexNumbers.apply fMapX complexNumber
+                        ComplexNumbers.andMap fMapX complexNumber
                 in
                 pureFApplyX
                     |> Expect.equal (ComplexNumbers.ComplexNumber (ComplexNumbers.Real 0) (ComplexNumbers.Imaginary 0))
         , Test.fuzz2
             Fuzz.int
             Fuzz.int
-            "tests pure f apply x equal map f x multiply polar"
+            "tests pure f andMap x equal map f x multiply polar"
           <|
             \one two ->
                 let
@@ -341,7 +341,7 @@ suite =
         , Test.fuzz2
             Fuzz.int
             Fuzz.int
-            "tests pure f apply x equal map f x multiply divide"
+            "tests pure f andMap x equal map f x multiply divide"
           <|
             \one two ->
                 let

@@ -19,7 +19,7 @@ module ComplexNumbers exposing
     , convertFromPolarToCartesian
     , map
     , pure
-    , apply
+    , andMap
     , andThen
     , equal
     , power
@@ -59,7 +59,7 @@ module ComplexNumbers exposing
 @docs convertFromPolarToCartesian
 @docs map
 @docs pure
-@docs apply
+@docs andMap
 @docs andThen
 @docs equal
 @docs power
@@ -270,11 +270,11 @@ pure a =
 
 {-| Apply for Complex Number Cartesian representaiton applicative
 -}
-apply :
+andMap :
     ComplexNumber (a -> b)
     -> ComplexNumber a
     -> ComplexNumber b
-apply (ComplexNumber (Real fReal) (Imaginary fImaginary)) (ComplexNumber (Real rl) (Imaginary imag)) =
+andMap (ComplexNumber (Real fReal) (Imaginary fImaginary)) (ComplexNumber (Real rl) (Imaginary imag)) =
     ComplexNumber (Real <| fReal rl) (Imaginary <| fImaginary imag)
 
 
@@ -298,7 +298,7 @@ map2 :
     -> ComplexNumber b
     -> ComplexNumber c
 map2 f a b =
-    apply (map f a) b
+    andMap (map f a) b
 
 
 {-| Equality of Complex Numbers
