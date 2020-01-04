@@ -11,14 +11,18 @@ suite : Test.Test
 suite =
     Test.describe "Tests Applicative Functor abstraction for Complex Numbers"
         [ Test.describe "Tests Applicative Four Laws For Both Cartesian and Polar"
-            [ Test.fuzz2 Fuzz.int Fuzz.int "tests first applicative law for Complex Numbers" <|
+            [ Test.fuzz2
+                Fuzz.int
+                Fuzz.int
+                "tests first applicative law for Complex Numbers"
+              <|
                 \one two ->
                     let
                         cIdentity =
-                            ComplexNumbers.pureCartesian identity
+                            ComplexNumbers.pure identity
 
                         c =
-                            ComplexNumbers.ComplexNumberCartesian
+                            ComplexNumbers.ComplexNumber
                                 (ComplexNumbers.Real
                                     one
                                 )
@@ -27,26 +31,29 @@ suite =
                                 )
 
                         cApplied =
-                            ComplexNumbers.applyCartesian cIdentity c
+                            ComplexNumbers.andMap c cIdentity
                     in
                     Expect.equal cApplied c
-            , Test.fuzz Fuzz.int "tests second applicative law for Complex Numbers" <|
+            , Test.fuzz
+                Fuzz.int
+                "tests second applicative law for Complex Numbers"
+              <|
                 \one ->
                     let
                         f =
                             (<<)
 
                         fPure =
-                            ComplexNumbers.pureCartesian f
+                            ComplexNumbers.pure f
 
                         u =
-                            ComplexNumbers.pureCartesian identity
+                            ComplexNumbers.pure identity
 
                         v =
-                            ComplexNumbers.pureCartesian identity
+                            ComplexNumbers.pure identity
 
                         w =
-                            ComplexNumbers.ComplexNumberCartesian
+                            ComplexNumbers.ComplexNumber
                                 (ComplexNumbers.Real
                                     one
                                 )
@@ -55,55 +62,71 @@ suite =
                                 )
 
                         leftSide =
-                            ComplexNumbers.applyCartesian (ComplexNumbers.applyCartesian (ComplexNumbers.applyCartesian fPure u) v) w
+                            ComplexNumbers.andMap
+                                w
+                                (ComplexNumbers.andMap v (ComplexNumbers.andMap u fPure))
 
                         rightSide =
-                            ComplexNumbers.applyCartesian u (ComplexNumbers.applyCartesian v w)
+                            ComplexNumbers.andMap
+                                (ComplexNumbers.andMap w v)
+                                u
                     in
                     Expect.equal leftSide rightSide
-            , Test.fuzz Fuzz.int "tests third applicative law for ComplexNumbers" <|
+            , Test.fuzz
+                Fuzz.int
+                "tests third applicative law for ComplexNumbers"
+              <|
                 \one ->
                     let
                         f =
                             (*) 2
 
                         pureF =
-                            ComplexNumbers.pureCartesian f
+                            ComplexNumbers.pure f
 
                         pureOne =
-                            ComplexNumbers.pureCartesian one
+                            ComplexNumbers.pure one
 
                         expected =
-                            ComplexNumbers.pureCartesian <| f one
+                            ComplexNumbers.pure <| f one
 
                         cApplied =
-                            ComplexNumbers.applyCartesian pureF pureOne
+                            ComplexNumbers.andMap pureOne pureF
                     in
                     Expect.equal cApplied expected
-            , Test.fuzz Fuzz.int "tests fourth applicative law for Complex Numbers" <|
+            , Test.fuzz
+                Fuzz.int
+                "tests fourth applicative law for Complex Numbers"
+              <|
                 \one ->
                     let
                         pureOne =
-                            ComplexNumbers.pureCartesian identity
+                            ComplexNumbers.pure identity
 
                         pureTwo =
-                            ComplexNumbers.pureCartesian one
+                            ComplexNumbers.pure one
 
                         leftSide =
-                            ComplexNumbers.applyCartesian pureOne pureTwo
+                            ComplexNumbers.andMap pureTwo pureOne
 
                         rightSide =
-                            ComplexNumbers.applyCartesian (ComplexNumbers.pureCartesian (Basics.always one)) pureOne
+                            ComplexNumbers.andMap
+                                pureOne
+                                (ComplexNumbers.pure (Basics.always one))
                     in
                     Expect.equal leftSide rightSide
-            , Test.fuzz2 Fuzz.int Fuzz.int "tests first applicative law for Complex Numbers Polar" <|
+            , Test.fuzz2
+                Fuzz.int
+                Fuzz.int
+                "tests first applicative law for Complex Numbers Polar"
+              <|
                 \one two ->
                     let
                         cIdentity =
-                            Internal.ComplexNumbers.purePolar identity
+                            Internal.ComplexNumbers.pure identity
 
                         c =
-                            Internal.ComplexNumbers.ComplexNumberPolar
+                            Internal.ComplexNumbers.ComplexNumber
                                 (Internal.ComplexNumbers.Modulus
                                     one
                                 )
@@ -112,26 +135,29 @@ suite =
                                 )
 
                         cApplied =
-                            Internal.ComplexNumbers.applyPolar cIdentity c
+                            Internal.ComplexNumbers.andMap c cIdentity
                     in
                     Expect.equal cApplied c
-            , Test.fuzz Fuzz.int "tests second applicative law for Complex Numbers Polar" <|
+            , Test.fuzz
+                Fuzz.int
+                "tests second applicative law for Complex Numbers Polar"
+              <|
                 \one ->
                     let
                         f =
                             (<<)
 
                         fPure =
-                            Internal.ComplexNumbers.purePolar f
+                            Internal.ComplexNumbers.pure f
 
                         u =
-                            Internal.ComplexNumbers.purePolar identity
+                            Internal.ComplexNumbers.pure identity
 
                         v =
-                            Internal.ComplexNumbers.purePolar identity
+                            Internal.ComplexNumbers.pure identity
 
                         w =
-                            Internal.ComplexNumbers.ComplexNumberPolar
+                            Internal.ComplexNumbers.ComplexNumber
                                 (Internal.ComplexNumbers.Modulus
                                     one
                                 )
@@ -140,87 +166,119 @@ suite =
                                 )
 
                         leftSide =
-                            Internal.ComplexNumbers.applyPolar (Internal.ComplexNumbers.applyPolar (Internal.ComplexNumbers.applyPolar fPure u) v) w
+                            Internal.ComplexNumbers.andMap
+                                w
+                                (Internal.ComplexNumbers.andMap v (Internal.ComplexNumbers.andMap u fPure))
 
                         rightSide =
-                            Internal.ComplexNumbers.applyPolar u (Internal.ComplexNumbers.applyPolar v w)
+                            Internal.ComplexNumbers.andMap
+                                (Internal.ComplexNumbers.andMap w v)
+                                u
                     in
                     Expect.equal leftSide rightSide
-            , Test.fuzz Fuzz.int "tests third applicative law for Complex Numbers Polar" <|
+            , Test.fuzz
+                Fuzz.int
+                "tests third applicative law for Complex Numbers Polar"
+              <|
                 \one ->
                     let
                         f =
                             (*) 2
 
                         pureF =
-                            Internal.ComplexNumbers.purePolar f
+                            Internal.ComplexNumbers.pure f
 
                         pureOne =
-                            Internal.ComplexNumbers.purePolar one
+                            Internal.ComplexNumbers.pure one
 
                         expected =
-                            Internal.ComplexNumbers.purePolar <| f one
+                            Internal.ComplexNumbers.pure <| f one
 
                         cApplied =
-                            Internal.ComplexNumbers.applyPolar pureF pureOne
+                            Internal.ComplexNumbers.andMap pureOne pureF
                     in
                     Expect.equal cApplied expected
-            , Test.fuzz Fuzz.int "tests fourth applicative law for Complex Numbers Polar" <|
+            , Test.fuzz
+                Fuzz.int
+                "tests fourth applicative law for Complex Numbers Polar"
+              <|
                 \one ->
                     let
                         pureOne =
-                            Internal.ComplexNumbers.purePolar identity
+                            Internal.ComplexNumbers.pure identity
 
                         pureTwo =
-                            Internal.ComplexNumbers.purePolar one
+                            Internal.ComplexNumbers.pure one
 
                         leftSide =
-                            Internal.ComplexNumbers.applyPolar pureOne pureTwo
+                            Internal.ComplexNumbers.andMap pureTwo pureOne
 
                         rightSide =
-                            Internal.ComplexNumbers.applyPolar (Internal.ComplexNumbers.purePolar (Basics.always one)) pureOne
+                            Internal.ComplexNumbers.andMap
+                                pureOne
+                                (Internal.ComplexNumbers.pure (Basics.always one))
                     in
                     Expect.equal leftSide rightSide
             ]
-        , Test.fuzz2 Fuzz.int Fuzz.int "tests pure f apply x equal map f x" <|
+        , Test.fuzz2
+            Fuzz.int
+            Fuzz.int
+            "tests pure f andMap x equal map f x"
+          <|
             \one two ->
                 let
                     complexNumber =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+                        ComplexNumbers.ComplexNumber
+                            (ComplexNumbers.Real one)
+                            (ComplexNumbers.Imaginary two)
 
                     f =
                         (*) 2
 
                     fMapX =
-                        ComplexNumbers.mapCartesian f complexNumber
+                        ComplexNumbers.map f complexNumber
 
                     pureFApplyX =
-                        ComplexNumbers.applyCartesian (ComplexNumbers.pureCartesian f) complexNumber
+                        ComplexNumbers.andMap complexNumber (ComplexNumbers.pure f)
                 in
                 pureFApplyX
                     |> Expect.equal fMapX
-        , Test.fuzz2 Fuzz.int Fuzz.int "tests pure f apply x equal map f x polar" <|
+        , Test.fuzz2
+            Fuzz.int
+            Fuzz.int
+            "tests pure f andMap x equal map f x polar"
+          <|
             \one two ->
                 let
                     complexNumber =
-                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus one) (Internal.ComplexNumbers.Theta two)
+                        Internal.ComplexNumbers.ComplexNumber
+                            (Internal.ComplexNumbers.Modulus one)
+                            (Internal.ComplexNumbers.Theta two)
 
                     f =
                         (*) 2
 
                     fMapX =
-                        Internal.ComplexNumbers.mapPolar f complexNumber
+                        Internal.ComplexNumbers.map f complexNumber
 
                     pureFApplyX =
-                        Internal.ComplexNumbers.applyPolar (Internal.ComplexNumbers.purePolar f) complexNumber
+                        Internal.ComplexNumbers.andMap
+                            complexNumber
+                            (Internal.ComplexNumbers.pure f)
                 in
                 pureFApplyX
                     |> Expect.equal fMapX
-        , Test.fuzz2 Fuzz.int Fuzz.int "tests apply + equal to add" <|
+        , Test.fuzz2
+            Fuzz.int
+            Fuzz.int
+            "tests andMap + equal to add"
+          <|
             \one two ->
                 let
                     complexNumber =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+                        ComplexNumbers.ComplexNumber
+                            (ComplexNumbers.Real one)
+                            (ComplexNumbers.Imaginary two)
 
                     doubleComplexNumber =
                         ComplexNumbers.add complexNumber complexNumber
@@ -229,61 +287,81 @@ suite =
                         (+)
 
                     fMapX =
-                        ComplexNumbers.mapCartesian f complexNumber
+                        ComplexNumbers.map f complexNumber
 
                     pureFApplyX =
-                        ComplexNumbers.applyCartesian fMapX complexNumber
+                        ComplexNumbers.andMap complexNumber fMapX
                 in
                 pureFApplyX
                     |> Expect.equal doubleComplexNumber
-        , Test.fuzz2 Fuzz.int Fuzz.int "tests apply - equal to add" <|
+        , Test.fuzz2
+            Fuzz.int
+            Fuzz.int
+            "tests andMap - equal to add"
+          <|
             \one two ->
                 let
                     complexNumber =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+                        ComplexNumbers.ComplexNumber
+                            (ComplexNumbers.Real one)
+                            (ComplexNumbers.Imaginary two)
 
                     f =
                         (-)
 
                     fMapX =
-                        ComplexNumbers.mapCartesian f complexNumber
+                        ComplexNumbers.map f complexNumber
 
                     pureFApplyX =
-                        ComplexNumbers.applyCartesian fMapX complexNumber
+                        ComplexNumbers.andMap complexNumber fMapX
                 in
                 pureFApplyX
-                    |> Expect.equal (ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real 0) (ComplexNumbers.Imaginary 0))
-        , Test.fuzz2 Fuzz.int Fuzz.int "tests pure f apply x equal map f x multiply polar" <|
+                    |> Expect.equal (ComplexNumbers.ComplexNumber (ComplexNumbers.Real 0) (ComplexNumbers.Imaginary 0))
+        , Test.fuzz2
+            Fuzz.int
+            Fuzz.int
+            "tests pure f andMap x equal map f x multiply polar"
+          <|
             \one two ->
                 let
                     complexNumber =
-                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus one) (Internal.ComplexNumbers.Theta two)
+                        Internal.ComplexNumbers.ComplexNumber (Internal.ComplexNumbers.Modulus one) (Internal.ComplexNumbers.Theta two)
 
                     f _ =
-                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus (*)) (Internal.ComplexNumbers.Theta (+))
+                        Internal.ComplexNumbers.ComplexNumber (Internal.ComplexNumbers.Modulus (*)) (Internal.ComplexNumbers.Theta (+))
 
                     fMapX =
-                        Internal.ComplexNumbers.mapPolar f complexNumber
+                        Internal.ComplexNumbers.map f complexNumber
 
                     pureFApplyX =
-                        Internal.ComplexNumbers.applyPolar (Internal.ComplexNumbers.purePolar f) complexNumber
+                        Internal.ComplexNumbers.andMap complexNumber (Internal.ComplexNumbers.pure f)
                 in
                 pureFApplyX
                     |> Expect.equal fMapX
-        , Test.fuzz2 Fuzz.int Fuzz.int "tests pure f apply x equal map f x multiply divide" <|
+        , Test.fuzz2
+            Fuzz.int
+            Fuzz.int
+            "tests pure f andMap x equal map f x multiply divide"
+          <|
             \one two ->
                 let
                     complexNumber =
-                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus one) (Internal.ComplexNumbers.Theta two)
+                        Internal.ComplexNumbers.ComplexNumber
+                            (Internal.ComplexNumbers.Modulus one)
+                            (Internal.ComplexNumbers.Theta two)
 
                     f _ =
-                        Internal.ComplexNumbers.ComplexNumberPolar (Internal.ComplexNumbers.Modulus (/)) (Internal.ComplexNumbers.Theta (-))
+                        Internal.ComplexNumbers.ComplexNumber
+                            (Internal.ComplexNumbers.Modulus (/))
+                            (Internal.ComplexNumbers.Theta (-))
 
                     fMapX =
-                        Internal.ComplexNumbers.mapPolar f complexNumber
+                        Internal.ComplexNumbers.map f complexNumber
 
                     pureFApplyX =
-                        Internal.ComplexNumbers.applyPolar (Internal.ComplexNumbers.purePolar f) complexNumber
+                        Internal.ComplexNumbers.andMap
+                            complexNumber
+                            (Internal.ComplexNumbers.pure f)
                 in
                 pureFApplyX
                     |> Expect.equal fMapX

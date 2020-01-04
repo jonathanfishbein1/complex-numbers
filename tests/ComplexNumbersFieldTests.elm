@@ -10,25 +10,42 @@ import Test
 suite : Test.Test
 suite =
     Test.describe "The ComplexNumbers Field"
-        [ Test.fuzz2 Fuzz.float Fuzz.float "tests ComplexNumbers add" <|
+        [ Test.fuzz2
+            Fuzz.float
+            Fuzz.float
+            "tests ComplexNumbers add"
+          <|
             \real imaginary ->
                 let
                     testValue =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
+                        ComplexNumbers.ComplexNumber
+                            (ComplexNumbers.Real real)
+                            (ComplexNumbers.Imaginary imaginary)
 
                     expected =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real <| 2 * real) (ComplexNumbers.Imaginary <| 2 * imaginary)
+                        ComplexNumbers.ComplexNumber
+                            (ComplexNumbers.Real <| 2 * real)
+                            (ComplexNumbers.Imaginary <| 2 * imaginary)
                 in
                 ComplexNumbers.add testValue testValue
                     |> Expect.equal expected
-        , Test.fuzz3 Fuzz.float Fuzz.float Fuzz.float "tests ComplexNumbers addition is commutative" <|
+        , Test.fuzz3
+            Fuzz.float
+            Fuzz.float
+            Fuzz.float
+            "tests ComplexNumbers addition is commutative"
+          <|
             \one two three ->
                 let
                     a =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+                        ComplexNumbers.ComplexNumber
+                            (ComplexNumbers.Real one)
+                            (ComplexNumbers.Imaginary two)
 
                     b =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
+                        ComplexNumbers.ComplexNumber
+                            (ComplexNumbers.Real two)
+                            (ComplexNumbers.Imaginary three)
 
                     testValueOne =
                         ComplexNumbers.add a b
@@ -38,17 +55,28 @@ suite =
                 in
                 testValueOne
                     |> Expect.equal testValueTwo
-        , Test.fuzz3 Fuzz.int Fuzz.int Fuzz.int "tests ComplexNumbers addition is associative" <|
+        , Test.fuzz3
+            Fuzz.int
+            Fuzz.int
+            Fuzz.int
+            "tests ComplexNumbers addition is associative"
+          <|
             \one two three ->
                 let
                     a =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+                        ComplexNumbers.ComplexNumber
+                            (ComplexNumbers.Real one)
+                            (ComplexNumbers.Imaginary two)
 
                     b =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
+                        ComplexNumbers.ComplexNumber
+                            (ComplexNumbers.Real two)
+                            (ComplexNumbers.Imaginary three)
 
                     c =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary three)
+                        ComplexNumbers.ComplexNumber
+                            (ComplexNumbers.Real one)
+                            (ComplexNumbers.Imaginary three)
 
                     testValueOne =
                         ComplexNumbers.add (ComplexNumbers.add a b) c
@@ -58,14 +86,23 @@ suite =
                 in
                 testValueOne
                     |> Expect.equal testValueTwo
-        , Test.fuzz3 Fuzz.float Fuzz.float Fuzz.float "tests ComplexNumbers multiplication is commutative" <|
+        , Test.fuzz3
+            Fuzz.float
+            Fuzz.float
+            Fuzz.float
+            "tests ComplexNumbers multiplication is commutative"
+          <|
             \one two three ->
                 let
                     a =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+                        ComplexNumbers.ComplexNumber
+                            (ComplexNumbers.Real one)
+                            (ComplexNumbers.Imaginary two)
 
                     b =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
+                        ComplexNumbers.ComplexNumber
+                            (ComplexNumbers.Real two)
+                            (ComplexNumbers.Imaginary three)
 
                     testValueOne =
                         ComplexNumbers.multiply a b
@@ -75,17 +112,28 @@ suite =
                 in
                 testValueOne
                     |> Expect.equal testValueTwo
-        , Test.fuzz3 (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) "tests ComplexNumbers multiplication is associative" <|
+        , Test.fuzz3
+            (Fuzz.floatRange -10 10)
+            (Fuzz.floatRange -10 10)
+            (Fuzz.floatRange -10 10)
+            "tests ComplexNumbers multiplication is associative"
+          <|
             \one two three ->
                 let
                     a =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+                        ComplexNumbers.ComplexNumber
+                            (ComplexNumbers.Real one)
+                            (ComplexNumbers.Imaginary two)
 
                     b =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
+                        ComplexNumbers.ComplexNumber
+                            (ComplexNumbers.Real two)
+                            (ComplexNumbers.Imaginary three)
 
                     c =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary three)
+                        ComplexNumbers.ComplexNumber
+                            (ComplexNumbers.Real one)
+                            (ComplexNumbers.Imaginary three)
 
                     testValueOne =
                         ComplexNumbers.multiply (ComplexNumbers.multiply a b) c
@@ -97,25 +145,42 @@ suite =
                         ComplexNumbers.equal testValueOne testValueTwo
                 in
                 Expect.true "equal" result
-        , Test.fuzz2 Fuzz.float Fuzz.float "tests ComplexNumbers zero is identity" <|
+        , Test.fuzz2
+            Fuzz.float
+            Fuzz.float
+            "tests ComplexNumbers zero is identity"
+          <|
             \real imaginary ->
                 let
                     testValue =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
+                        ComplexNumbers.ComplexNumber
+                            (ComplexNumbers.Real real)
+                            (ComplexNumbers.Imaginary imaginary)
                 in
                 ComplexNumbers.add testValue ComplexNumbers.zero
                     |> Expect.equal testValue
-        , Test.fuzz3 (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) "tests ComplexNumbers multiplication distributes over addition" <|
+        , Test.fuzz3
+            (Fuzz.floatRange -10 10)
+            (Fuzz.floatRange -10 10)
+            (Fuzz.floatRange -10 10)
+            "tests ComplexNumbers multiplication distributes over addition"
+          <|
             \one two three ->
                 let
                     a =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+                        ComplexNumbers.ComplexNumber
+                            (ComplexNumbers.Real one)
+                            (ComplexNumbers.Imaginary two)
 
                     b =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
+                        ComplexNumbers.ComplexNumber
+                            (ComplexNumbers.Real two)
+                            (ComplexNumbers.Imaginary three)
 
                     c =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary three)
+                        ComplexNumbers.ComplexNumber
+                            (ComplexNumbers.Real one)
+                            (ComplexNumbers.Imaginary three)
 
                     testValueOne =
                         ComplexNumbers.multiply a (ComplexNumbers.add b c)
@@ -128,40 +193,22 @@ suite =
                         ComplexNumbers.equal testValueOne testValueTwo
                 in
                 Expect.true "equal" result
-        , Test.fuzz2 Fuzz.int Fuzz.int "tests ComplexNumbers subtract" <|
+        , Test.fuzz2
+            Fuzz.int
+            Fuzz.int
+            "tests ComplexNumbers subtract"
+          <|
             \real imaginary ->
                 let
                     testValue =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
+                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
 
                     zero =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real 0) (ComplexNumbers.Imaginary 0)
+                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real 0) (ComplexNumbers.Imaginary 0)
 
                     expected =
                         testValue
                 in
                 ComplexNumbers.subtract testValue zero
                     |> Expect.equal expected
-
-        -- , Test.fuzz3 Fuzz.float Fuzz.float Fuzz.float "tests ComplexNumbers division" <|
-        --     \one two three ->
-        --         let
-        --             dividend =
-        --                 ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
-        --             divisor =
-        --                 ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
-        --             (ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real realDivisor) _) =
-        --                 divisor
-        --             (ComplexNumbers.ComplexNumberCartesian _ (ComplexNumbers.Imaginary imaginaryDivisor)) =
-        --                 divisor
-        --             ( ro, theta ) =
-        --                 toPolar ( two, three )
-        --             quotient =
-        --                 ComplexNumbers.divide dividend divisor
-        --         in
-        --         case round ro of
-        --             0 ->
-        --                 Expect.err quotient
-        --             _ ->
-        --                 Expect.ok quotient
         ]

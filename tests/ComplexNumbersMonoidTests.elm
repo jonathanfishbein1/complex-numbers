@@ -10,25 +10,40 @@ import Test
 suite : Test.Test
 suite =
     Test.describe "The ComplexNumbers module"
-        [ Test.fuzz2 Fuzz.float Fuzz.float "tests ComplexNumberCartesian empty or identity value for sum" <|
+        [ Test.fuzz2
+            Fuzz.float
+            Fuzz.float
+            "tests ComplexNumber empty or identity value for sum"
+          <|
             \real imaginary ->
                 let
                     expected =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
+                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
                 in
                 ComplexNumbers.sum.semigroup.prepend expected ComplexNumbers.sum.identity
                     |> Expect.equal expected
-        , Test.fuzz3 Fuzz.int Fuzz.int Fuzz.int "tests monoidally add" <|
+        , Test.fuzz3
+            Fuzz.int
+            Fuzz.int
+            Fuzz.int
+            "tests monoidally add"
+          <|
             \one two three ->
                 let
                     a =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+                        ComplexNumbers.ComplexNumber
+                            (ComplexNumbers.Real one)
+                            (ComplexNumbers.Imaginary two)
 
                     b =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
+                        ComplexNumbers.ComplexNumber
+                            (ComplexNumbers.Real two)
+                            (ComplexNumbers.Imaginary three)
 
                     c =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary three)
+                        ComplexNumbers.ComplexNumber
+                            (ComplexNumbers.Real one)
+                            (ComplexNumbers.Imaginary three)
 
                     expected =
                         ComplexNumbers.add (ComplexNumbers.add a b) c
@@ -38,27 +53,42 @@ suite =
                 in
                 ComplexNumbers.sum.concat listOfMonoids
                     |> Expect.equal expected
-        , Test.fuzz2 (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) "tests ComplexNumberCartesian empty or identity value for product" <|
+        , Test.fuzz2
+            (Fuzz.floatRange -10 10)
+            (Fuzz.floatRange -10 10)
+            "tests ComplexNumber empty or identity value for product"
+          <|
             \real imaginary ->
                 let
                     expected =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
+                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
 
                     result =
                         ComplexNumbers.equal (ComplexNumbers.product.semigroup.prepend expected ComplexNumbers.product.identity) expected
                 in
                 Expect.true "equal" result
-        , Test.fuzz3 (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) (Fuzz.map toFloat (Fuzz.intRange -10 10)) "tests monoidally product" <|
+        , Test.fuzz3
+            (Fuzz.floatRange -10 10)
+            (Fuzz.floatRange -10 10)
+            (Fuzz.floatRange -10 10)
+            "tests monoidally product"
+          <|
             \one two three ->
                 let
                     a =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary two)
+                        ComplexNumbers.ComplexNumber
+                            (ComplexNumbers.Real one)
+                            (ComplexNumbers.Imaginary two)
 
                     b =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real two) (ComplexNumbers.Imaginary three)
+                        ComplexNumbers.ComplexNumber
+                            (ComplexNumbers.Real two)
+                            (ComplexNumbers.Imaginary three)
 
                     c =
-                        ComplexNumbers.ComplexNumberCartesian (ComplexNumbers.Real one) (ComplexNumbers.Imaginary three)
+                        ComplexNumbers.ComplexNumber
+                            (ComplexNumbers.Real one)
+                            (ComplexNumbers.Imaginary three)
 
                     expected =
                         ComplexNumbers.multiply (ComplexNumbers.multiply a b) c
