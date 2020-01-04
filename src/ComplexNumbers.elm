@@ -5,6 +5,7 @@ module ComplexNumbers exposing
     , i
     , zero
     , one
+    , complexField
     , real
     , imaginary
     , add
@@ -15,19 +16,18 @@ module ComplexNumbers exposing
     , divide
     , modulus
     , conjugate
+    , power
     , convertFromCartesianToPolar
     , convertFromPolarToCartesian
+    , euler
     , map
     , pure
     , andMap
     , andThen
     , equal
-    , power
-    , complexField
     , parseComplexNumber
     , read
     , print
-    , euler
     )
 
 {-| A module for complex numbers
@@ -40,11 +40,16 @@ module ComplexNumbers exposing
 @docs ComplexNumber
 
 
-# Arithmetic operations on complex numbers
+# Values
 
 @docs i
 @docs zero
 @docs one
+@docs complexField
+
+
+# Arithmetic operations on complex numbers
+
 @docs real
 @docs imaginary
 @docs add
@@ -55,15 +60,25 @@ module ComplexNumbers exposing
 @docs divide
 @docs modulus
 @docs conjugate
+@docs power
 @docs convertFromCartesianToPolar
 @docs convertFromPolarToCartesian
+@docs euler
+
+
+# Monoid, Functor, Applicative Functor, and Monad
+
 @docs map
 @docs pure
 @docs andMap
 @docs andThen
+
+#Equality
+
 @docs equal
-@docs power
-@docs complexField
+
+
+# Read and Print
 
 @docs parseComplexNumber
 @docs read
