@@ -5,13 +5,10 @@ module ComplexNumbers exposing
     , i
     , zero
     , one
-    , complexField
     , real
     , imaginary
     , add
-    , complexSumMonoid
     , multiply
-    , complexProductMonoid
     , subtract
     , divide
     , modulus
@@ -20,6 +17,11 @@ module ComplexNumbers exposing
     , convertFromCartesianToPolar
     , convertFromPolarToCartesian
     , euler
+    , complexSumSemigroup, complexProductSemigroup
+    , complexSumMonoid, complexProductMonoid
+    , complexGroup
+    , complexRing
+    , complexField
     , map
     , pure
     , andMap
@@ -45,7 +47,6 @@ module ComplexNumbers exposing
 @docs i
 @docs zero
 @docs one
-@docs complexField
 
 
 # Arithmetic operations on complex numbers
@@ -53,9 +54,7 @@ module ComplexNumbers exposing
 @docs real
 @docs imaginary
 @docs add
-@docs complexSumMonoid
 @docs multiply
-@docs complexProductMonoid
 @docs subtract
 @docs divide
 @docs modulus
@@ -66,8 +65,13 @@ module ComplexNumbers exposing
 @docs euler
 
 
-# Monoid, Functor, Applicative Functor, and Monad
+# Semigroup, Monoid, Group, Ring, Field, Functor, Applicative Functor, and Monad
 
+@docs complexSumSemigroup, complexProductSemigroup
+@docs complexSumMonoid, complexProductMonoid
+@docs complexGroup
+@docs complexRing
+@docs complexField
 @docs map
 @docs pure
 @docs andMap
