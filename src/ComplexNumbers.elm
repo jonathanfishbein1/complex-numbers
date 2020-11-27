@@ -5,13 +5,10 @@ module ComplexNumbers exposing
     , i
     , zero
     , one
-    , complexField
     , real
     , imaginary
     , add
-    , sum
     , multiply
-    , product
     , subtract
     , divide
     , modulus
@@ -20,6 +17,11 @@ module ComplexNumbers exposing
     , convertFromCartesianToPolar
     , convertFromPolarToCartesian
     , euler
+    , complexSumSemigroup, complexProductSemigroup
+    , complexSumMonoid, complexProductMonoid
+    , complexGroup
+    , complexRing
+    , complexField
     , map
     , pure
     , andMap
@@ -45,7 +47,6 @@ module ComplexNumbers exposing
 @docs i
 @docs zero
 @docs one
-@docs complexField
 
 
 # Arithmetic operations on complex numbers
@@ -53,9 +54,7 @@ module ComplexNumbers exposing
 @docs real
 @docs imaginary
 @docs add
-@docs sum
 @docs multiply
-@docs product
 @docs subtract
 @docs divide
 @docs modulus
@@ -66,8 +65,13 @@ module ComplexNumbers exposing
 @docs euler
 
 
-# Monoid, Functor, Applicative Functor, and Monad
+# Semigroup, Monoid, Group, Ring, Field, Functor, Applicative Functor, and Monad
 
+@docs complexSumSemigroup, complexProductSemigroup
+@docs complexSumMonoid, complexProductMonoid
+@docs complexGroup
+@docs complexRing
+@docs complexField
 @docs map
 @docs pure
 @docs andMap
@@ -86,13 +90,15 @@ module ComplexNumbers exposing
 
 -}
 
+import AbelianGroup
+import CommutativeMonoid
+import CommutativeRing
+import CommutativeSemigroup
 import Field
 import Float.Extra
 import Internal.ComplexNumbers
 import Parser exposing ((|.), (|=))
 import Typeclasses.Classes.Equality
-import Typeclasses.Classes.Monoid
-import Typeclasses.Classes.Semigroup
 
 
 
@@ -164,16 +170,7 @@ add complexOne complexTwo =
 
 sumEmpty : ComplexNumber number
 sumEmpty =
-    ComplexNumber (Real 0) (Imaginary 0)
-
-
-{-| Monoidally add two complex numbers together
--}
-sum : Typeclasses.Classes.Monoid.Monoid (ComplexNumber number)
-sum =
-    Typeclasses.Classes.Monoid.semigroupAndIdentity
-        (Typeclasses.Classes.Semigroup.prepend add)
-        sumEmpty
+    zero
 
 
 {-| Multiply two complex numbers together
@@ -192,15 +189,6 @@ multiply complexNumberOne complexNumberTwo =
 productEmpty : ComplexNumber number
 productEmpty =
     one
-
-
-{-| Monoidally multiply two complex numbers together
--}
-product : Typeclasses.Classes.Monoid.Monoid (ComplexNumber Float)
-product =
-    Typeclasses.Classes.Monoid.semigroupAndIdentity
-        (Typeclasses.Classes.Semigroup.prepend multiply)
-        productEmpty
 
 
 {-| Subtract two complex numbers together
@@ -415,19 +403,53 @@ positiveOrNegativeFloat =
         ]
 
 
-{-| Field for Complex numbers
+{-| Semigroup for Complex Numbers with addition as the operation
+-}
+complexSumSemigroup : CommutativeSemigroup.CommutativeSemigroup (ComplexNumber number)
+complexSumSemigroup =
+    CommutativeSemigroup.CommutativeSemigroup add
+
+
+{-| Semigroup for Complex Numbers with multiplicatoin as the operation
+-}
+complexProductSemigroup : CommutativeSemigroup.CommutativeSemigroup (ComplexNumber Float)
+complexProductSemigroup =
+    CommutativeSemigroup.CommutativeSemigroup multiply
+
+
+{-| Monoid for Complex Numbers with addition as the operation
+-}
+complexSumMonoid : CommutativeMonoid.CommutativeMonoid (ComplexNumber number)
+complexSumMonoid =
+    CommutativeMonoid.commutativeSemigroupAndIdentity complexSumSemigroup sumEmpty
+
+
+{-| Monoid for Complex Numbers with multiplication as the operation
+-}
+complexProductMonoid : CommutativeMonoid.CommutativeMonoid (ComplexNumber Float)
+complexProductMonoid =
+    CommutativeMonoid.commutativeSemigroupAndIdentity complexProductSemigroup productEmpty
+
+
+{-| Group for Complex Numbers with addition as the operation
+-}
+complexGroup : AbelianGroup.AbelianGroup (ComplexNumber number)
+complexGroup =
+    AbelianGroup.AbelianGroup { monoid = complexSumMonoid, inverse = \(ComplexNumber (Real x) (Imaginary y)) -> ComplexNumber (Real -x) (Imaginary -y) }
+
+
+{-| Ring for Complex Numbers
+-}
+complexRing : CommutativeRing.CommutativeRing (ComplexNumber Float)
+complexRing =
+    CommutativeRing.CommutativeRing { addition = complexGroup, multiplication = complexProductMonoid }
+
+
+{-| Field for Complex Numbers
 -}
 complexField : Field.Field (ComplexNumber Float)
 complexField =
-    { zero = zero
-    , one = one
-    , add = add
-    , subtract = subtract
-    , multiply = multiply
-    , divide = divide
-    , power = power
-    , negate = multiply (ComplexNumber (Real -1) (Imaginary 0))
-    }
+    Field.Field complexRing
 
 
 {-| Euler's equation
