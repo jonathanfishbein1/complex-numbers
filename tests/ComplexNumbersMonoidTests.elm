@@ -1,6 +1,8 @@
 module ComplexNumbersMonoidTests exposing (suite)
 
-import ComplexNumbers
+import CommutativeMonoid
+import CommutativeSemigroup
+import ComplexNumbers exposing (ComplexNumber)
 import Expect
 import Fuzz
 import Internal.ComplexNumbers
@@ -19,8 +21,14 @@ suite =
                 let
                     expected =
                         ComplexNumbers.ComplexNumber (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
+
+                    (CommutativeMonoid.CommutativeMonoid monoid) =
+                        ComplexNumbers.complexSumMonoid
+
+                    (CommutativeSemigroup.CommutativeSemigroup semigroup) =
+                        monoid.semigroup
                 in
-                ComplexNumbers.sum.semigroup.prepend expected ComplexNumbers.sum.identity
+                semigroup expected monoid.identity
                     |> Expect.equal expected
         , Test.fuzz3
             Fuzz.int
@@ -50,8 +58,11 @@ suite =
 
                     listOfMonoids =
                         [ a, b, c ]
+
+                    (CommutativeMonoid.CommutativeMonoid monoid) =
+                        ComplexNumbers.complexSumMonoid
                 in
-                ComplexNumbers.sum.concat listOfMonoids
+                monoid.concat listOfMonoids
                     |> Expect.equal expected
         , Test.fuzz2
             (Fuzz.floatRange -10 10)
@@ -63,8 +74,14 @@ suite =
                     expected =
                         ComplexNumbers.ComplexNumber (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
 
+                    (CommutativeMonoid.CommutativeMonoid monoid) =
+                        ComplexNumbers.complexProductMonoid
+
+                    (CommutativeSemigroup.CommutativeSemigroup semigroup) =
+                        monoid.semigroup
+
                     result =
-                        ComplexNumbers.equal (ComplexNumbers.product.semigroup.prepend expected ComplexNumbers.product.identity) expected
+                        ComplexNumbers.equal (semigroup expected monoid.identity) expected
                 in
                 Expect.true "equal" result
         , Test.fuzz3
@@ -96,8 +113,11 @@ suite =
                     listOfMonoids =
                         [ a, b, c ]
 
+                    (CommutativeMonoid.CommutativeMonoid monoid) =
+                        ComplexNumbers.complexProductMonoid
+
                     result =
-                        ComplexNumbers.equal (ComplexNumbers.product.concat listOfMonoids) expected
+                        ComplexNumbers.equal (monoid.concat listOfMonoids) expected
                 in
                 Expect.true "equal" result
         ]

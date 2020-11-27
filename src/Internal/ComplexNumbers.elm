@@ -19,8 +19,8 @@ module Internal.ComplexNumbers exposing
 {-| Modulus or magnitude portion
 -}
 
-import Typeclasses.Classes.Monoid
-import Typeclasses.Classes.Semigroup
+import Monoid
+import Semigroup
 
 
 type Modulus m
@@ -139,8 +139,8 @@ productEmpty =
 
 {-| Monoidally multiply two complex numbers together
 -}
-product : Typeclasses.Classes.Monoid.Monoid (ComplexNumber Float)
+product : Monoid.Monoid (ComplexNumber Float)
 product =
-    Typeclasses.Classes.Monoid.semigroupAndIdentity
-        (Typeclasses.Classes.Semigroup.prepend multiply)
+    Monoid.semigroupAndIdentity
+        (Semigroup.prepend multiply)
         productEmpty
