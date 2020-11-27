@@ -399,36 +399,50 @@ positiveOrNegativeFloat =
         ]
 
 
+{-| Semigroup for Complex Numbers with addition as the operation
+-}
 complexSumSemigroup : CommutativeSemigroup.CommutativeSemigroup (ComplexNumber number)
 complexSumSemigroup =
     CommutativeSemigroup.CommutativeSemigroup add
 
 
+{-| Semigroup for Complex Numbers with multiplicatoin as the operation
+-}
 complexProductSemigroup : CommutativeSemigroup.CommutativeSemigroup (ComplexNumber Float)
 complexProductSemigroup =
     CommutativeSemigroup.CommutativeSemigroup multiply
 
 
+{-| Monoid for Complex Numbers with addition as the operation
+-}
 complexSumMonoid : CommutativeMonoid.CommutativeMonoid (ComplexNumber number)
 complexSumMonoid =
     CommutativeMonoid.commutativeSemigroupAndIdentity complexSumSemigroup sumEmpty
 
 
+{-| Monoid for Complex Numbers with multiplication as the operation
+-}
 complexProductMonoid : CommutativeMonoid.CommutativeMonoid (ComplexNumber Float)
 complexProductMonoid =
     CommutativeMonoid.commutativeSemigroupAndIdentity complexProductSemigroup productEmpty
 
 
+{-| Group for Complex Numbers with addition as the operation
+-}
 complexGroup : AbelianGroup.AbelianGroup (ComplexNumber number)
 complexGroup =
     AbelianGroup.AbelianGroup { monoid = complexSumMonoid, inverse = \(ComplexNumber (Real x) (Imaginary y)) -> ComplexNumber (Real -x) (Imaginary -y) }
 
 
+{-| Ring for Complex Numbers
+-}
 complexRing : CommutativeRing.CommutativeRing (ComplexNumber Float)
 complexRing =
     CommutativeRing.CommutativeRing { addition = complexGroup, multiplication = complexProductMonoid }
 
 
+{-| Field for Complex Numbers
+-}
 complexField : Field.Field (ComplexNumber Float)
 complexField =
     Field.Field complexRing
