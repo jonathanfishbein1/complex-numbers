@@ -18,8 +18,8 @@ module ComplexNumbers exposing
     , convertFromPolarToCartesian
     , euler
     , complexSumSemigroup, complexProductSemigroup
-    , complexSumMonoid, complexProductMonoid
-    , complexGroup
+    , complexSumMonoid, complexProductMonoid, complexSumCommutativeMonoid, complexProductCommutativeMonoid
+    , complexSumGroup
     , complexRing
     , complexField
     , map
@@ -30,7 +30,6 @@ module ComplexNumbers exposing
     , parseComplexNumber
     , read
     , print
-    , complexProductCommutativeMonoid, complexSumCommutativeMonoid
     )
 
 {-| A module for complex numbers
@@ -69,8 +68,8 @@ module ComplexNumbers exposing
 # Semigroup, Monoid, Group, Ring, Field, Functor, Applicative Functor, and Monad
 
 @docs complexSumSemigroup, complexProductSemigroup
-@docs complexSumMonoid, complexProductMonoid
-@docs complexGroup
+@docs complexSumMonoid, complexProductMonoid, complexSumCommutativeMonoid, complexProductCommutativeMonoid
+@docs complexSumGroup
 @docs complexRing
 @docs complexField
 @docs map
@@ -452,12 +451,12 @@ complexProductCommutativeMonoid =
 
 {-| Group for Complex Numbers with addition as the operation
 -}
-complexGroup : Group.Group (ComplexNumber number)
-complexGroup =
+complexSumGroup : Group.Group (ComplexNumber number)
+complexSumGroup =
     { monoid = complexSumMonoid, inverse = \(ComplexNumber (Real x) (Imaginary y)) -> ComplexNumber (Real -x) (Imaginary -y) }
 
 
-{-| Group for Complex Numbers with addition as the operation
+{-| Group for Complex Numbers with multiplication as the operation
 -}
 complexProductGroup : Group.Group (ComplexNumber Float)
 complexProductGroup =
@@ -468,7 +467,7 @@ complexProductGroup =
 -}
 complexAbelianGroup : AbelianGroup.AbelianGroup (ComplexNumber number)
 complexAbelianGroup =
-    AbelianGroup.AbelianGroup complexGroup
+    AbelianGroup.AbelianGroup complexSumGroup
 
 
 {-| Ring for Complex Numbers
@@ -478,12 +477,14 @@ complexRing =
     { addition = complexAbelianGroup, multiplication = complexProductMonoid }
 
 
+{-| Division Ring for Complex Numbers
+-}
 complexDivisionRing : DivisionRing.DivisionRing (ComplexNumber Float)
 complexDivisionRing =
-    { addition = complexAbelianGroup, multiplication = complexGroup }
+    { addition = complexAbelianGroup, multiplication = complexSumGroup }
 
 
-{-| Ring for Complex Numbers
+{-| Commutative Ring for Complex Numbers
 -}
 complexCommutativeRing : CommutativeRing.CommutativeRing (ComplexNumber Float)
 complexCommutativeRing =
