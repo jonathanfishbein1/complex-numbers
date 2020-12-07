@@ -30,6 +30,7 @@ module ComplexNumbers exposing
     , parseComplexNumber
     , read
     , print
+    , complexCommutativeDivisionRing
     )
 
 {-| A module for complex numbers
@@ -91,6 +92,7 @@ module ComplexNumbers exposing
 -}
 
 import AbelianGroup
+import CommutativeDivisionRing
 import CommutativeMonoid
 import CommutativeRing
 import CommutativeSemigroup
@@ -491,11 +493,18 @@ complexCommutativeRing =
     CommutativeRing.CommutativeRing complexRing
 
 
+{-| Commutative Division Ring for Complex Numbers
+-}
+complexCommutativeDivisionRing : CommutativeDivisionRing.CommutativeDivisionRing (ComplexNumber Float)
+complexCommutativeDivisionRing =
+    CommutativeDivisionRing.CommutativeDivisionRing complexDivisionRing
+
+
 {-| Field for Complex Numbers
 -}
 complexField : Field.Field (ComplexNumber Float)
 complexField =
-    Field.Field complexCommutativeRing
+    Field.Field complexCommutativeDivisionRing
 
 
 {-| Euler's equation
