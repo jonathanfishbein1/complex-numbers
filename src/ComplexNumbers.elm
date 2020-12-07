@@ -19,8 +19,8 @@ module ComplexNumbers exposing
     , euler
     , complexSumSemigroup, complexProductSemigroup
     , complexSumMonoid, complexProductMonoid, complexSumCommutativeMonoid, complexProductCommutativeMonoid
-    , complexSumGroup
-    , complexRing
+    , complexSumGroup, complexProductGroup, complexAbelianGroup
+    , complexRing, complexDivisionRing, complexCommutativeRing, complexCommutativeDivisionRing
     , complexField
     , map
     , pure
@@ -69,8 +69,8 @@ module ComplexNumbers exposing
 
 @docs complexSumSemigroup, complexProductSemigroup
 @docs complexSumMonoid, complexProductMonoid, complexSumCommutativeMonoid, complexProductCommutativeMonoid
-@docs complexSumGroup
-@docs complexRing
+@docs complexSumGroup, complexProductGroup, complexAbelianGroup
+@docs complexRing, complexDivisionRing, complexCommutativeRing, complexCommutativeDivisionRing
 @docs complexField
 @docs map
 @docs pure
@@ -91,6 +91,7 @@ module ComplexNumbers exposing
 -}
 
 import AbelianGroup
+import CommutativeDivisionRing
 import CommutativeMonoid
 import CommutativeRing
 import CommutativeSemigroup
@@ -491,11 +492,18 @@ complexCommutativeRing =
     CommutativeRing.CommutativeRing complexRing
 
 
+{-| Commutative Division Ring for Complex Numbers
+-}
+complexCommutativeDivisionRing : CommutativeDivisionRing.CommutativeDivisionRing (ComplexNumber Float)
+complexCommutativeDivisionRing =
+    CommutativeDivisionRing.CommutativeDivisionRing complexDivisionRing
+
+
 {-| Field for Complex Numbers
 -}
 complexField : Field.Field (ComplexNumber Float)
 complexField =
-    Field.Field complexCommutativeRing
+    Field.Field complexCommutativeDivisionRing
 
 
 {-| Euler's equation
