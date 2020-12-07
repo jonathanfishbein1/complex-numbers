@@ -23,12 +23,9 @@ suite =
                         ComplexNumbers.ComplexNumber (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
 
                     (CommutativeMonoid.CommutativeMonoid monoid) =
-                        ComplexNumbers.complexSumMonoid
-
-                    (CommutativeSemigroup.CommutativeSemigroup semigroup) =
-                        monoid.semigroup
+                        ComplexNumbers.complexSumCommutativeMonoid
                 in
-                semigroup expected monoid.identity
+                monoid.semigroup expected monoid.identity
                     |> Expect.equal expected
         , Test.fuzz3
             Fuzz.int
@@ -60,7 +57,7 @@ suite =
                         [ a, b, c ]
 
                     (CommutativeMonoid.CommutativeMonoid monoid) =
-                        ComplexNumbers.complexSumMonoid
+                        ComplexNumbers.complexSumCommutativeMonoid
                 in
                 monoid.concat listOfMonoids
                     |> Expect.equal expected
@@ -75,13 +72,10 @@ suite =
                         ComplexNumbers.ComplexNumber (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
 
                     (CommutativeMonoid.CommutativeMonoid monoid) =
-                        ComplexNumbers.complexProductMonoid
-
-                    (CommutativeSemigroup.CommutativeSemigroup semigroup) =
-                        monoid.semigroup
+                        ComplexNumbers.complexProductCommutativeMonoid
 
                     result =
-                        ComplexNumbers.equal (semigroup expected monoid.identity) expected
+                        ComplexNumbers.equal (monoid.semigroup expected monoid.identity) expected
                 in
                 Expect.true "equal" result
         , Test.fuzz3
@@ -114,7 +108,7 @@ suite =
                         [ a, b, c ]
 
                     (CommutativeMonoid.CommutativeMonoid monoid) =
-                        ComplexNumbers.complexProductMonoid
+                        ComplexNumbers.complexProductCommutativeMonoid
 
                     result =
                         ComplexNumbers.equal (monoid.concat listOfMonoids) expected

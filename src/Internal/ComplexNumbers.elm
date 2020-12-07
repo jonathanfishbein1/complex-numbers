@@ -142,5 +142,5 @@ productEmpty =
 product : Monoid.Monoid (ComplexNumber Float)
 product =
     Monoid.semigroupAndIdentity
-        (Semigroup.prepend multiply)
+        multiply
         productEmpty

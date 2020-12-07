@@ -18,8 +18,8 @@ module ComplexNumbers exposing
     , convertFromPolarToCartesian
     , euler
     , complexSumSemigroup, complexProductSemigroup
-    , complexSumMonoid, complexProductMonoid
-    , complexGroup
+    , complexSumMonoid, complexProductMonoid, complexSumCommutativeMonoid, complexProductCommutativeMonoid
+    , complexSumGroup
     , complexRing
     , complexField
     , map
@@ -68,8 +68,8 @@ module ComplexNumbers exposing
 # Semigroup, Monoid, Group, Ring, Field, Functor, Applicative Functor, and Monad
 
 @docs complexSumSemigroup, complexProductSemigroup
-@docs complexSumMonoid, complexProductMonoid
-@docs complexGroup
+@docs complexSumMonoid, complexProductMonoid, complexSumCommutativeMonoid, complexProductCommutativeMonoid
+@docs complexSumGroup
 @docs complexRing
 @docs complexField
 @docs map
@@ -94,10 +94,14 @@ import AbelianGroup
 import CommutativeMonoid
 import CommutativeRing
 import CommutativeSemigroup
+import DivisionRing
 import Field
 import Float.Extra
+import Group exposing (Group)
 import Internal.ComplexNumbers
+import Monoid exposing (Monoid)
 import Parser exposing ((|.), (|=))
+import Ring
 import Typeclasses.Classes.Equality
 
 
@@ -419,37 +423,79 @@ complexProductSemigroup =
 
 {-| Monoid for Complex Numbers with addition as the operation
 -}
-complexSumMonoid : CommutativeMonoid.CommutativeMonoid (ComplexNumber number)
+complexSumMonoid : Monoid.Monoid (ComplexNumber number)
 complexSumMonoid =
-    CommutativeMonoid.commutativeSemigroupAndIdentity complexSumSemigroup sumEmpty
+    Monoid.semigroupAndIdentity add sumEmpty
+
+
+{-| Monoid for Complex Numbers with addition as the operation
+-}
+complexSumCommutativeMonoid : CommutativeMonoid.CommutativeMonoid (ComplexNumber number)
+complexSumCommutativeMonoid =
+    CommutativeMonoid.CommutativeMonoid complexSumMonoid
 
 
 {-| Monoid for Complex Numbers with multiplication as the operation
 -}
-complexProductMonoid : CommutativeMonoid.CommutativeMonoid (ComplexNumber Float)
+complexProductMonoid : Monoid.Monoid (ComplexNumber Float)
 complexProductMonoid =
-    CommutativeMonoid.commutativeSemigroupAndIdentity complexProductSemigroup productEmpty
+    Monoid.semigroupAndIdentity multiply productEmpty
+
+
+{-| Monoid for Complex Numbers with multiplication as the operation
+-}
+complexProductCommutativeMonoid : CommutativeMonoid.CommutativeMonoid (ComplexNumber Float)
+complexProductCommutativeMonoid =
+    CommutativeMonoid.CommutativeMonoid complexProductMonoid
 
 
 {-| Group for Complex Numbers with addition as the operation
 -}
-complexGroup : AbelianGroup.AbelianGroup (ComplexNumber number)
-complexGroup =
-    AbelianGroup.AbelianGroup { monoid = complexSumMonoid, inverse = \(ComplexNumber (Real x) (Imaginary y)) -> ComplexNumber (Real -x) (Imaginary -y) }
+complexSumGroup : Group.Group (ComplexNumber number)
+complexSumGroup =
+    { monoid = complexSumMonoid, inverse = \(ComplexNumber (Real x) (Imaginary y)) -> ComplexNumber (Real -x) (Imaginary -y) }
+
+
+{-| Group for Complex Numbers with multiplication as the operation
+-}
+complexProductGroup : Group.Group (ComplexNumber Float)
+complexProductGroup =
+    { monoid = complexSumMonoid, inverse = \(ComplexNumber (Real x) (Imaginary y)) -> divide one (ComplexNumber (Real x) (Imaginary y)) }
+
+
+{-| Group for Complex Numbers with addition as the operation
+-}
+complexAbelianGroup : AbelianGroup.AbelianGroup (ComplexNumber number)
+complexAbelianGroup =
+    AbelianGroup.AbelianGroup complexSumGroup
 
 
 {-| Ring for Complex Numbers
 -}
-complexRing : CommutativeRing.CommutativeRing (ComplexNumber Float)
+complexRing : Ring.Ring (ComplexNumber Float)
 complexRing =
-    CommutativeRing.CommutativeRing { addition = complexGroup, multiplication = complexProductMonoid }
+    { addition = complexAbelianGroup, multiplication = complexProductMonoid }
+
+
+{-| Division Ring for Complex Numbers
+-}
+complexDivisionRing : DivisionRing.DivisionRing (ComplexNumber Float)
+complexDivisionRing =
+    { addition = complexAbelianGroup, multiplication = complexSumGroup }
+
+
+{-| Commutative Ring for Complex Numbers
+-}
+complexCommutativeRing : CommutativeRing.CommutativeRing (ComplexNumber Float)
+complexCommutativeRing =
+    CommutativeRing.CommutativeRing complexRing
 
 
 {-| Field for Complex Numbers
 -}
 complexField : Field.Field (ComplexNumber Float)
 complexField =
-    Field.Field complexRing
+    Field.Field complexCommutativeRing
 
 
 {-| Euler's equation
