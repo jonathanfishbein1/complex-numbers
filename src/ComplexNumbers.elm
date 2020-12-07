@@ -19,8 +19,8 @@ module ComplexNumbers exposing
     , euler
     , complexSumSemigroup, complexProductSemigroup
     , complexSumMonoid, complexProductMonoid, complexSumCommutativeMonoid, complexProductCommutativeMonoid
-    , complexSumGroup
-    , complexRing
+    , complexSumGroup, complexProductGroup, complexAbelianGroup
+    , complexRing, complexDivisionRing, complexCommutativeRing, complexCommutativeDivisionRing
     , complexField
     , map
     , pure
@@ -30,7 +30,6 @@ module ComplexNumbers exposing
     , parseComplexNumber
     , read
     , print
-    , complexCommutativeDivisionRing
     )
 
 {-| A module for complex numbers
@@ -70,8 +69,8 @@ module ComplexNumbers exposing
 
 @docs complexSumSemigroup, complexProductSemigroup
 @docs complexSumMonoid, complexProductMonoid, complexSumCommutativeMonoid, complexProductCommutativeMonoid
-@docs complexSumGroup
-@docs complexRing
+@docs complexSumGroup, complexProductGroup, complexAbelianGroup
+@docs complexRing, complexDivisionRing, complexCommutativeRing, complexCommutativeDivisionRing
 @docs complexField
 @docs map
 @docs pure
