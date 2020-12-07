@@ -103,6 +103,7 @@ import Internal.ComplexNumbers
 import Monoid exposing (Monoid)
 import Parser exposing ((|.), (|=))
 import Ring
+import Semigroup exposing (Semigroup)
 import Typeclasses.Classes.Equality
 
 
@@ -410,23 +411,44 @@ positiveOrNegativeFloat =
 
 {-| Semigroup for Complex Numbers with addition as the operation
 -}
-complexSumSemigroup : CommutativeSemigroup.CommutativeSemigroup (ComplexNumber number)
+complexSumSemigroup : Semigroup.Semigroup (ComplexNumber number)
 complexSumSemigroup =
-    CommutativeSemigroup.CommutativeSemigroup add
+    add
+
+
+{-| Semigroup for Complex Numbers with addition as the operation
+-}
+complexProductSemigroup : Semigroup.Semigroup (ComplexNumber Float)
+complexProductSemigroup =
+    multiply
+
+
+{-| Semigroup for Complex Numbers with addition as the operation
+-}
+complexSumCommutativeSemigroup : CommutativeSemigroup.CommutativeSemigroup (ComplexNumber number)
+complexSumCommutativeSemigroup =
+    CommutativeSemigroup.CommutativeSemigroup complexSumSemigroup
 
 
 {-| Semigroup for Complex Numbers with multiplicatoin as the operation
 -}
-complexProductSemigroup : CommutativeSemigroup.CommutativeSemigroup (ComplexNumber Float)
-complexProductSemigroup =
-    CommutativeSemigroup.CommutativeSemigroup multiply
+complexProductCommutativeSemigroup : CommutativeSemigroup.CommutativeSemigroup (ComplexNumber Float)
+complexProductCommutativeSemigroup =
+    CommutativeSemigroup.CommutativeSemigroup complexProductSemigroup
 
 
 {-| Monoid for Complex Numbers with addition as the operation
 -}
 complexSumMonoid : Monoid.Monoid (ComplexNumber number)
 complexSumMonoid =
-    Monoid.semigroupAndIdentity add sumEmpty
+    Monoid.semigroupAndIdentity complexSumSemigroup sumEmpty
+
+
+{-| Monoid for Complex Numbers with multiplication as the operation
+-}
+complexProductMonoid : Monoid.Monoid (ComplexNumber Float)
+complexProductMonoid =
+    Monoid.semigroupAndIdentity complexProductSemigroup productEmpty
 
 
 {-| Monoid for Complex Numbers with addition as the operation
@@ -434,13 +456,6 @@ complexSumMonoid =
 complexSumCommutativeMonoid : CommutativeMonoid.CommutativeMonoid (ComplexNumber number)
 complexSumCommutativeMonoid =
     CommutativeMonoid.CommutativeMonoid complexSumMonoid
-
-
-{-| Monoid for Complex Numbers with multiplication as the operation
--}
-complexProductMonoid : Monoid.Monoid (ComplexNumber Float)
-complexProductMonoid =
-    Monoid.semigroupAndIdentity multiply productEmpty
 
 
 {-| Monoid for Complex Numbers with multiplication as the operation
