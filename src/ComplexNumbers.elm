@@ -461,7 +461,7 @@ complexSumGroup =
 -}
 complexProductGroup : Group.Group (ComplexNumber Float)
 complexProductGroup =
-    { monoid = complexSumMonoid, inverse = \(ComplexNumber (Real x) (Imaginary y)) -> divide one (ComplexNumber (Real x) (Imaginary y)) }
+    { monoid = complexProductMonoid, inverse = \(ComplexNumber (Real x) (Imaginary y)) -> divide one (ComplexNumber (Real x) (Imaginary y)) }
 
 
 {-| Group for Complex Numbers with addition as the operation
@@ -482,7 +482,7 @@ complexRing =
 -}
 complexDivisionRing : DivisionRing.DivisionRing (ComplexNumber Float)
 complexDivisionRing =
-    { addition = complexAbelianGroup, multiplication = complexSumGroup }
+    { addition = complexAbelianGroup, multiplication = complexProductGroup }
 
 
 {-| Commutative Ring for Complex Numbers
