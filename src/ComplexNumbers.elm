@@ -30,6 +30,7 @@ module ComplexNumbers exposing
     , parseComplexNumber
     , read
     , print
+    , complexProductCommutativeSemigroup
     )
 
 {-| A module for complex numbers
@@ -98,12 +99,12 @@ import CommutativeSemigroup
 import DivisionRing
 import Field
 import Float.Extra
-import Group exposing (Group)
+import Group
 import Internal.ComplexNumbers
-import Monoid exposing (Monoid)
+import Monoid
 import Parser exposing ((|.), (|=))
 import Ring
-import Semigroup exposing (Semigroup)
+import Semigroup
 import Typeclasses.Classes.Equality
 
 
