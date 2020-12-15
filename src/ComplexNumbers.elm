@@ -17,7 +17,7 @@ module ComplexNumbers exposing
     , convertFromCartesianToPolar
     , convertFromPolarToCartesian
     , euler
-    , complexSumSemigroup, complexProductSemigroup, complexSumCommutativeSemigroup
+    , complexSumSemigroup, complexProductSemigroup, complexSumCommutativeSemigroup, complexProductCommutativeSemigroup
     , complexSumMonoid, complexProductMonoid, complexSumCommutativeMonoid, complexProductCommutativeMonoid
     , complexSumGroup, complexProductGroup, complexAbelianGroup
     , complexRing, complexDivisionRing, complexCommutativeRing, complexCommutativeDivisionRing
@@ -30,7 +30,6 @@ module ComplexNumbers exposing
     , parseComplexNumber
     , read
     , print
-    , complexProductCommutativeSemigroup
     )
 
 {-| A module for complex numbers
@@ -68,7 +67,7 @@ module ComplexNumbers exposing
 
 # Semigroup, Monoid, Group, Ring, Field, Functor, Applicative Functor, and Monad
 
-@docs complexSumSemigroup, complexProductSemigroup, complexSumCommutativeSemigroup
+@docs complexSumSemigroup, complexProductSemigroup, complexSumCommutativeSemigroup, complexProductCommutativeSemigroup
 @docs complexSumMonoid, complexProductMonoid, complexSumCommutativeMonoid, complexProductCommutativeMonoid
 @docs complexSumGroup, complexProductGroup, complexAbelianGroup
 @docs complexRing, complexDivisionRing, complexCommutativeRing, complexCommutativeDivisionRing
