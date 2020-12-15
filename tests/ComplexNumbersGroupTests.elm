@@ -16,7 +16,7 @@ suite =
         [ Test.fuzz2
             Fuzz.int
             Fuzz.int
-            "tests Complex Number has an inverse"
+            "tests Complex Number sum group has an inverse"
           <|
             \one two ->
                 let
