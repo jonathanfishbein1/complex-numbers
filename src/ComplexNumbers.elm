@@ -17,7 +17,7 @@ module ComplexNumbers exposing
     , convertFromCartesianToPolar
     , convertFromPolarToCartesian
     , euler
-    , complexSumSemigroup, complexProductSemigroup
+    , complexSumSemigroup, complexProductSemigroup, complexSumCommutativeSemigroup, complexProductCommutativeSemigroup
     , complexSumMonoid, complexProductMonoid, complexSumCommutativeMonoid, complexProductCommutativeMonoid
     , complexSumGroup, complexProductGroup, complexAbelianGroup
     , complexRing, complexDivisionRing, complexCommutativeRing, complexCommutativeDivisionRing
@@ -67,7 +67,7 @@ module ComplexNumbers exposing
 
 # Semigroup, Monoid, Group, Ring, Field, Functor, Applicative Functor, and Monad
 
-@docs complexSumSemigroup, complexProductSemigroup
+@docs complexSumSemigroup, complexProductSemigroup, complexSumCommutativeSemigroup, complexProductCommutativeSemigroup
 @docs complexSumMonoid, complexProductMonoid, complexSumCommutativeMonoid, complexProductCommutativeMonoid
 @docs complexSumGroup, complexProductGroup, complexAbelianGroup
 @docs complexRing, complexDivisionRing, complexCommutativeRing, complexCommutativeDivisionRing
@@ -98,12 +98,12 @@ import CommutativeSemigroup
 import DivisionRing
 import Field
 import Float.Extra
-import Group exposing (Group)
+import Group
 import Internal.ComplexNumbers
-import Monoid exposing (Monoid)
+import Monoid
 import Parser exposing ((|.), (|=))
 import Ring
-import Semigroup exposing (Semigroup)
+import Semigroup
 import Typeclasses.Classes.Equality
 
 

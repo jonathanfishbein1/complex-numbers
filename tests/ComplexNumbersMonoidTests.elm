@@ -2,7 +2,7 @@ module ComplexNumbersMonoidTests exposing (suite)
 
 import CommutativeMonoid
 import CommutativeSemigroup
-import ComplexNumbers exposing (ComplexNumber)
+import ComplexNumbers
 import Expect
 import Fuzz
 import Internal.ComplexNumbers

@@ -86,65 +86,6 @@ suite =
                 in
                 testValueOne
                     |> Expect.equal testValueTwo
-        , Test.fuzz3
-            Fuzz.float
-            Fuzz.float
-            Fuzz.float
-            "tests ComplexNumbers multiplication is commutative"
-          <|
-            \one two three ->
-                let
-                    a =
-                        ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real one)
-                            (ComplexNumbers.Imaginary two)
-
-                    b =
-                        ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real two)
-                            (ComplexNumbers.Imaginary three)
-
-                    testValueOne =
-                        ComplexNumbers.multiply a b
-
-                    testValueTwo =
-                        ComplexNumbers.multiply b a
-                in
-                testValueOne
-                    |> Expect.equal testValueTwo
-        , Test.fuzz3
-            (Fuzz.floatRange -10 10)
-            (Fuzz.floatRange -10 10)
-            (Fuzz.floatRange -10 10)
-            "tests ComplexNumbers multiplication is associative"
-          <|
-            \one two three ->
-                let
-                    a =
-                        ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real one)
-                            (ComplexNumbers.Imaginary two)
-
-                    b =
-                        ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real two)
-                            (ComplexNumbers.Imaginary three)
-
-                    c =
-                        ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real one)
-                            (ComplexNumbers.Imaginary three)
-
-                    testValueOne =
-                        ComplexNumbers.multiply (ComplexNumbers.multiply a b) c
-
-                    testValueTwo =
-                        ComplexNumbers.multiply a (ComplexNumbers.multiply b c)
-
-                    result =
-                        ComplexNumbers.equal testValueOne testValueTwo
-                in
-                Expect.true "equal" result
         , Test.fuzz2
             Fuzz.float
             Fuzz.float

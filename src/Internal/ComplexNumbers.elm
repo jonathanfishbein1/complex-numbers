@@ -20,7 +20,6 @@ module Internal.ComplexNumbers exposing
 -}
 
 import Monoid
-import Semigroup
 
 
 type Modulus m
