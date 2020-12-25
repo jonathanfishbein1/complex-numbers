@@ -31,6 +31,7 @@ module ComplexNumbers exposing
     , read
     , print
     , printiNotation
+    , printiNotationWithRounding
     )
 
 {-| A module for complex numbers
@@ -89,6 +90,7 @@ module ComplexNumbers exposing
 @docs read
 @docs print
 @docs printiNotation
+@docs printiNotationWithRounding
 
 -}
 
@@ -105,6 +107,7 @@ import Internal.ComplexNumbers
 import Monoid
 import Parser exposing ((|.), (|=))
 import Ring
+import Round
 import Semigroup
 import Typeclasses.Classes.Equality
 
@@ -355,14 +358,21 @@ print (ComplexNumber (Real rl) (Imaginary imag)) =
         ++ String.fromFloat imag
 
 
-{-| Print ComplexNumber i notation
+{-| Print ComplexNumber i notation with rounding function
+-}
+printiNotationWithRounding : (Float -> String) -> ComplexNumber Float -> String
+printiNotationWithRounding toString (ComplexNumber (Real rl) (Imaginary imag)) =
+    toString rl
+        ++ "+"
+        ++ toString imag
+        ++ "i "
+
+
+{-| Print ComplexNumber i notation with two decimal places
 -}
 printiNotation : ComplexNumber Float -> String
-printiNotation (ComplexNumber (Real rl) (Imaginary imag)) =
-    String.fromFloat rl
-        ++ " "
-        ++ String.fromFloat imag
-        ++ "i "
+printiNotation =
+    printiNotationWithRounding (Round.round 2)
 
 
 {-| Read ComplexNumber
