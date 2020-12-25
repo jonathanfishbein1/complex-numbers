@@ -30,6 +30,7 @@ module ComplexNumbers exposing
     , parseComplexNumber
     , read
     , print
+    , printiNotation
     )
 
 {-| A module for complex numbers
@@ -87,6 +88,7 @@ module ComplexNumbers exposing
 @docs parseComplexNumber
 @docs read
 @docs print
+@docs printiNotation
 
 -}
 
@@ -351,6 +353,16 @@ print (ComplexNumber (Real rl) (Imaginary imag)) =
         ++ String.fromFloat rl
         ++ " Imaginary "
         ++ String.fromFloat imag
+
+
+{-| Print ComplexNumber i notation
+-}
+printiNotation : ComplexNumber Float -> String
+printiNotation (ComplexNumber (Real rl) (Imaginary imag)) =
+    String.fromFloat rl
+        ++ " "
+        ++ String.fromFloat imag
+        ++ "i "
 
 
 {-| Read ComplexNumber
