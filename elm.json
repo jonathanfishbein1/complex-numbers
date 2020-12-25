@@ -3,7 +3,7 @@
     "name": "jonathanfishbein1/complex-numbers",
     "summary": "complex numbers in elm",
     "license": "BSD-3-Clause",
-    "version": "10.2.0",
+    "version": "10.3.0",
     "exposed-modules": [
         "ComplexNumbers"
     ],
@@ -13,6 +13,7 @@
         "elm/parser": "1.1.0 <= v < 2.0.0",
         "ianmackenzie/elm-float-extra": "1.1.0 <= v < 2.0.0",
         "jonathanfishbein1/numeric-typeclasses": "3.0.2 <= v < 4.0.0",
+        "myrho/elm-round": "1.0.4 <= v < 2.0.0",
         "nikita-volkov/typeclasses": "1.8.0 <= v < 2.0.0"
     },
     "test-dependencies": {
