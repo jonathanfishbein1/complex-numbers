@@ -363,9 +363,14 @@ print (ComplexNumber (Real rl) (Imaginary imag)) =
 printiNotationWithRounding : (Float -> String) -> ComplexNumber Float -> String
 printiNotationWithRounding toString (ComplexNumber (Real rl) (Imaginary imag)) =
     toString rl
-        ++ "+"
-        ++ toString imag
-        ++ "i "
+        ++ (if imag < 0 then
+                "-"
+
+            else
+                "+"
+           )
+        ++ toString (Basics.abs imag)
+        ++ "i"
 
 
 {-| Print ComplexNumber i notation with two decimal places
