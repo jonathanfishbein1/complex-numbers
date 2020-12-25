@@ -362,7 +362,13 @@ print (ComplexNumber (Real rl) (Imaginary imag)) =
 -}
 printiNotationWithRounding : (Float -> String) -> ComplexNumber Float -> String
 printiNotationWithRounding toString (ComplexNumber (Real rl) (Imaginary imag)) =
-    toString rl
+    (if rl < 0 then
+        "-"
+
+     else
+        "+"
+    )
+        ++ toString (Basics.abs rl)
         ++ (if imag < 0 then
                 "-"
 
