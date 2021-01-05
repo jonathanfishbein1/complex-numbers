@@ -2,27 +2,23 @@
 
 ## Summary
 
-A module to define complex numbers and basic arithmetic operations on them
+A module to define complex numbers and basic arithmetic operations on them.
 
-Examples of complex numbers
+I accidently published this package *before* checking to see if there already existed an Elm package for complex numbers.  This was a rookie mistake I made when getting started developing Elm packages.
 
-3 + 4i a compolex number with both real and imaginary components
+However, this package does contain some functionality that differs from the two other Elm complex number packages.  Most notably this package makes use of [jonathanfishbein1/numeric-typeclasses](https://package.elm-lang.org/packages/jonathanfishbein1/numeric-typeclasses/latest/) to define instances of Semigroup, Monoid, Group, Ring, and Field for Complex Numbers.  These instances can be valuable if you are trying to define generic functions in your own projects that can operate on both Real and Complex Numbers.
 
-3 a complex number with no imaginary component
+```elm
+{-| Group for Complex Numbers with addition as the operation
+-}
+complexSumGroup : Group.Group (ComplexNumber number)
+complexSumGroup =
+    { monoid = complexSumMonoid, inverse = \(ComplexNumber (Real x) (Imaginary y)) -> ComplexNumber (Real -x) (Imaginary -y) }
 
-i a complex number with no real component
+{-| Group for Complex Numbers with multiplication as the operation
+-}
+complexProductGroup : Group.Group (ComplexNumber Float)
+complexProductGroup =
+    { monoid = complexProductMonoid, inverse = \(ComplexNumber (Real x) (Imaginary y)) -> divide one (ComplexNumber (Real x) (Imaginary y)) }
 
-The above examples are complex numbers using the Cartesian representation they can also be represented
-using polar coordinates in that case the magnitude of the real and imaginary components is the first component called the modulus.
-The angle of the modulus when graphed on the complex plane is the second component.
-
-Complex numbers have arithmetic operations associated with them including add, multiply, subtract, divide, modulus and conjugate.
-The majority of the operations are familiar but encapsulate the unique procedures required to do so with complex numbers.
-
-The conjugate of a complex number is the complex number with the sign of its imaginary portion flipped.  For example 
-the conjugate of 3 + 4i would be 3 - 4i
-
-There are two functions convertFromCartesianToPolar and convertFromPolarToCartesian for converting between Cartesian and polar and polar to 
-Cartesian representations respectivly.
-
-Complex numbers have two monoid instances sum and product.
+```
