@@ -3,7 +3,7 @@
     "name": "jonathanfishbein1/complex-numbers",
     "summary": "complex numbers in elm",
     "license": "BSD-3-Clause",
-    "version": "10.3.3",
+    "version": "10.3.4",
     "exposed-modules": [
         "ComplexNumbers"
     ],
