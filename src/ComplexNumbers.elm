@@ -236,8 +236,15 @@ modulus (ComplexNumber (Real rl) (Imaginary imag)) =
 {-| Calculate the conjugate of a complex number
 -}
 conjugate : ComplexNumber number -> ComplexNumber number
-conjugate (ComplexNumber rl (Imaginary imaginaryOne)) =
-    ComplexNumber rl (Imaginary -imaginaryOne)
+conjugate (ComplexNumber rl (Imaginary img)) =
+    ComplexNumber rl (Imaginary -img)
+
+
+{-| Calculate the conjugate of a complex number
+-}
+imaginaryAxisReflection : ComplexNumber number -> ComplexNumber number
+imaginaryAxisReflection (ComplexNumber (Real rl) img) =
+    ComplexNumber (Real -rl) img
 
 
 {-| Convert from the Cartesian representation of a complex number to the polar representation
