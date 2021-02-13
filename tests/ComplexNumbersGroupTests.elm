@@ -1,12 +1,8 @@
 module ComplexNumbersGroupTests exposing (suite)
 
-import AbelianGroup
-import CommutativeMonoid
-import CommutativeSemigroup
 import ComplexNumbers
 import Expect
 import Fuzz
-import Group
 import Test
 
 

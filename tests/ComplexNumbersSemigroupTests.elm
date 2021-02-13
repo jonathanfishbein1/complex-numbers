@@ -1,12 +1,9 @@
 module ComplexNumbersSemigroupTests exposing (..)
 
-import CommutativeMonoid
 import CommutativeSemigroup
 import ComplexNumbers
 import Expect
 import Fuzz
-import Internal.ComplexNumbers
-import Semigroup
 import Test
 
 

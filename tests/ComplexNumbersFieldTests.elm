@@ -3,7 +3,6 @@ module ComplexNumbersFieldTests exposing (suite)
 import ComplexNumbers
 import Expect
 import Fuzz
-import Internal.ComplexNumbers
 import Test
 
 
