@@ -3,7 +3,9 @@ module ComplexNumbersTest exposing (suite)
 import ComplexNumbers
 import Expect
 import Fuzz
+import Imaginary
 import Internal.ComplexNumbers
+import Real
 import Test
 
 
@@ -19,13 +21,13 @@ suite =
                 let
                     number =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real one)
-                            (ComplexNumbers.Imaginary two)
+                            (Real.Real one)
+                            (Imaginary.Imaginary two)
 
-                    (ComplexNumbers.ComplexNumber (ComplexNumbers.Real real) _) =
+                    (ComplexNumbers.ComplexNumber (Real.Real real) _) =
                         number
 
-                    (ComplexNumbers.ComplexNumber _ (ComplexNumbers.Imaginary imaginary)) =
+                    (ComplexNumbers.ComplexNumber _ (Imaginary.Imaginary imaginary)) =
                         number
 
                     length =
@@ -47,13 +49,13 @@ suite =
                 let
                     numberOne =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real one)
-                            (ComplexNumbers.Imaginary two)
+                            (Real.Real one)
+                            (Imaginary.Imaginary two)
 
                     numberTwo =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real two)
-                            (ComplexNumbers.Imaginary three)
+                            (Real.Real two)
+                            (Imaginary.Imaginary three)
 
                     lengthOne =
                         ComplexNumbers.modulus numberOne
@@ -79,13 +81,13 @@ suite =
                 let
                     numberOne =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real one)
-                            (ComplexNumbers.Imaginary two)
+                            (Real.Real one)
+                            (Imaginary.Imaginary two)
 
                     numberTwo =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real two)
-                            (ComplexNumbers.Imaginary three)
+                            (Real.Real two)
+                            (Imaginary.Imaginary three)
 
                     modulesOfSumOfNumberOneNumberTwo =
                         ComplexNumbers.add numberOne numberTwo
@@ -110,13 +112,13 @@ suite =
                 let
                     testValue =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real real)
-                            (ComplexNumbers.Imaginary imaginary)
+                            (Real.Real real)
+                            (Imaginary.Imaginary imaginary)
 
                     expected =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real <| real)
-                            (ComplexNumbers.Imaginary <| -imaginary)
+                            (Real.Real <| real)
+                            (Imaginary.Imaginary <| -imaginary)
                 in
                 ComplexNumbers.conjugate testValue
                     |> Expect.equal expected
@@ -129,13 +131,13 @@ suite =
                 let
                     testValue =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real real)
-                            (ComplexNumbers.Imaginary imaginary)
+                            (Real.Real real)
+                            (Imaginary.Imaginary imaginary)
 
                     conjugate =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real <| real)
-                            (ComplexNumbers.Imaginary <| -imaginary)
+                            (Real.Real <| real)
+                            (Imaginary.Imaginary <| -imaginary)
 
                     conjugateConjugate =
                         ComplexNumbers.conjugate conjugate
@@ -151,13 +153,13 @@ suite =
                 let
                     numberOne =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real one)
-                            (ComplexNumbers.Imaginary two)
+                            (Real.Real one)
+                            (Imaginary.Imaginary two)
 
                     numberTwo =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real two)
-                            (ComplexNumbers.Imaginary three)
+                            (Real.Real two)
+                            (Imaginary.Imaginary three)
 
                     conjugateOne =
                         ComplexNumbers.conjugate numberOne
@@ -185,13 +187,13 @@ suite =
                 let
                     numberOne =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real one)
-                            (ComplexNumbers.Imaginary two)
+                            (Real.Real one)
+                            (Imaginary.Imaginary two)
 
                     numberTwo =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real two)
-                            (ComplexNumbers.Imaginary three)
+                            (Real.Real two)
+                            (Imaginary.Imaginary three)
 
                     conjugateOne =
                         ComplexNumbers.conjugate numberOne
@@ -218,8 +220,8 @@ suite =
                 let
                     testValue =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real real)
-                            (ComplexNumbers.Imaginary imaginary)
+                            (Real.Real real)
+                            (Imaginary.Imaginary imaginary)
 
                     conjugate =
                         ComplexNumbers.conjugate testValue
@@ -241,8 +243,8 @@ suite =
                 let
                     testValue =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real real)
-                            (ComplexNumbers.Imaginary imaginary)
+                            (Real.Real real)
+                            (Imaginary.Imaginary imaginary)
 
                     reciprocal =
                         ComplexNumbers.divide ComplexNumbers.one testValue
@@ -255,8 +257,8 @@ suite =
 
                     modulusSquaredComplexNumber =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real modulusSquared)
-                            (ComplexNumbers.Imaginary 0)
+                            (Real.Real modulusSquared)
+                            Imaginary.zero
 
                     conjugateDividedByModulesSquared =
                         ComplexNumbers.divide conjugate modulusSquaredComplexNumber
@@ -273,13 +275,13 @@ suite =
                 let
                     z =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real real)
-                            (ComplexNumbers.Imaginary imaginary)
+                            (Real.Real real)
+                            (Imaginary.Imaginary imaginary)
 
                     w =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real real)
-                            (ComplexNumbers.Imaginary imaginary)
+                            (Real.Real real)
+                            (Imaginary.Imaginary imaginary)
 
                     zDividedByW =
                         ComplexNumbers.divide z w
@@ -305,9 +307,7 @@ suite =
             \_ ->
                 let
                     z =
-                        ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real 0)
-                            (ComplexNumbers.Imaginary 0)
+                        ComplexNumbers.zero
 
                     zLength =
                         ComplexNumbers.modulus z
@@ -323,8 +323,8 @@ suite =
                 let
                     z =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real real)
-                            (ComplexNumbers.Imaginary imaginary)
+                            (Real.Real real)
+                            (Imaginary.Imaginary imaginary)
 
                     zLength =
                         ComplexNumbers.modulus z
@@ -340,8 +340,8 @@ suite =
                 let
                     cartesianTestValue =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real real)
-                            (ComplexNumbers.Imaginary imaginary)
+                            (Real.Real real)
+                            (Imaginary.Imaginary imaginary)
 
                     polarTestValue =
                         ComplexNumbers.convertFromCartesianToPolar cartesianTestValue
@@ -418,11 +418,11 @@ suite =
             \_ ->
                 let
                     complexNumberDividend =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real 2) (ComplexNumbers.Imaginary 0)
+                        ComplexNumbers.ComplexNumber (Real.Real 2) (Imaginary.Imaginary 0)
                             |> ComplexNumbers.convertFromCartesianToPolar
 
                     complexNumberDivisor =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real 1) (ComplexNumbers.Imaginary 1)
+                        ComplexNumbers.ComplexNumber (Real.Real 1) (Imaginary.Imaginary 1)
                             |> ComplexNumbers.convertFromCartesianToPolar
 
                     quotient =
@@ -439,8 +439,8 @@ suite =
 
                     expected =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real (quotientMod * Basics.cos quotientPhase))
-                            (ComplexNumbers.Imaginary (quotientMod * Basics.sin quotientPhase))
+                            (Real.Real (quotientMod * Basics.cos quotientPhase))
+                            (Imaginary.Imaginary (quotientMod * Basics.sin quotientPhase))
                 in
                 Expect.equal quotientCartesian expected
         , Test.fuzz2
@@ -472,8 +472,8 @@ suite =
                 let
                     complexNumber =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real one)
-                            (ComplexNumbers.Imaginary two)
+                            (Real.Real one)
+                            (Imaginary.Imaginary two)
 
                     printedComplexNumber =
                         ComplexNumbers.print complexNumber

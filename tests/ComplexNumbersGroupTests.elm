@@ -3,6 +3,8 @@ module ComplexNumbersGroupTests exposing (suite)
 import ComplexNumbers
 import Expect
 import Fuzz
+import Imaginary
+import Real
 import Test
 
 
@@ -18,8 +20,8 @@ suite =
                 let
                     complexNumber =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real one)
-                            (ComplexNumbers.Imaginary two)
+                            (Real.Real one)
+                            (Imaginary.Imaginary two)
 
                     inversePlusA =
                         ComplexNumbers.complexSumGroup.monoid.semigroup
@@ -46,8 +48,8 @@ suite =
                 let
                     complexNumber =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real one)
-                            (ComplexNumbers.Imaginary two)
+                            (Real.Real one)
+                            (Imaginary.Imaginary two)
 
                     inversePlusA =
                         ComplexNumbers.complexProductGroup.monoid.semigroup

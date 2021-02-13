@@ -4,6 +4,8 @@ import CommutativeMonoid
 import ComplexNumbers
 import Expect
 import Fuzz
+import Imaginary
+import Real
 import Test
 
 
@@ -18,7 +20,7 @@ suite =
             \real imaginary ->
                 let
                     expected =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
+                        ComplexNumbers.ComplexNumber (Real.Real real) (Imaginary.Imaginary imaginary)
 
                     (CommutativeMonoid.CommutativeMonoid monoid) =
                         ComplexNumbers.complexSumCommutativeMonoid
@@ -35,18 +37,18 @@ suite =
                 let
                     a =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real one)
-                            (ComplexNumbers.Imaginary two)
+                            (Real.Real one)
+                            (Imaginary.Imaginary two)
 
                     b =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real two)
-                            (ComplexNumbers.Imaginary three)
+                            (Real.Real two)
+                            (Imaginary.Imaginary three)
 
                     c =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real one)
-                            (ComplexNumbers.Imaginary three)
+                            (Real.Real one)
+                            (Imaginary.Imaginary three)
 
                     expected =
                         ComplexNumbers.add (ComplexNumbers.add a b) c
@@ -67,7 +69,7 @@ suite =
             \real imaginary ->
                 let
                     expected =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
+                        ComplexNumbers.ComplexNumber (Real.Real real) (Imaginary.Imaginary imaginary)
 
                     (CommutativeMonoid.CommutativeMonoid monoid) =
                         ComplexNumbers.complexProductCommutativeMonoid
@@ -86,18 +88,18 @@ suite =
                 let
                     a =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real one)
-                            (ComplexNumbers.Imaginary two)
+                            (Real.Real one)
+                            (Imaginary.Imaginary two)
 
                     b =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real two)
-                            (ComplexNumbers.Imaginary three)
+                            (Real.Real two)
+                            (Imaginary.Imaginary three)
 
                     c =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real one)
-                            (ComplexNumbers.Imaginary three)
+                            (Real.Real one)
+                            (Imaginary.Imaginary three)
 
                     expected =
                         ComplexNumbers.multiply (ComplexNumbers.multiply a b) c

@@ -3,7 +3,9 @@ module ComplexNumbersApplicativeFunctorTest exposing (suite)
 import ComplexNumbers
 import Expect
 import Fuzz
+import Imaginary
 import Internal.ComplexNumbers
+import Real
 import Test
 
 
@@ -23,10 +25,10 @@ suite =
 
                         c =
                             ComplexNumbers.ComplexNumber
-                                (ComplexNumbers.Real
+                                (Real.Real
                                     one
                                 )
-                                (ComplexNumbers.Imaginary
+                                (Imaginary.Imaginary
                                     two
                                 )
 
@@ -54,10 +56,10 @@ suite =
 
                         w =
                             ComplexNumbers.ComplexNumber
-                                (ComplexNumbers.Real
+                                (Real.Real
                                     one
                                 )
-                                (ComplexNumbers.Imaginary
+                                (Imaginary.Imaginary
                                     one
                                 )
 
@@ -229,8 +231,8 @@ suite =
                 let
                     complexNumber =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real one)
-                            (ComplexNumbers.Imaginary two)
+                            (Real.Real one)
+                            (Imaginary.Imaginary two)
 
                     f =
                         (*) 2
@@ -277,8 +279,8 @@ suite =
                 let
                     complexNumber =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real one)
-                            (ComplexNumbers.Imaginary two)
+                            (Real.Real one)
+                            (Imaginary.Imaginary two)
 
                     doubleComplexNumber =
                         ComplexNumbers.add complexNumber complexNumber
@@ -303,8 +305,8 @@ suite =
                 let
                     complexNumber =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real one)
-                            (ComplexNumbers.Imaginary two)
+                            (Real.Real one)
+                            (Imaginary.Imaginary two)
 
                     f =
                         (-)
@@ -316,7 +318,7 @@ suite =
                         ComplexNumbers.andMap complexNumber fMapX
                 in
                 pureFApplyX
-                    |> Expect.equal (ComplexNumbers.ComplexNumber (ComplexNumbers.Real 0) (ComplexNumbers.Imaginary 0))
+                    |> Expect.equal (ComplexNumbers.ComplexNumber (Real.Real 0) (Imaginary.Imaginary 0))
         , Test.fuzz2
             Fuzz.int
             Fuzz.int

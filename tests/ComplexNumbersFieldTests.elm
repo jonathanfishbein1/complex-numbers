@@ -3,6 +3,8 @@ module ComplexNumbersFieldTests exposing (suite)
 import ComplexNumbers
 import Expect
 import Fuzz
+import Imaginary
+import Real
 import Test
 
 
@@ -18,13 +20,13 @@ suite =
                 let
                     testValue =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real real)
-                            (ComplexNumbers.Imaginary imaginary)
+                            (Real.Real real)
+                            (Imaginary.Imaginary imaginary)
 
                     expected =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real <| 2 * real)
-                            (ComplexNumbers.Imaginary <| 2 * imaginary)
+                            (Real.Real <| 2 * real)
+                            (Imaginary.Imaginary <| 2 * imaginary)
                 in
                 ComplexNumbers.add testValue testValue
                     |> Expect.equal expected
@@ -38,13 +40,13 @@ suite =
                 let
                     a =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real one)
-                            (ComplexNumbers.Imaginary two)
+                            (Real.Real one)
+                            (Imaginary.Imaginary two)
 
                     b =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real two)
-                            (ComplexNumbers.Imaginary three)
+                            (Real.Real two)
+                            (Imaginary.Imaginary three)
 
                     testValueOne =
                         ComplexNumbers.add a b
@@ -64,18 +66,18 @@ suite =
                 let
                     a =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real one)
-                            (ComplexNumbers.Imaginary two)
+                            (Real.Real one)
+                            (Imaginary.Imaginary two)
 
                     b =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real two)
-                            (ComplexNumbers.Imaginary three)
+                            (Real.Real two)
+                            (Imaginary.Imaginary three)
 
                     c =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real one)
-                            (ComplexNumbers.Imaginary three)
+                            (Real.Real one)
+                            (Imaginary.Imaginary three)
 
                     testValueOne =
                         ComplexNumbers.add (ComplexNumbers.add a b) c
@@ -94,8 +96,8 @@ suite =
                 let
                     testValue =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real real)
-                            (ComplexNumbers.Imaginary imaginary)
+                            (Real.Real real)
+                            (Imaginary.Imaginary imaginary)
                 in
                 ComplexNumbers.add testValue ComplexNumbers.zero
                     |> Expect.equal testValue
@@ -109,18 +111,18 @@ suite =
                 let
                     a =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real one)
-                            (ComplexNumbers.Imaginary two)
+                            (Real.Real one)
+                            (Imaginary.Imaginary two)
 
                     b =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real two)
-                            (ComplexNumbers.Imaginary three)
+                            (Real.Real two)
+                            (Imaginary.Imaginary three)
 
                     c =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real one)
-                            (ComplexNumbers.Imaginary three)
+                            (Real.Real one)
+                            (Imaginary.Imaginary three)
 
                     testValueOne =
                         ComplexNumbers.multiply a (ComplexNumbers.add b c)
@@ -141,10 +143,10 @@ suite =
             \real imaginary ->
                 let
                     testValue =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real real) (ComplexNumbers.Imaginary imaginary)
+                        ComplexNumbers.ComplexNumber (Real.Real real) (Imaginary.Imaginary imaginary)
 
                     zero =
-                        ComplexNumbers.ComplexNumber (ComplexNumbers.Real 0) (ComplexNumbers.Imaginary 0)
+                        ComplexNumbers.zero
 
                     expected =
                         testValue

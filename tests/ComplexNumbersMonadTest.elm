@@ -3,7 +3,9 @@ module ComplexNumbersMonadTest exposing (suite)
 import ComplexNumbers
 import Expect
 import Fuzz
+import Imaginary
 import Internal.ComplexNumbers
+import Real
 import Test
 
 
@@ -20,8 +22,8 @@ suite =
                     let
                         f a =
                             ComplexNumbers.ComplexNumber
-                                (ComplexNumbers.Real <| a * 2)
-                                (ComplexNumbers.Imaginary <| a * 2)
+                                (Real.Real <| a * 2)
+                                (Imaginary.Imaginary <| a * 2)
 
                         leftSide =
                             ComplexNumbers.andThen
@@ -56,13 +58,13 @@ suite =
 
                         f a =
                             ComplexNumbers.ComplexNumber
-                                (ComplexNumbers.Real <| a * 2)
-                                (ComplexNumbers.Imaginary <| a * 2)
+                                (Real.Real <| a * 2)
+                                (Imaginary.Imaginary <| a * 2)
 
                         g a =
                             ComplexNumbers.ComplexNumber
-                                (ComplexNumbers.Real <| a * 3)
-                                (ComplexNumbers.Imaginary <| a * 3)
+                                (Real.Real <| a * 3)
+                                (Imaginary.Imaginary <| a * 3)
 
                         leftSide =
                             ComplexNumbers.andThen
