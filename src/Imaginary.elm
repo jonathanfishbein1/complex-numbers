@@ -1,5 +1,6 @@
 module Imaginary exposing
     ( Imaginary(..)
+    , andMap
     , i
     , imaginary
     , map
@@ -52,3 +53,13 @@ map f (Imaginary r) =
 pure : a -> Imaginary a
 pure a =
     Imaginary a
+
+
+{-| Apply for Complex Number Cartesian representaiton applicative
+-}
+andMap :
+    Imaginary a
+    -> Imaginary (a -> b)
+    -> Imaginary b
+andMap (Imaginary imag) (Imaginary fImag) =
+    Imaginary <| fImag imag

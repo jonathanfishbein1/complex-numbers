@@ -283,8 +283,8 @@ andMap :
     ComplexNumber a
     -> ComplexNumber (a -> b)
     -> ComplexNumber b
-andMap (ComplexNumber rl (Imaginary.Imaginary imag)) (ComplexNumber fReal (Imaginary.Imaginary fImaginary)) =
-    ComplexNumber (Real.andMap rl fReal) (Imaginary.Imaginary <| fImaginary imag)
+andMap (ComplexNumber rl imag) (ComplexNumber fReal fImaginary) =
+    ComplexNumber (Real.andMap rl fReal) (Imaginary.andMap imag fImaginary)
 
 
 {-| Monadic bind for Complex Number Cartesian representaiton
