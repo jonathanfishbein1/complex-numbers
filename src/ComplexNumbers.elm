@@ -490,7 +490,7 @@ complexProductCommutativeMonoid =
 -}
 complexSumGroup : Group.Group (ComplexNumber number)
 complexSumGroup =
-    { monoid = complexSumMonoid, inverse = \(ComplexNumber (Real.Real x) (Imaginary.Imaginary y)) -> ComplexNumber (Real.Real -x) (Imaginary.Imaginary -y) }
+    { monoid = complexSumMonoid, inverse = \(ComplexNumber rl imag) -> ComplexNumber (Real.negate rl) (Imaginary.negate imag) }
 
 
 {-| Group for Complex Numbers with multiplication as the operation
