@@ -30,6 +30,7 @@ module ComplexNumbers exposing
     , print
     , printiNotation
     , printiNotationWithRounding
+    , imaginaryAxisReflection
     )
 
 {-| A module for complex numbers
