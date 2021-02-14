@@ -11,6 +11,7 @@ module ComplexNumbers exposing
     , divide
     , modulus
     , conjugate
+    , imaginaryAxisReflection
     , power
     , convertFromCartesianToPolar
     , convertFromPolarToCartesian
@@ -30,7 +31,6 @@ module ComplexNumbers exposing
     , print
     , printiNotation
     , printiNotationWithRounding
-    , imaginaryAxisReflection
     )
 
 {-| A module for complex numbers
@@ -60,6 +60,7 @@ module ComplexNumbers exposing
 @docs divide
 @docs modulus
 @docs conjugate
+@docs imaginaryAxisReflection
 @docs power
 @docs convertFromCartesianToPolar
 @docs convertFromPolarToCartesian
@@ -228,7 +229,7 @@ conjugate (ComplexNumber rl img) =
     ComplexNumber rl (Imaginary.negate img)
 
 
-{-| Calculate the conjugate of a complex number
+{-| Calculate the imaginary axis reflection of a complex number
 -}
 imaginaryAxisReflection : ComplexNumber number -> ComplexNumber number
 imaginaryAxisReflection (ComplexNumber rl img) =
