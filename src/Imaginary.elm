@@ -1,15 +1,46 @@
 module Imaginary exposing
     ( Imaginary(..)
+    , i
+    , zero
+    , imaginary
+    , negate
+    , map
+    , pure
     , andMap
     , equal
-    , equalImplementation
-    , i
-    , imaginary
-    , map
-    , negate
-    , pure
-    , zero
     )
+
+{-| A module for Imaginary numbers
+
+
+# Types
+
+@docs Imaginary
+
+
+# Values
+
+@docs i
+@docs zero
+
+
+# Arithmetic operations on complex numbers
+
+@docs imaginary
+@docs negate
+
+
+# Semigroup, Monoid, Group, Ring, Field, Functor, Applicative Functor, and Monad
+
+@docs map
+@docs pure
+@docs andMap
+
+#Equality
+
+@docs equal
+
+-}
 
 import Float.Extra
 import Typeclasses.Classes.Equality
@@ -21,6 +52,8 @@ type Imaginary i
     = Imaginary i
 
 
+{-| i
+-}
 i : Imaginary number
 i =
     Imaginary 1
@@ -33,33 +66,35 @@ zero =
     Imaginary 0
 
 
+{-| Negate an Imaginary number
+-}
 negate : Imaginary number -> Imaginary number
 negate imag =
     Imaginary -(imaginary imag)
 
 
-{-| Extracts the imaginary part of a complex number
+{-| Extracts the value of an Imaginary number
 -}
 imaginary : Imaginary a -> a
 imaginary (Imaginary imag) =
     imag
 
 
-{-| Map over a complex number
+{-| Map over anImaginary Imaginary number
 -}
 map : (a -> b) -> Imaginary a -> Imaginary b
 map f (Imaginary r) =
     Imaginary <| f r
 
 
-{-| Place a value in the minimal Complex Number Cartesian context
+{-| Place a value in the minimal Imaginary context
 -}
 pure : a -> Imaginary a
 pure a =
     Imaginary a
 
 
-{-| Apply for Complex Number Cartesian representaiton applicative
+{-| Apply for Imaginary representaiton applicative
 -}
 andMap :
     Imaginary a

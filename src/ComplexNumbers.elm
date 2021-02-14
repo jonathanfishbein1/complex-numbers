@@ -38,8 +38,6 @@ module ComplexNumbers exposing
 
 # Types
 
-@docs Real.Real
-@docs Imaginary.Imaginary
 @docs ComplexNumber
 
 
