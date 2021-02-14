@@ -266,15 +266,15 @@ convertFromPolarToCartesian (Internal.ComplexNumbers.ComplexNumber (Internal.Com
 {-| Map over a complex number
 -}
 map : (a -> b) -> ComplexNumber a -> ComplexNumber b
-map f (ComplexNumber (Real.Real realOne) (Imaginary.Imaginary imaginaryOne)) =
-    ComplexNumber (Real.Real <| f realOne) (Imaginary.Imaginary <| f imaginaryOne)
+map f (ComplexNumber rl img) =
+    ComplexNumber (Real.map f rl) (Imaginary.map f img)
 
 
 {-| Place a value in the minimal Complex Number Cartesian context
 -}
 pure : a -> ComplexNumber a
 pure a =
-    ComplexNumber (Real.Real a) (Imaginary.Imaginary a)
+    ComplexNumber (Real.pure a) (Imaginary.pure a)
 
 
 {-| Apply for Complex Number Cartesian representaiton applicative
@@ -283,8 +283,8 @@ andMap :
     ComplexNumber a
     -> ComplexNumber (a -> b)
     -> ComplexNumber b
-andMap (ComplexNumber (Real.Real rl) (Imaginary.Imaginary imag)) (ComplexNumber (Real.Real fReal) (Imaginary.Imaginary fImaginary)) =
-    ComplexNumber (Real.Real <| fReal rl) (Imaginary.Imaginary <| fImaginary imag)
+andMap (ComplexNumber rl (Imaginary.Imaginary imag)) (ComplexNumber fReal (Imaginary.Imaginary fImaginary)) =
+    ComplexNumber (Real.andMap rl fReal) (Imaginary.Imaginary <| fImaginary imag)
 
 
 {-| Monadic bind for Complex Number Cartesian representaiton

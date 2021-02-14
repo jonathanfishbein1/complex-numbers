@@ -2,7 +2,9 @@ module Imaginary exposing
     ( Imaginary(..)
     , i
     , imaginary
+    , map
     , negate
+    , pure
     , zero
     )
 
@@ -36,3 +38,17 @@ negate imag =
 imaginary : Imaginary a -> a
 imaginary (Imaginary imag) =
     imag
+
+
+{-| Map over a complex number
+-}
+map : (a -> b) -> Imaginary a -> Imaginary b
+map f (Imaginary r) =
+    Imaginary <| f r
+
+
+{-| Place a value in the minimal Complex Number Cartesian context
+-}
+pure : a -> Imaginary a
+pure a =
+    Imaginary a
