@@ -1,12 +1,10 @@
 module ComplexNumbersGroupTests exposing (suite)
 
-import AbelianGroup
-import CommutativeMonoid
-import CommutativeSemigroup
 import ComplexNumbers
 import Expect
 import Fuzz
-import Group
+import Imaginary
+import Real
 import Test
 
 
@@ -22,8 +20,8 @@ suite =
                 let
                     complexNumber =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real one)
-                            (ComplexNumbers.Imaginary two)
+                            (Real.Real one)
+                            (Imaginary.Imaginary two)
 
                     inversePlusA =
                         ComplexNumbers.complexSumGroup.monoid.semigroup
@@ -50,8 +48,8 @@ suite =
                 let
                     complexNumber =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real one)
-                            (ComplexNumbers.Imaginary two)
+                            (Real.Real one)
+                            (Imaginary.Imaginary two)
 
                     inversePlusA =
                         ComplexNumbers.complexProductGroup.monoid.semigroup
@@ -64,7 +62,7 @@ suite =
                             (ComplexNumbers.complexProductGroup.inverse complexNumber)
                 in
                 Expect.true "All equal identity"
-                    (ComplexNumbers.equal inversePlusA ComplexNumbers.complexProductGroup.monoid.identity
-                        && ComplexNumbers.equal aPlusInverse ComplexNumbers.complexProductGroup.monoid.identity
+                    (ComplexNumbers.equal.eq inversePlusA ComplexNumbers.complexProductGroup.monoid.identity
+                        && ComplexNumbers.equal.eq aPlusInverse ComplexNumbers.complexProductGroup.monoid.identity
                     )
         ]

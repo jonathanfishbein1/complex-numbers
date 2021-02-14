@@ -1,7 +1,5 @@
 module ComplexNumbers exposing
-    ( Real(..)
-    , Imaginary(..)
-    , ComplexNumber(..)
+    ( ComplexNumber(..)
     , i
     , zero
     , one
@@ -13,6 +11,7 @@ module ComplexNumbers exposing
     , divide
     , modulus
     , conjugate
+    , imaginaryAxisReflection
     , power
     , convertFromCartesianToPolar
     , convertFromPolarToCartesian
@@ -39,8 +38,6 @@ module ComplexNumbers exposing
 
 # Types
 
-@docs Real
-@docs Imaginary
 @docs ComplexNumber
 
 
@@ -61,6 +58,7 @@ module ComplexNumbers exposing
 @docs divide
 @docs modulus
 @docs conjugate
+@docs imaginaryAxisReflection
 @docs power
 @docs convertFromCartesianToPolar
 @docs convertFromPolarToCartesian
@@ -101,11 +99,12 @@ import CommutativeRing
 import CommutativeSemigroup
 import DivisionRing
 import Field
-import Float.Extra
 import Group
+import Imaginary
 import Internal.ComplexNumbers
 import Monoid
 import Parser exposing ((|.), (|=))
+import Real
 import Ring
 import Round
 import Semigroup
@@ -116,57 +115,45 @@ import Typeclasses.Classes.Equality
 -- Types
 
 
-{-| Real portion
--}
-type Real r
-    = Real r
-
-
-{-| Imaginary portion
--}
-type Imaginary i
-    = Imaginary i
-
-
 {-| Cartesian representation of a complex number
 -}
 type ComplexNumber a
-    = ComplexNumber (Real a) (Imaginary a)
+    = ComplexNumber (Real.Real a) (Imaginary.Imaginary a)
 
 
 {-| zero
 -}
 zero : ComplexNumber number
 zero =
-    ComplexNumber (Real 0) (Imaginary 0)
+    ComplexNumber Real.zero Imaginary.zero
 
 
 {-| one
 -}
 one : ComplexNumber number
 one =
-    ComplexNumber (Real 1) (Imaginary 0)
+    ComplexNumber Real.one Imaginary.zero
 
 
 {-| The number i
 -}
 i : ComplexNumber number
 i =
-    ComplexNumber (Real 0) (Imaginary 1)
+    ComplexNumber Real.zero Imaginary.i
 
 
 {-| Extracts the real part of a complex number
 -}
 real : ComplexNumber a -> a
-real (ComplexNumber (Real rl) _) =
-    rl
+real (ComplexNumber rl _) =
+    Real.real rl
 
 
 {-| Extracts the imaginary part of a complex number
 -}
 imaginary : ComplexNumber a -> a
-imaginary (ComplexNumber _ (Imaginary imag)) =
-    imag
+imaginary (ComplexNumber _ imag) =
+    Imaginary.imaginary imag
 
 
 {-| Add two complex numbers together
@@ -228,7 +215,7 @@ divide complexNumberDividend complexNumberCartesianDivisor =
 {-| Calculate the modulus of a complex number
 -}
 modulus : ComplexNumber Float -> Float
-modulus (ComplexNumber (Real rl) (Imaginary imag)) =
+modulus (ComplexNumber (Real.Real rl) (Imaginary.Imaginary imag)) =
     (rl ^ 2 + imag ^ 2)
         |> sqrt
 
@@ -236,8 +223,15 @@ modulus (ComplexNumber (Real rl) (Imaginary imag)) =
 {-| Calculate the conjugate of a complex number
 -}
 conjugate : ComplexNumber number -> ComplexNumber number
-conjugate (ComplexNumber rl (Imaginary imaginaryOne)) =
-    ComplexNumber rl (Imaginary -imaginaryOne)
+conjugate (ComplexNumber rl img) =
+    ComplexNumber rl (Imaginary.negate img)
+
+
+{-| Calculate the imaginary axis reflection of a complex number
+-}
+imaginaryAxisReflection : ComplexNumber number -> ComplexNumber number
+imaginaryAxisReflection (ComplexNumber rl img) =
+    ComplexNumber (Real.negate rl) img
 
 
 {-| Convert from the Cartesian representation of a complex number to the polar representation
@@ -245,7 +239,7 @@ conjugate (ComplexNumber rl (Imaginary imaginaryOne)) =
 convertFromCartesianToPolar :
     ComplexNumber Float
     -> Internal.ComplexNumbers.ComplexNumber Float
-convertFromCartesianToPolar (ComplexNumber (Real rl) (Imaginary imag)) =
+convertFromCartesianToPolar (ComplexNumber (Real.Real rl) (Imaginary.Imaginary imag)) =
     let
         polar =
             toPolar ( rl, imag )
@@ -265,21 +259,21 @@ convertFromPolarToCartesian (Internal.ComplexNumbers.ComplexNumber (Internal.Com
         cartesian =
             fromPolar ( ro, theta )
     in
-    ComplexNumber (Real <| Tuple.first cartesian) (Imaginary <| Tuple.second cartesian)
+    ComplexNumber (Real.Real <| Tuple.first cartesian) (Imaginary.Imaginary <| Tuple.second cartesian)
 
 
 {-| Map over a complex number
 -}
 map : (a -> b) -> ComplexNumber a -> ComplexNumber b
-map f (ComplexNumber (Real realOne) (Imaginary imaginaryOne)) =
-    ComplexNumber (Real <| f realOne) (Imaginary <| f imaginaryOne)
+map f (ComplexNumber rl img) =
+    ComplexNumber (Real.map f rl) (Imaginary.map f img)
 
 
 {-| Place a value in the minimal Complex Number Cartesian context
 -}
 pure : a -> ComplexNumber a
 pure a =
-    ComplexNumber (Real a) (Imaginary a)
+    ComplexNumber (Real.pure a) (Imaginary.pure a)
 
 
 {-| Apply for Complex Number Cartesian representaiton applicative
@@ -288,8 +282,8 @@ andMap :
     ComplexNumber a
     -> ComplexNumber (a -> b)
     -> ComplexNumber b
-andMap (ComplexNumber (Real rl) (Imaginary imag)) (ComplexNumber (Real fReal) (Imaginary fImaginary)) =
-    ComplexNumber (Real <| fReal rl) (Imaginary <| fImaginary imag)
+andMap (ComplexNumber rl imag) (ComplexNumber fReal fImaginary) =
+    ComplexNumber (Real.andMap rl fReal) (Imaginary.andMap imag fImaginary)
 
 
 {-| Monadic bind for Complex Number Cartesian representaiton
@@ -298,10 +292,10 @@ andThen :
     (a -> ComplexNumber b)
     -> ComplexNumber a
     -> ComplexNumber b
-andThen f (ComplexNumber (Real previousReal) (Imaginary previousImaginary)) =
+andThen f (ComplexNumber (Real.Real previousReal) (Imaginary.Imaginary previousImaginary)) =
     ComplexNumber
-        (Real <| real <| f previousReal)
-        (Imaginary <| imaginary <| f previousImaginary)
+        (Real.Real <| real <| f previousReal)
+        (Imaginary.Imaginary <| imaginary <| f previousImaginary)
 
 
 {-| Lift a binary function to work with complex numbers
@@ -321,9 +315,16 @@ equalImplementation :
     ComplexNumber Float
     -> ComplexNumber Float
     -> Bool
-equalImplementation (ComplexNumber (Real realOne) (Imaginary imaginaryOne)) (ComplexNumber (Real realTwo) (Imaginary imaginaryTwo)) =
-    Float.Extra.equalWithin 0.000000001 realOne realTwo
-        && Float.Extra.equalWithin 0.000000001 imaginaryOne imaginaryTwo
+equalImplementation (ComplexNumber realOne imaginaryOne) (ComplexNumber realTwo imaginaryTwo) =
+    Real.equal.eq realOne realTwo
+        && Imaginary.equal.eq imaginaryOne imaginaryTwo
+
+
+{-| `Equal` type for `ComplexNumber`.
+-}
+equal : Typeclasses.Classes.Equality.Equality (ComplexNumber Float)
+equal =
+    Typeclasses.Classes.Equality.eq equalImplementation
 
 
 {-| Calculate a complex number raised to a power
@@ -334,34 +335,20 @@ power n complexNumber =
         |> convertFromPolarToCartesian
 
 
-{-| `Equal` type for `ComplexNumber`.
--}
-complexNumberEqual : Typeclasses.Classes.Equality.Equality (ComplexNumber Float)
-complexNumberEqual =
-    Typeclasses.Classes.Equality.eq equalImplementation
-
-
-{-| Compare two ComplexNumbers for equality
--}
-equal : ComplexNumber Float -> ComplexNumber Float -> Bool
-equal =
-    complexNumberEqual.eq
-
-
 {-| Print ComplexNumber
 -}
 print : ComplexNumber Float -> String
-print (ComplexNumber (Real rl) (Imaginary imag)) =
-    "ComplexNumber Real "
+print (ComplexNumber (Real.Real rl) (Imaginary.Imaginary imag)) =
+    "ComplexNumber Real.Real "
         ++ String.fromFloat rl
-        ++ " Imaginary "
+        ++ " Imaginary.Imaginary "
         ++ String.fromFloat imag
 
 
 {-| Print ComplexNumber i notation with rounding function
 -}
 printiNotationWithRounding : (Float -> String) -> ComplexNumber Float -> String
-printiNotationWithRounding toString (ComplexNumber (Real rl) (Imaginary imag)) =
+printiNotationWithRounding toString (ComplexNumber (Real.Real rl) (Imaginary.Imaginary imag)) =
     (if rl < 0 then
         "−"
 
@@ -405,18 +392,18 @@ parseComplexNumber =
         |= parseImaginary
 
 
-parseReal : Parser.Parser (Real Float)
+parseReal : Parser.Parser (Real.Real Float)
 parseReal =
-    Parser.succeed Real
-        |. Parser.keyword "Real"
+    Parser.succeed Real.Real
+        |. Parser.keyword "Real.Real"
         |. Parser.spaces
         |= positiveOrNegativeFloat
 
 
-parseImaginary : Parser.Parser (Imaginary Float)
+parseImaginary : Parser.Parser (Imaginary.Imaginary Float)
 parseImaginary =
-    Parser.succeed Imaginary
-        |. Parser.keyword "Imaginary"
+    Parser.succeed Imaginary.Imaginary
+        |. Parser.keyword "Imaginary.Imaginary"
         |. Parser.spaces
         |= positiveOrNegativeFloat
 
@@ -502,14 +489,14 @@ complexProductCommutativeMonoid =
 -}
 complexSumGroup : Group.Group (ComplexNumber number)
 complexSumGroup =
-    { monoid = complexSumMonoid, inverse = \(ComplexNumber (Real x) (Imaginary y)) -> ComplexNumber (Real -x) (Imaginary -y) }
+    { monoid = complexSumMonoid, inverse = \(ComplexNumber rl imag) -> ComplexNumber (Real.negate rl) (Imaginary.negate imag) }
 
 
 {-| Group for Complex Numbers with multiplication as the operation
 -}
 complexProductGroup : Group.Group (ComplexNumber Float)
 complexProductGroup =
-    { monoid = complexProductMonoid, inverse = \(ComplexNumber (Real x) (Imaginary y)) -> divide one (ComplexNumber (Real x) (Imaginary y)) }
+    { monoid = complexProductMonoid, inverse = \(ComplexNumber (Real.Real x) (Imaginary.Imaginary y)) -> divide one (ComplexNumber (Real.Real x) (Imaginary.Imaginary y)) }
 
 
 {-| Group for Complex Numbers with addition as the operation
@@ -558,4 +545,4 @@ complexField =
 -}
 euler : Float -> ComplexNumber Float
 euler theta =
-    ComplexNumber (Real <| Basics.cos theta) (Imaginary <| Basics.sin theta)
+    ComplexNumber (Real.Real <| Basics.cos theta) (Imaginary.Imaginary <| Basics.sin theta)

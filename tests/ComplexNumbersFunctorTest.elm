@@ -3,7 +3,9 @@ module ComplexNumbersFunctorTest exposing (suite)
 import ComplexNumbers
 import Expect
 import Fuzz
+import Imaginary
 import Internal.ComplexNumbers
+import Real
 import Test
 
 
@@ -19,8 +21,8 @@ suite =
                 let
                     complexNumber =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real one)
-                            (ComplexNumbers.Imaginary two)
+                            (Real.Real one)
+                            (Imaginary.Imaginary two)
 
                     mapResult =
                         ComplexNumbers.map identity complexNumber
@@ -53,8 +55,8 @@ suite =
                 let
                     complexNumber =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real one)
-                            (ComplexNumbers.Imaginary two)
+                            (Real.Real one)
+                            (Imaginary.Imaginary two)
 
                     f =
                         (*) 2

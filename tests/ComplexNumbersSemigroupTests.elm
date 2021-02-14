@@ -1,12 +1,11 @@
 module ComplexNumbersSemigroupTests exposing (..)
 
-import CommutativeMonoid
 import CommutativeSemigroup
 import ComplexNumbers
 import Expect
 import Fuzz
-import Internal.ComplexNumbers
-import Semigroup
+import Imaginary
+import Real
 import Test
 
 
@@ -23,18 +22,18 @@ suite =
                 let
                     a =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real one)
-                            (ComplexNumbers.Imaginary two)
+                            (Real.Real one)
+                            (Imaginary.Imaginary two)
 
                     b =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real two)
-                            (ComplexNumbers.Imaginary three)
+                            (Real.Real two)
+                            (Imaginary.Imaginary three)
 
                     c =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real one)
-                            (ComplexNumbers.Imaginary three)
+                            (Real.Real one)
+                            (Imaginary.Imaginary three)
 
                     semigroup =
                         ComplexNumbers.complexSumSemigroup
@@ -56,13 +55,13 @@ suite =
                 let
                     a =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real one)
-                            (ComplexNumbers.Imaginary two)
+                            (Real.Real one)
+                            (Imaginary.Imaginary two)
 
                     b =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real two)
-                            (ComplexNumbers.Imaginary one)
+                            (Real.Real two)
+                            (Imaginary.Imaginary one)
 
                     (CommutativeSemigroup.CommutativeSemigroup semigroup) =
                         ComplexNumbers.complexSumCommutativeSemigroup
@@ -85,13 +84,13 @@ suite =
                 let
                     a =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real one)
-                            (ComplexNumbers.Imaginary two)
+                            (Real.Real one)
+                            (Imaginary.Imaginary two)
 
                     b =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real two)
-                            (ComplexNumbers.Imaginary three)
+                            (Real.Real two)
+                            (Imaginary.Imaginary three)
 
                     testValueOne =
                         ComplexNumbers.multiply a b
@@ -111,18 +110,18 @@ suite =
                 let
                     a =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real one)
-                            (ComplexNumbers.Imaginary two)
+                            (Real.Real one)
+                            (Imaginary.Imaginary two)
 
                     b =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real two)
-                            (ComplexNumbers.Imaginary three)
+                            (Real.Real two)
+                            (Imaginary.Imaginary three)
 
                     c =
                         ComplexNumbers.ComplexNumber
-                            (ComplexNumbers.Real one)
-                            (ComplexNumbers.Imaginary three)
+                            (Real.Real one)
+                            (Imaginary.Imaginary three)
 
                     testValueOne =
                         ComplexNumbers.multiply (ComplexNumbers.multiply a b) c
@@ -131,7 +130,7 @@ suite =
                         ComplexNumbers.multiply a (ComplexNumbers.multiply b c)
 
                     result =
-                        ComplexNumbers.equal testValueOne testValueTwo
+                        ComplexNumbers.equal.eq testValueOne testValueTwo
                 in
                 Expect.true "equal" result
         ]

@@ -3,9 +3,11 @@
     "name": "jonathanfishbein1/complex-numbers",
     "summary": "complex numbers in elm",
     "license": "BSD-3-Clause",
-    "version": "10.3.5",
+    "version": "11.0.0",
     "exposed-modules": [
-        "ComplexNumbers"
+        "ComplexNumbers",
+        "Real",
+        "Imaginary"
     ],
     "elm-version": "0.19.0 <= v < 0.20.0",
     "dependencies": {
