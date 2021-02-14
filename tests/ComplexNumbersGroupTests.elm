@@ -62,7 +62,7 @@ suite =
                             (ComplexNumbers.complexProductGroup.inverse complexNumber)
                 in
                 Expect.true "All equal identity"
-                    (ComplexNumbers.equal inversePlusA ComplexNumbers.complexProductGroup.monoid.identity
-                        && ComplexNumbers.equal aPlusInverse ComplexNumbers.complexProductGroup.monoid.identity
+                    (ComplexNumbers.equal.eq inversePlusA ComplexNumbers.complexProductGroup.monoid.identity
+                        && ComplexNumbers.equal.eq aPlusInverse ComplexNumbers.complexProductGroup.monoid.identity
                     )
         ]

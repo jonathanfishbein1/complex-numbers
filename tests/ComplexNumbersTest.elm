@@ -265,7 +265,7 @@ suite =
                 in
                 Expect.true
                     "reciprecal and conjugate divided by modules squared equal"
-                    (ComplexNumbers.equal reciprocal conjugateDividedByModulesSquared)
+                    (ComplexNumbers.equal.eq reciprocal conjugateDividedByModulesSquared)
         , Test.fuzz2
             (Fuzz.floatRange 1 10)
             (Fuzz.floatRange 1 10)
@@ -300,7 +300,7 @@ suite =
                 in
                 Expect.true
                     "conjugate of z divided by w equals the conjugate of z divided by the conjugate of w"
-                    (ComplexNumbers.equal conjugateZDividedByW zConjugateDividedBywConjugate)
+                    (ComplexNumbers.equal.eq conjugateZDividedByW zConjugateDividedBywConjugate)
         , Test.test
             "length of z is 0 if z real and imaginary parts are 0"
           <|
@@ -350,7 +350,7 @@ suite =
                         ComplexNumbers.convertFromPolarToCartesian polarTestValue
 
                     result =
-                        ComplexNumbers.equal cartesianTestValue conversionResult
+                        ComplexNumbers.equal.eq cartesianTestValue conversionResult
                 in
                 Expect.true "Should be equal" result
         , Test.fuzz3
@@ -491,7 +491,7 @@ suite =
                         ComplexNumbers.euler Basics.pi
                 in
                 Expect.true "e ^ (i * pi) + 1 = 0"
-                    (ComplexNumbers.equal
+                    (ComplexNumbers.equal.eq
                         (ComplexNumbers.add complexNumberAtPi ComplexNumbers.one)
                         ComplexNumbers.zero
                     )
@@ -522,5 +522,5 @@ suite =
                         ComplexNumbers.euler -one
                 in
                 Expect.true "conjugate of e ^ (i * theta) = e ^ -i * theta)"
-                    (ComplexNumbers.equal complexNumberConjugate complexNumberNegativeTheta)
+                    (ComplexNumbers.equal.eq complexNumberConjugate complexNumberNegativeTheta)
         ]

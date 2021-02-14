@@ -132,7 +132,7 @@ suite =
                             |> ComplexNumbers.add (ComplexNumbers.multiply a c)
 
                     result =
-                        ComplexNumbers.equal testValueOne testValueTwo
+                        ComplexNumbers.equal.eq testValueOne testValueTwo
                 in
                 Expect.true "equal" result
         , Test.fuzz2

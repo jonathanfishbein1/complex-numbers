@@ -75,7 +75,7 @@ suite =
                         ComplexNumbers.complexProductCommutativeMonoid
 
                     result =
-                        ComplexNumbers.equal (monoid.semigroup expected monoid.identity) expected
+                        ComplexNumbers.equal.eq (monoid.semigroup expected monoid.identity) expected
                 in
                 Expect.true "equal" result
         , Test.fuzz3
@@ -111,7 +111,7 @@ suite =
                         ComplexNumbers.complexProductCommutativeMonoid
 
                     result =
-                        ComplexNumbers.equal (monoid.concat listOfMonoids) expected
+                        ComplexNumbers.equal.eq (monoid.concat listOfMonoids) expected
                 in
                 Expect.true "equal" result
         ]

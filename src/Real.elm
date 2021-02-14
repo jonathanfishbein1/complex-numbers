@@ -2,6 +2,8 @@ module Real exposing
     ( Real(..)
     , andMap
     , andThen
+    , equal
+    , equalImplementation
     , map
     , negate
     , one
@@ -10,10 +12,12 @@ module Real exposing
     , zero
     )
 
+import Float.Extra
+import Typeclasses.Classes.Equality
+
+
 {-| Real portion
 -}
-
-
 type Real r
     = Real r
 
@@ -76,3 +80,20 @@ andThen :
     -> Real b
 andThen f (Real previousReal) =
     Real <| real <| f previousReal
+
+
+{-| Equality of Real Numbers
+-}
+equalImplementation :
+    Real Float
+    -> Real Float
+    -> Bool
+equalImplementation (Real realOne) (Real realTwo) =
+    Float.Extra.equalWithin 0.000000001 realOne realTwo
+
+
+{-| `Equal` type for `Real`.
+-}
+equal : Typeclasses.Classes.Equality.Equality (Real Float)
+equal =
+    Typeclasses.Classes.Equality.eq equalImplementation

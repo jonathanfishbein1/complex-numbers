@@ -130,7 +130,7 @@ suite =
                         ComplexNumbers.multiply a (ComplexNumbers.multiply b c)
 
                     result =
-                        ComplexNumbers.equal testValueOne testValueTwo
+                        ComplexNumbers.equal.eq testValueOne testValueTwo
                 in
                 Expect.true "equal" result
         ]

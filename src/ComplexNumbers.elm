@@ -317,9 +317,16 @@ equalImplementation :
     ComplexNumber Float
     -> ComplexNumber Float
     -> Bool
-equalImplementation (ComplexNumber (Real.Real realOne) (Imaginary.Imaginary imaginaryOne)) (ComplexNumber (Real.Real realTwo) (Imaginary.Imaginary imaginaryTwo)) =
-    Float.Extra.equalWithin 0.000000001 realOne realTwo
-        && Float.Extra.equalWithin 0.000000001 imaginaryOne imaginaryTwo
+equalImplementation (ComplexNumber realOne imaginaryOne) (ComplexNumber realTwo imaginaryTwo) =
+    Real.equal.eq realOne realTwo
+        && Imaginary.equal.eq imaginaryOne imaginaryTwo
+
+
+{-| `Equal` type for `ComplexNumber`.
+-}
+equal : Typeclasses.Classes.Equality.Equality (ComplexNumber Float)
+equal =
+    Typeclasses.Classes.Equality.eq equalImplementation
 
 
 {-| Calculate a complex number raised to a power
@@ -328,20 +335,6 @@ power : Float -> ComplexNumber Float -> ComplexNumber Float
 power n complexNumber =
     Internal.ComplexNumbers.power n (convertFromCartesianToPolar complexNumber)
         |> convertFromPolarToCartesian
-
-
-{-| `Equal` type for `ComplexNumber`.
--}
-complexNumberEqual : Typeclasses.Classes.Equality.Equality (ComplexNumber Float)
-complexNumberEqual =
-    Typeclasses.Classes.Equality.eq equalImplementation
-
-
-{-| Compare two ComplexNumbers for equality
--}
-equal : ComplexNumber Float -> ComplexNumber Float -> Bool
-equal =
-    complexNumberEqual.eq
 
 
 {-| Print ComplexNumber

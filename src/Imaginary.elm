@@ -1,6 +1,8 @@
 module Imaginary exposing
     ( Imaginary(..)
     , andMap
+    , equal
+    , equalImplementation
     , i
     , imaginary
     , map
@@ -9,10 +11,12 @@ module Imaginary exposing
     , zero
     )
 
+import Float.Extra
+import Typeclasses.Classes.Equality
+
+
 {-| Imaginary portion
 -}
-
-
 type Imaginary i
     = Imaginary i
 
@@ -63,3 +67,20 @@ andMap :
     -> Imaginary b
 andMap (Imaginary imag) (Imaginary fImag) =
     Imaginary <| fImag imag
+
+
+{-| Equality of Imaginary Numbers
+-}
+equalImplementation :
+    Imaginary Float
+    -> Imaginary Float
+    -> Bool
+equalImplementation (Imaginary realOne) (Imaginary realTwo) =
+    Float.Extra.equalWithin 0.000000001 realOne realTwo
+
+
+{-| `Equal` type for `Imaginary`.
+-}
+equal : Typeclasses.Classes.Equality.Equality (Imaginary Float)
+equal =
+    Typeclasses.Classes.Equality.eq equalImplementation
