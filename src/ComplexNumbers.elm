@@ -100,7 +100,6 @@ import CommutativeRing
 import CommutativeSemigroup
 import DivisionRing
 import Field
-import Float.Extra
 import Group
 import Imaginary
 import Internal.ComplexNumbers
