@@ -2,6 +2,8 @@
 
 ## Summary
 
+UNMAINTAINED! Use <https://package.elm-lang.org/packages/jonathanfishbein1/elm-numbers/latest/>
+
 A module to define complex numbers and basic arithmetic operations on them.
 
 I accidently published this package *before* checking to see if there already existed an Elm package for complex numbers.  This was a rookie mistake I made when getting started developing Elm packages.
